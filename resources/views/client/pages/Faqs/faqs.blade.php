@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="page-title page-title-layout5">
-        <div class="bg-img"><img src="assets/images/backgrounds/6.jpg" alt="background"></div>
+        <div class="bg-img"><img src="{{ asset('assets/client/images/backgrounds/6.jpg') }}" alt="background"></div>
         <div class="container">
             <div class="row">
                 <div class="col-12 d-flex justify-content-between flex-wrap align-items-center">
@@ -25,7 +25,8 @@
                 <div class="col-sm-12 col-md-12 col-lg-4">
                     <aside class="sidebar has-marign-right">
                         <div class="widget widget-help bg-overlay bg-overlay-secondary-gradient">
-                            <div class="bg-img"><img src="assets/images/banners/5.jpg" alt="background"></div>
+                            <div class="bg-img"><img src="{{ asset('assets/client/images/banners/5.jpg') }}"
+                                    alt="background"></div>
                             <div class="widget-content">
                                 <div class="widget__icon">
                                     <i class="icon-call3"></i>

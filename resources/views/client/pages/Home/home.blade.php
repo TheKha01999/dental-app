@@ -245,7 +245,7 @@
                     <div class="video-banner">
                         <img src="{{ asset('assets/client/images/about/4.jpg') }}" alt="about" />
                         <a class="video__btn video__btn-white popup-video"
-                            href="https://www.youtube.com/watch?v=nrJtHemSPW4">
+                            href="https://www.youtube.com/watch?v=UyfJsIbiSEk">
                             <div class="video__player">
                                 <i class="fa fa-play"></i>
                             </div>

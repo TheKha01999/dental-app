@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 Route::get('home', function () {
-    return view('client.pages.home');
+    return view('client.pages.Home.home');
 })->name('home');
 Route::get('home/about', function () {
     return view('client.pages.About.about');

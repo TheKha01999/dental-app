@@ -26,7 +26,7 @@
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="member">
                         <div class="member__img">
-                            <img src="assets/images/team/1.jpg" alt="member img">
+                            <img src="{{ asset('assets/client/images/team/1.jpg') }}" alt="member img">
                         </div><!-- /.member-img -->
                         <div class="member__info">
                             <h5 class="member__name"><a href="doctors-single-doctor1.html">Mike Dooley</a></h5>
@@ -52,7 +52,7 @@
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="member">
                         <div class="member__img">
-                            <img src="assets/images/team/2.jpg" alt="member img">
+                            <img src="{{ asset('assets/client/images/team/2.jpg') }}" alt="member img">
                         </div><!-- /.member-img -->
                         <div class="member__info">
                             <h5 class="member__name"><a href="doctors-single-doctor1.html">Richard Muldoone</a></h5>
@@ -78,7 +78,7 @@
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="member">
                         <div class="member__img">
-                            <img src="assets/images/team/3.jpg" alt="member img">
+                            <img src="{{ asset('assets/client/images/team/3.jpg') }}" alt="member img">
                         </div><!-- /.member-img -->
                         <div class="member__info">
                             <h5 class="member__name"><a href="doctors-single-doctor1.html">Maria Andaloro</a></h5>
@@ -104,7 +104,7 @@
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="member">
                         <div class="member__img">
-                            <img src="assets/images/team/4.jpg" alt="member img">
+                            <img src="{{ asset('assets/client/images/team/4.jpg') }}" alt="member img">
                         </div><!-- /.member-img -->
                         <div class="member__info">
                             <h5 class="member__name"><a href="doctors-single-doctor1.html">Dupree Black</a></h5>
@@ -130,7 +130,7 @@
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="member">
                         <div class="member__img">
-                            <img src="assets/images/team/5.jpg" alt="member img">
+                            <img src="{{ asset('assets/client/images/team/5.jpg') }}" alt="member img">
                         </div><!-- /.member-img -->
                         <div class="member__info">
                             <h5 class="member__name"><a href="doctors-single-doctor1.html">Markus skar</a></h5>
@@ -157,7 +157,7 @@
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="member">
                         <div class="member__img">
-                            <img src="assets/images/team/6.jpg" alt="member img">
+                            <img src="{{ asset('assets/client/images/team/6.jpg') }}" alt="member img">
                         </div><!-- /.member-img -->
                         <div class="member__info">
                             <h5 class="member__name"><a href="doctors-single-doctor1.html">Kiano Barker</a></h5>
@@ -183,7 +183,7 @@
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="member">
                         <div class="member__img">
-                            <img src="assets/images/team/6.jpg" alt="member img">
+                            <img src="{{ asset('assets/client/images/team/7.jpg') }}" alt="member img">
                         </div><!-- /.member-img -->
                         <div class="member__info">
                             <h5 class="member__name"><a href="doctors-single-doctor1.html">Kiano Barker</a></h5>
@@ -209,7 +209,7 @@
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="member">
                         <div class="member__img">
-                            <img src="assets/images/team/6.jpg" alt="member img">
+                            <img src="{{ asset('assets/client/images/team/8.jpg') }}" alt="member img">
                         </div><!-- /.member-img -->
                         <div class="member__info">
                             <h5 class="member__name"><a href="doctors-single-doctor1.html">Kiano Barker</a></h5>
@@ -235,7 +235,7 @@
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="member">
                         <div class="member__img">
-                            <img src="assets/images/team/6.jpg" alt="member img">
+                            <img src="{{ asset('assets/client/images/team/9.jpg') }}" alt="member img">
                         </div><!-- /.member-img -->
                         <div class="member__info">
                             <h5 class="member__name"><a href="doctors-single-doctor1.html">Kiano Barker</a></h5>

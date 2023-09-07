@@ -1,8 +1,8 @@
 @extends('client.layout.master')
 @section('content')
     <!-- ========================
-                                                                                           page title
-                                                                                        =========================== -->
+                                                                                                                                           page title
+                                                                                                                                        =========================== -->
     <section class="page-title page-title-layout1 bg-overlay">
         <div class="bg-img"><img src="{{ asset('assets/client/images/page-titles/1.jpg') }}" alt="background"></div>
         <div class="container">
@@ -29,14 +29,14 @@
 
 
     <!-- ========================
-                                                                                  About Layout 1
-                                                                                =========================== -->
+                                                                                                                                  About Layout 1
+                                                                                                                                =========================== -->
     <section class="about-layout1 pb-0">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <div class="heading-layout2">
-                        <h3 class="heading__title mb-40">Improving The Quality Of Your Life Through Better Health.</h3>
+                        <h3 class="heading__title mb-40">Highly Qualified And Dedicated Doctor.</h3>
                     </div><!-- /heading -->
                 </div><!-- /.col-12 -->
             </div><!-- /.row -->
@@ -57,8 +57,8 @@
                 </div><!-- /.col-lg-6 -->
             </div><!-- /.row -->
 
-            <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-md-12 col-lg-8">
                     <img width="100%" src="{{ asset('assets/client/images/about/1.jpg') }}" alt="about">
                 </div><!-- /.col-lg-6 -->
             </div>
@@ -70,7 +70,7 @@
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <div class="heading-layout2">
-                        <h3 class="heading__title mb-40">Improving The Quality Of Your Life Through Better Health.</h3>
+                        <h3 class="heading__title mb-40">The most modern and complete facilities.</h3>
                     </div><!-- /heading -->
                 </div><!-- /.col-12 -->
             </div><!-- /.row -->
@@ -91,9 +91,9 @@
                 </div><!-- /.col-lg-6 -->
             </div><!-- /.row -->
 
-            <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-12">
-                    <img width="100%" src="{{ asset('assets/client/images/about/1.jpg') }}" alt="about">
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-md-12 col-lg-8">
+                    <img width="100%" src="{{ asset('assets/client/images/about/2.jpg') }}" alt="about">
                 </div><!-- /.col-lg-6 -->
             </div>
         </div><!-- /.container -->
@@ -104,7 +104,8 @@
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <div class="heading-layout2">
-                        <h3 class="heading__title mb-40">Improving The Quality Of Your Life Through Better Health.</h3>
+                        <h3 class="heading__title mb-40">
+                            Branches spread across the country.</h3>
                     </div><!-- /heading -->
                 </div><!-- /.col-12 -->
             </div><!-- /.row -->
@@ -125,9 +126,9 @@
                 </div><!-- /.col-lg-6 -->
             </div><!-- /.row -->
 
-            <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-12">
-                    <img width="100%" src="{{ asset('assets/client/images/about/1.jpg') }}" alt="about">
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-md-12 col-lg-8">
+                    <img width="100%" src="{{ asset('assets/client/images/about/3.jpg') }}" alt="about">
                 </div><!-- /.col-lg-6 -->
             </div>
         </div><!-- /.container -->

@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="page-title page-title-layout1 bg-overlay">
-        <div class="bg-img"><img src="assets/images/page-titles/2.jpg" alt="background"></div>
+        <div class="bg-img"><img src="{{ asset('assets/client/images/page-titles/2.jpg') }}" alt="background"></div>
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5">
@@ -25,7 +25,7 @@
         </div><!-- /.container -->
     </section><!-- /.page-title -->
     <section class="services-layout1 pt-130">
-        <div class="bg-img"><img src="assets/images/backgrounds/2.jpg" alt="background"></div>
+        <div class="bg-img"><img src="{{ asset('assets/client/images/backgrounds/2.jpg') }}" alt="background"></div>
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
@@ -40,8 +40,7 @@
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <div class="service-item">
                         <div class="service__icon">
-                            <img src="https://vinmec-prod.s3.amazonaws.com/images/20190807_052108_556526_quy-trinh-nieng-ran.max-1800x1800.jpg"
-                                alt="">
+                            <img src="{{ asset('assets/client/images/services/1.jpg') }}" alt="">
                         </div><!-- /.service__icon -->
                         <div class="service__content">
                             <h4 class="service__title">Neurology Clinic</h4>
@@ -66,8 +65,7 @@
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <div class="service-item">
                         <div class="service__icon">
-                            <img src="https://elitedental.com.vn/wp-content/uploads/2022/08/implant-nha-khoa.jpg"
-                                alt="">
+                            <img src="{{ asset('assets/client/images/services/2.jpg') }}" alt="">
                         </div><!-- /.service__icon -->
                         <div class="service__content">
                             <h4 class="service__title">Cardiology Clinic</h4>
@@ -91,8 +89,7 @@
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <div class="service-item">
                         <div class="service__icon">
-                            <img src="https://elitedental.com.vn/wp-content/uploads/2022/04/Dental-Bridge.jpg"
-                                alt="">
+                            <img src="{{ asset('assets/client/images/services/3.jpg') }}" alt="">
                         </div><!-- /.service__icon -->
                         <div class="service__content">
                             <h4 class="service__title">Pathology Clinic</h4>
@@ -116,8 +113,7 @@
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <div class="service-item">
                         <div class="service__icon">
-                            <img src="https://cdn.benhvienthucuc.vn/wp-content/uploads/2022/06/dan-su-veneer-600x400.jpg"
-                                alt="">
+                            <img src="{{ asset('assets/client/images/services/4.jpg') }}" alt="">
                         </div><!-- /.service__icon -->
                         <div class="service__content">
                             <h4 class="service__title">Laboratory Analysis</h4>
@@ -142,8 +138,7 @@
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <div class="service-item">
                         <div class="service__icon">
-                            <img src="https://cdn.benhvienthucuc.vn/wp-content/uploads/2022/04/dieu-tri-cuoi-ho-loi-e1650017790892.jpg"
-                                alt="">
+                            <img src="{{ asset('assets/client/images/services/5.jpg') }}" alt="">
                         </div><!-- /.service__icon -->
                         <div class="service__content">
                             <h4 class="service__title">Pediatric Clinic</h4>
@@ -167,7 +162,7 @@
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <div class="service-item">
                         <div class="service__icon">
-                            <img src="https://hidental.vn/wp-content/uploads/2020/11/nho-rang-khon.jpg" alt="">
+                            <img src="{{ asset('assets/client/images/services/6.jpg') }}" alt="">
 
                         </div><!-- /.service__icon -->
                         <div class="service__content">

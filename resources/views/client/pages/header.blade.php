@@ -159,8 +159,19 @@
                     <i class="fa fa-user"></i>
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Login</a>
-                    <a class="dropdown-item" href="#">Register</a>
+                    @if (Route::has('login'))
+                        <div>
+                            @auth
+                                <a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a>
+                            @else
+                                <a class="dropdown-item" href="{{ route('login') }}">Login</a>
+
+                                @if (Route::has('register'))
+                                    <a class="dropdown-item" href="{{ route('register') }}">Register</a>
+                                @endif
+                            @endauth
+                        </div>
+                    @endif
                 </div>
             </div>
 
