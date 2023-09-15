@@ -224,3 +224,7 @@
         </div><!-- /.container -->
     </section><!-- /.FAQ -->
 @endsection
+
+@section('title')
+    Faqs
+@endsection

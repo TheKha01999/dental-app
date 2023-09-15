@@ -9,6 +9,7 @@
 <!-- =========================
     Header
 =========================== -->
+{{-- {{ dd($name) }} --}}
 <header class="header header-layout2">
     <div class="header-topbar">
         <div class="container-fluid">
@@ -118,14 +119,14 @@
                         <!-- /.dropdown-menu -->
                     </li>
                     <!-- /.nav-item -->
-                    <li class="nav__item has-dropdown">
-                        <a href="#" data-toggle="dropdown" class="nav__item-link">Blog</a>
+                    <li class="nav__item ">
+                        <a href="{{ route('home.blog') }}" class="nav__item-link">Blog</a>
                         {{-- xoa dropdown-toggle va xoa dropdown menu --}}
                         <!-- /.dropdown-menu -->
                     </li>
                     <!-- /.nav-item -->
-                    <li class="nav__item has-dropdown">
-                        <a href="#" data-toggle="dropdown" class="nav__item-link">Shop</a>
+                    <li class="nav__item ">
+                        <a href="{{ route('home.product') }}" class="nav__item-link">Shop</a>
                         {{-- xoa dropdown-toggle va xoa dropdown menu --}}
                         <!-- /.dropdown-menu -->
                     </li>
@@ -153,7 +154,6 @@
             <button class="ml-30 action__btn-cart">
                 <i class="fa fa-shopping-cart"></i>
             </button>
-
             <div class="dropdown ml-30 action__btn-user">
                 <button data-toggle="dropdown">
                     <i class="fa fa-user"></i>
@@ -162,7 +162,22 @@
                     @if (Route::has('login'))
                         <div>
                             @auth
+
+                                {{-- <a class="dropdown-item" href="">Xin Chao {{ Session::get('name') }} !</a> --}}
+                                <a class="dropdown-item" href="#">Xin Chao {{ Auth::user()->name }} !</a>
                                 <a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a>
+                                <x-dropdown-link :href="route('profile.edit')">
+                                    {{ __('Edit Profile') }}
+                                </x-dropdown-link>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+
+                                    <x-dropdown-link :href="route('logout')"
+                                        onclick="event.preventDefault();
+                                                        this.closest('form').submit();">
+                                        {{ __('Log Out') }}
+                                    </x-dropdown-link>
+                                </form>
                             @else
                                 <a class="dropdown-item" href="{{ route('login') }}">Login</a>
 
@@ -174,7 +189,6 @@
                     @endif
                 </div>
             </div>
-
         </div>
         <!-- /.container -->
     </nav>

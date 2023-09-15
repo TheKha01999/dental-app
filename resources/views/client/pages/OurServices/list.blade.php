@@ -187,3 +187,6 @@
         </div><!-- /.container -->
     </section><!-- /.Services Layout 1 -->
 @endsection
+@section('title')
+    Services
+@endsection

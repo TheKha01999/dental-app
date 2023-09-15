@@ -44,7 +44,8 @@
                                         </div>
 
                                         <div class="pt-1 mb-4">
-                                            <button class="btn btn-dark btn-lg btn-block" type="submit">Login</button>
+                                            <button style="background-color: #21CDC0" class="btn btn-dark btn-lg btn-block"
+                                                type="submit">Login</button>
                                         </div>
 
                                         @if (Route::has('password.request'))
@@ -57,7 +58,6 @@
                                         <a href="#!" class="small text-muted">Terms of use.</a>
                                         <a href="#!" class="small text-muted">Privacy policy</a>
                                     </form>
-
                                 </div>
                             </div>
                         </div>

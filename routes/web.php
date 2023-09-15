@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,13 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('client.pages.Home.home');
+// })->name('/');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+//Luu y auth ở đây nên check có ng đăng nhập chưa ở link này vs email veryfied ở đây luôn
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -30,9 +32,13 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-Route::get('home', function () {
+Route::get('/', function () {
+
+
     return view('client.pages.Home.home');
 })->name('home');
+
+
 Route::get('home/about', function () {
     return view('client.pages.About.about');
 })->name('home.about');
@@ -45,3 +51,9 @@ Route::get('home/faqs', function () {
 Route::get('home/services', function () {
     return view('client.pages.OurServices.list');
 })->name('home.services');
+Route::get('home/blog', function () {
+    return view('client.pages.Blog.blog');
+})->name('home.blog');
+Route::get('home/product', function () {
+    return view('client.pages.Product.list');
+})->name('home.product');
