@@ -57,6 +57,7 @@ Route::get('home/blog', function () {
 })->name('home.blog');
 
 Route::get('home/product', [ClientProductsController::class, 'index'])->name('home.product');
+Route::get('home/product/{id}', [ClientProductsController::class, 'detail'])->name('home.product.detail');
 
 
 Route::get('admin', function () {

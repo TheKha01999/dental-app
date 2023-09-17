@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ========================
-                                                                                                                                           page title
-                                                                                                                                        =========================== -->
+                                                                                                                                                   page title
+                                                                                                                                                =========================== -->
     <section class="page-title page-title-layout5 text-center">
         <div class="bg-img"><img src="{{ asset('assets/client/images/backgrounds/6.jpg') }}" alt="background"></div>
         <div class="container">
@@ -22,8 +22,8 @@
     </section><!-- /.page-title -->
 
     <!-- ========================
-                                                                                                                                             shop
-                                                                                                                                          =========================== -->
+                                                                                                                                                     shop
+                                                                                                                                                  =========================== -->
     <section class="shop-grid">
         <div class="container">
             <div class="row">
@@ -268,7 +268,7 @@
                             <div class="widget-content">
                                 <ul class="list-unstyled mb-0">
                                     @foreach ($productCategories as $productCategory)
-                                        <li><a href="{{ route('home.product', ['keyword' => $productCategory->name]) }}"><span
+                                        <li><a href="{{ route('home.product.detail', ['id' => $productCategory->id]) }}"><span
                                                     class="cat-count">0</span><span>{{ $productCategory->name }}</span></a>
                                         </li>
                                     @endforeach
