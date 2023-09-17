@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ========================
-                               page title
-                            =========================== -->
+                                                                                                                                           page title
+                                                                                                                                        =========================== -->
     <section class="page-title page-title-layout5 text-center">
         <div class="bg-img"><img src="{{ asset('assets/client/images/backgrounds/6.jpg') }}" alt="background"></div>
         <div class="container">
@@ -22,8 +22,8 @@
     </section><!-- /.page-title -->
 
     <!-- ========================
-                                 shop
-                              =========================== -->
+                                                                                                                                             shop
+                                                                                                                                          =========================== -->
     <section class="shop-grid">
         <div class="container">
             <div class="row">
@@ -39,24 +39,25 @@
                     </div>
                     <div class="row">
                         <!-- Product item #1 -->
-                        <div class="col-sm-6 col-md-6 col-lg-4">
-                            <div class="product-item">
-                                <div class="product__img">
-                                    <img src="{{ asset('assets/client/images/products/1.jpg') }}" alt="Product"
-                                        loading="lazy">
-                                    <div class="product__action">
-                                        <a href="#" class="btn btn__primary btn__rounded">
-                                            <i class="icon-cart"></i> <span>Add To Cart</span>
-                                        </a>
-                                    </div><!-- /.product-action -->
-                                </div><!-- /.product-img -->
-                                <div class="product__info">
-                                    <h4 class="product__title"><a href="#">Calming Herps</a></h4>
-                                    <span class="product__price">$18.99</span>
-                                </div><!-- /.product-content -->
-                            </div><!-- /.product-item -->
-                        </div><!-- /.col-lg-4 -->
-                        <!-- Product item #2 -->
+                        @foreach ($products as $product)
+                            <div class="col-sm-6 col-md-6 col-lg-4">
+                                <div class="product-item">
+                                    <div class="product__img">
+                                        <img src="{{ asset('images/' . $product->image) }}" alt="Product" loading="lazy">
+                                        <div class="product__action">
+                                            <a href="#" class="btn btn__primary btn__rounded">
+                                                <i class="icon-cart"></i> <span>Add To Cart</span>
+                                            </a>
+                                        </div><!-- /.product-action -->
+                                    </div><!-- /.product-img -->
+                                    <div class="product__info">
+                                        <h4 class="product__title"><a href="#">{{ $product->name }}</a></h4>
+                                        <span class="product__price">${{ $product->price }}</span>
+                                    </div><!-- /.product-content -->
+                                </div><!-- /.product-item -->
+                            </div><!-- /.col-lg-4 -->
+                        @endforeach
+                        {{-- <!-- Product item #2 -->
                         <div class="col-sm-6 col-md-6 col-lg-4">
                             <div class="product-item">
                                 <div class="product__img">
@@ -199,7 +200,7 @@
                                     <span class="product__price">$18.99</span>
                                 </div><!-- /.product-content -->
                             </div><!-- /.product-item -->
-                        </div><!-- /.col-lg-4 -->
+                        </div><!-- /.col-lg-4 --> --}}
                     </div><!-- /.row -->
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12 text-center">
@@ -266,16 +267,21 @@
                             <h5 class="widget__title">Categories</h5>
                             <div class="widget-content">
                                 <ul class="list-unstyled mb-0">
-                                    <li><a href="#"><span class="cat-count">4</span><span>Neurology</span></a></li>
+                                    @foreach ($productCategories as $productCategory)
+                                        <li><a href="{{ route('home.product', ['keyword' => $productCategory->name]) }}"><span
+                                                    class="cat-count">0</span><span>{{ $productCategory->name }}</span></a>
+                                        </li>
+                                    @endforeach
+                                    {{-- <li><a href="#"><span class="cat-count">4</span><span>Neurology</span></a></li>
                                     <li><a href="#"><span class="cat-count">0</span><span>Cardiology</span></a></li>
                                     <li><a href="#"><span class="cat-count">3</span><span>Pathology</span></a></li>
                                     <li><a href="#"><span class="cat-count">2</span><span>Laboratory</span></a></li>
                                     <li><a href="#"><span class="cat-count">4</span><span>Pediatric</span></a></li>
                                     <li><a href="#"><span class="cat-count">1</span><span>Cardiac Clinic</span></a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </div><!-- /.widget-content -->
-                        </div><!-- /.widget-categories -->
+                            {{-- </div><!-- /.widget-categories -->
                         <div class="widget widget-filter">
                             <h5 class="widget__title">Pricing Filter</h5>
                             <div class="widget__content">
@@ -300,7 +306,7 @@
                                     <li><a href="#">Business</a></li>
                                 </ul>
                             </div><!-- /.widget-content -->
-                        </div><!-- /.widget-Tags -->
+                        </div><!-- /.widget-Tags --> --}}
                     </aside><!-- /.sidebar -->
                 </div><!-- /.col-lg-3 -->
             </div><!-- /.row -->
@@ -311,4 +317,3 @@
 @section('title')
     Products
 @endsection
-

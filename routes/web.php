@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\ProductCategoriesController;
+use App\Http\Controllers\Admin\ProductsController;
+use App\Http\Controllers\Client\ProductsController as ClientProductsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -33,8 +36,6 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 Route::get('/', function () {
-
-
     return view('client.pages.Home.home');
 })->name('home');
 
@@ -54,6 +55,21 @@ Route::get('home/services', function () {
 Route::get('home/blog', function () {
     return view('client.pages.Blog.blog');
 })->name('home.blog');
-Route::get('home/product', function () {
-    return view('client.pages.Product.list');
-})->name('home.product');
+
+Route::get('home/product', [ClientProductsController::class, 'index'])->name('home.product');
+
+
+Route::get('admin', function () {
+    return view('admin.layout.master');
+})->name('admin.master');
+
+
+//Admin Management
+Route::prefix('admin')->name('admin.')->group(function () {
+    //Product Categories table
+    Route::resource('product_categories', ProductCategoriesController::class);
+
+    //Products table
+    Route::resource('products', ProductsController::class);
+    Route::post('products/slug', [ProductsController::class, 'createSlug'])->name('products.create.slug');
+});
