@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Blog;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreProductCategoriesRequest;
-use App\Http\Requests\UpdateProductCategoriesRequest;
+use App\Http\Requests\Admin\Blog\StoreBlogCategoryRequest;
+use App\Http\Requests\Admin\Blog\UpdateBlogCategoryRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ProductCategoriesController extends Controller
+class BlogCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,14 +26,14 @@ class ProductCategoriesController extends Controller
         $page = $request->page ?? 1;
         $stt = ($page *  $itemPerPage) - ($itemPerPage - 1);
 
-        $productCategories = DB::table('product_categories')
+        $blogCategories = DB::table('blog_categories')
             ->where('name', 'like', '%' . $keyword . '%')
             ->orderBy('created_at', $sort)
             ->paginate($itemPerPage);
         return view(
-            'admin.pages.product_categories.list',
+            'admin.pages.blog_categories.list',
             [
-                'productCategories' => $productCategories,
+                'blogCategories' => $blogCategories,
                 'sortBy' => $sortBy,
                 'keyword' => $keyword,
                 'stt' => $stt
@@ -46,16 +46,15 @@ class ProductCategoriesController extends Controller
      */
     public function create()
     {
-
-        return view('admin.pages.product_categories.create');
+        return view('admin.pages.blog_categories.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductCategoriesRequest $request)
+    public function store(StoreBlogCategoryRequest $request)
     {
-        $check = DB::table('product_categories')->insert([
+        $check = DB::table('blog_categories')->insert([
             "name" => $request->name,
             'status' => $request->status,
             'created_at' => Carbon::now(),
@@ -63,7 +62,7 @@ class ProductCategoriesController extends Controller
         ]);
 
         $message = $check ? 'Created successfully !' : 'Created failed !';
-        return redirect()->route('admin.product_categories.index')->with('message', $message);
+        return redirect()->route('admin.blog_categories.index')->with('message', $message);
     }
 
     /**
@@ -71,8 +70,8 @@ class ProductCategoriesController extends Controller
      */
     public function show(string $id)
     {
-        $productCategories = DB::table('product_categories')->find($id);
-        return view('admin.pages.product_categories.detail', ['productCategories' => $productCategories]);
+        $blogCategories = DB::table('blog_categories')->find($id);
+        return view('admin.pages.blog_categories.detail', ['blogCategories' => $blogCategories]);
     }
 
     /**
@@ -86,17 +85,16 @@ class ProductCategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductCategoriesRequest $request, string $id)
+    public function update(UpdateBlogCategoryRequest $request, string $id)
     {
-
-        $check = DB::table('product_categories')->where('id', '=', $id)->update([
+        $check = DB::table('blog_categories')->where('id', '=', $id)->update([
             'name' => $request->name,
             'status' => $request->status,
             'updated_at' => Carbon::now(), //lưu ý chỗ này nên lúc nào cũng successfully
         ]);
 
         $message = $check  ? 'Updated successfully' : 'Updated failed';
-        return redirect()->route('admin.product_categories.index')->with('message', $message);
+        return redirect()->route('admin.blog_categories.index')->with('message', $message);
     }
 
     /**
@@ -104,12 +102,11 @@ class ProductCategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        // $productCategories = DB::table('product_categories')->find($id);
 
-        $check = DB::table('product_categories')->delete($id);
+        $check = DB::table('blog_categories')->delete($id);
 
         $message = $check ? 'Deleted successfully' : 'Deleted failed';
 
-        return redirect()->route('admin.product_categories.index')->with('message', $message);
+        return redirect()->route('admin.blog_categories.index')->with('message', $message);
     }
 }

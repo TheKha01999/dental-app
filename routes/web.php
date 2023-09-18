@@ -1,8 +1,17 @@
 <?php
 
+use App\Http\Controllers\Admin\Blog\BlogCategoryController;
+use App\Http\Controllers\Admin\Blog\BlogController;
 use App\Http\Controllers\Admin\ProductCategoriesController;
 use App\Http\Controllers\Admin\ProductsController;
+
+use App\Http\Controllers\Client\About\ClientAboutController;
+use App\Http\Controllers\Client\Blog\ClientBlogController;
+use App\Http\Controllers\Client\Doctor\ClientDoctorController;
+use App\Http\Controllers\Client\Faqs\ClientFaqsController;
+use App\Http\Controllers\Client\Home\ClientHomeController;
 use App\Http\Controllers\Client\ProductsController as ClientProductsController;
+use App\Http\Controllers\Client\Services\ClientServicesController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -35,35 +44,31 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-Route::get('/', function () {
-    return view('client.pages.Home.home');
-})->name('home');
+//Page Home of Client Management Below
+Route::get('/', [ClientHomeController::class, 'index'])->name('home');
 
+//Client Management
+Route::prefix('home')->name('home.')->group(function () {
+    //Page About
+    Route::get('about', [ClientAboutController::class, 'index'])->name('about');
 
-Route::get('home/about', function () {
-    return view('client.pages.About.about');
-})->name('home.about');
-Route::get('home/doctors', function () {
-    return view('client.pages.Doctors.list');
-})->name('home.doctors');
-Route::get('home/faqs', function () {
-    return view('client.pages.Faqs.faqs');
-})->name('home.faqs');
-Route::get('home/services', function () {
-    return view('client.pages.OurServices.list');
-})->name('home.services');
-Route::get('home/blog', function () {
-    return view('client.pages.Blog.blog');
-})->name('home.blog');
+    //Page Doctor
+    Route::get('doctors', [ClientDoctorController::class, 'index'])->name('doctors');
 
-Route::get('home/product', [ClientProductsController::class, 'index'])->name('home.product');
-Route::get('home/product/{id}', [ClientProductsController::class, 'detail'])->name('home.product.detail');
+    //Pgae Faqs
+    Route::get('faqs', [ClientFaqsController::class, 'index'])->name('faqs');
 
+    //Page Services
+    Route::get('services', [ClientServicesController::class, 'index'])->name('services');
 
-Route::get('admin', function () {
-    return view('admin.layout.master');
-})->name('admin.master');
+    //Page Product
+    Route::get('product', [ClientProductsController::class, 'index'])->name('product');
+    Route::get('product/{id}', [ClientProductsController::class, 'detail'])->name('product.detail');
 
+    //Page Blog
+    Route::get('blog', [ClientBlogController::class, 'index'])->name('blog');
+    Route::get('blog/{id}', [ClientBlogController::class, 'detail'])->name('blog.detail');
+});
 
 //Admin Management
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -73,4 +78,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
     //Products table
     Route::resource('products', ProductsController::class);
     Route::post('products/slug', [ProductsController::class, 'createSlug'])->name('products.create.slug');
+
+    //Blog Categories table
+    Route::resource('blog_categories', BlogCategoryController::class);
+
+    //Blogs Table
+    Route::resource('blogs', BlogController::class);
+    Route::post('blogs/slug', [BlogController::class, 'createSlug'])->name('blogs.create.slug');
+    Route::post('blogs/ckeditor-upload-image', [BlogController::class, 'uploadImage'])->name('blogs.ckedit.upload.image');
 });
+
+Route::get('admin', function () {
+    return view('admin.layout.master');
+})->name('admin.master');

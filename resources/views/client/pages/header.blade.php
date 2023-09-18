@@ -87,49 +87,16 @@
                         <!-- /.dropdown-menu -->
                     </li>
                     <!-- /.nav-item -->
-                    <li class="nav__item has-dropdown">
-                        <a data-toggle="dropdown" href="#" class="dropdown-toggle nav__item-link">Services
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="nav__item">
-                                <a href="departments.html" class="nav__item-link">Orthodontic</a>
-                            </li>
-                            <!-- /.nav-item -->
-                            <li class="nav__item">
-                                <a href="departments-single.html" class="nav__item-link">Implant</a></a>
-                            </li>
-                            <!-- /.nav-item -->
-                            <li class="nav__item">
-                                <a href="departments-single.html" class="nav__item-link">Porcelain Crowns</a></a>
-                            </li>
-                            <!-- /.nav-item -->
-                            <li class="nav__item">
-                                <a href="departments-single.html" class="nav__item-link">Ceramic Veneer</a></a>
-                            </li>
-                            <!-- /.nav-item -->
-                            <li class="nav__item">
-                                <a href="departments-single.html" class="nav__item-link">Gummy Smile</a></a>
-                            </li>
-                            <!-- /.nav-item -->
-                            <li class="nav__item">
-                                <a href="departments-single.html" class="nav__item-link">Wisdom teeth</a></a>
-                            </li>
-                            <!-- /.nav-item -->
-                        </ul>
-                        <!-- /.dropdown-menu -->
-                    </li>
-                    <!-- /.nav-item -->
-                    <li class="nav__item ">
-                        <a href="{{ route('home.blog') }}" class="nav__item-link">Blog</a>
-                        {{-- xoa dropdown-toggle va xoa dropdown menu --}}
-                        <!-- /.dropdown-menu -->
-                    </li>
+                    @yield('navbar_services')
+
                     <!-- /.nav-item -->
                     <li class="nav__item ">
                         <a href="{{ route('home.product') }}" class="nav__item-link">Shop</a>
-                        {{-- xoa dropdown-toggle va xoa dropdown menu --}}
-                        <!-- /.dropdown-menu -->
                     </li>
+
+                    <!-- /.nav-item -->
+                    @yield('navbar_menu')
+
                     <!-- /.nav-item -->
                     <li class="nav__item">
                         <a href="contact-us.html" class="nav__item-link">Contacts</a>
@@ -141,6 +108,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
+
             <!-- /.navbar-collapse -->
             <div class="d-none d-xl-flex align-items-center position-relative ml-30">
                 <a href="appointment.html" class="btn btn__primary btn__rounded">
@@ -162,7 +130,6 @@
                     @if (Route::has('login'))
                         <div>
                             @auth
-
                                 {{-- <a class="dropdown-item" href="">Xin Chao {{ Session::get('name') }} !</a> --}}
                                 <a class="dropdown-item" href="#">Xin Chao {{ Auth::user()->name }} !</a>
                                 <a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a>

@@ -59,7 +59,7 @@
                  <!-- Product Categories -->
                  <li class="nav-item has-treeview @yield('category_create_menu_open') @yield('category_list_menu_open')">
                      <a href="#" class="nav-link @yield('category_create_menu_active') @yield('category_list_menu_active')">
-                         <i class="nav-icon fas ion-ios-cart"></i>
+                         <i class="nav-icon fas ion-ios-keypad"></i>
                          <p>
                              Product Category
                              <i class="fas fa-angle-left right"></i>
@@ -134,6 +134,58 @@
                              <a href="{{ route('admin.products.create') }}" class="nav-link @yield('product_create_menu_active')">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Create Product</p>
+                             </a>
+                         </li>
+                     </ul>
+                 </li>
+
+                 <!-- Blog Category -->
+                 <li class="nav-item has-treeview @yield('blog_category_create_menu_open') @yield('blog_category_list_menu_open')">
+                     <a href="#" class="nav-link @yield('blog_category_create_menu_active') @yield('blog_category_list_menu_active')">
+                         <i class="nav-icon fas ion-ios-keypad"></i>
+                         <p>
+                             Blog Category
+                             <i class="fas fa-angle-left right"></i>
+                             {{-- <span class="badge badge-info right">6</span> --}}
+                         </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                         <li class="nav-item">
+                             <a href="{{ route('admin.blog_categories.index') }}" class="nav-link @yield('blog_category_list_menu_active')">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Category lists</p>
+                             </a>
+                         </li>
+                         <li class="nav-item ">
+                             <a href="{{ route('admin.blog_categories.create') }}" class="nav-link @yield('blog_category_create_menu_active')">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Create Category</p>
+                             </a>
+                         </li>
+                     </ul>
+                 </li>
+
+                 <!-- Blogs List -->
+                 <li class="nav-item has-treeview @yield('blog_create_menu_open') @yield('blog_list_menu_open')">
+                     <a href="#" class="nav-link @yield('blog_create_menu_active') @yield('blog_list_menu_active')">
+                         <i class="nav-icon fas ion-ios-book"></i>
+                         <p>
+                             Blogs
+                             <i class="fas fa-angle-left right"></i>
+                             {{-- <span class="badge badge-info right">6</span> --}}
+                         </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                         <li class="nav-item">
+                             <a href="{{ route('admin.blogs.index') }}" class="nav-link @yield('blog_list_menu_active')">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Blog lists</p>
+                             </a>
+                         </li>
+                         <li class="nav-item ">
+                             <a href="{{ route('admin.blogs.create') }}" class="nav-link @yield('blog_create_menu_active')">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Create blog</p>
                              </a>
                          </li>
                      </ul>
