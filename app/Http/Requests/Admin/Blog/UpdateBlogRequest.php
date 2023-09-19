@@ -23,9 +23,12 @@ class UpdateBlogRequest extends FormRequest
     {
         return [
             'title' => 'required|min:5|max:20|unique:blogs,title,' . $this->blog,
+            'blog_image' => 'image',
             'author' => 'required',
+            'author_image' => 'image',
             "slug" => "required",
             "content" => "required",
+            "short_description" => "required",
             "author_description" => "required",
             'status' => 'required',
             "blog_categories_id" => "required",

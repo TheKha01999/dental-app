@@ -61,11 +61,28 @@ class BlogController extends Controller
      */
     public function store(StoreBlogRequest $request)
     {
+
+        if ($request->hasFile('author_image')) {
+            $fileOrginialName = $request->file('author_image')->getClientOriginalName();
+            $fileAuthorName = pathinfo($fileOrginialName, PATHINFO_FILENAME);
+            $fileAuthorName .= '_' . time() . '.' . $request->file('author_image')->getClientOriginalExtension();
+            $request->file('author_image')->move(public_path('images'),  $fileAuthorName);
+        }
+        if ($request->hasFile('blog_image')) {
+            $fileOrginialName = $request->file('blog_image')->getClientOriginalName();
+            $fileBlogName = pathinfo($fileOrginialName, PATHINFO_FILENAME);
+            $fileBlogName .= '_' . time() . '.' . $request->file('blog_image')->getClientOriginalExtension();
+            $request->file('blog_image')->move(public_path('images'),  $fileBlogName);
+        }
+
         $check = DB::table('blogs')->insert([
             "author" => $request->author,
+            "author_image" => $fileAuthorName ?? null,
             "title" => $request->title,
+            "blog_image" => $fileBlogName ?? null,
             "slug" => $request->slug,
             "content" => $request->content,
+            "short_description" => $request->short_description,
             "author_description" => $request->author_description,
             "status" => $request->status,
             "blog_categories_id" => $request->blog_categories_id,
@@ -103,11 +120,41 @@ class BlogController extends Controller
      */
     public function update(UpdateBlogRequest $request, string $id)
     {
+        //Destroy image of dont use again old image in source file
+        $blog = DB::table('blogs')->find($id);
+        $oldBlogImage = $blog->blog_image;
+        $oldAuthorImage = $blog->author_image;
+
+        if ($request->hasFile('author_image')) {
+            $fileOrginialName = $request->file('author_image')->getClientOriginalName();
+            $fileAuthorName = pathinfo($fileOrginialName, PATHINFO_FILENAME);
+            $fileAuthorName .= '_' . time() . '.' . $request->file('author_image')->getClientOriginalExtension();
+            $request->file('author_image')->move(public_path('images'),  $fileAuthorName);
+
+            if (!is_null($oldAuthorImage) && file_exists('images/' . $oldAuthorImage)) {
+                unlink('images/' . $oldAuthorImage);
+            }
+        }
+        if ($request->hasFile('blog_image')) {
+            $fileOrginialName = $request->file('blog_image')->getClientOriginalName();
+            $fileBlogName = pathinfo($fileOrginialName, PATHINFO_FILENAME);
+            $fileBlogName .= '_' . time() . '.' . $request->file('blog_image')->getClientOriginalExtension();
+            $request->file('blog_image')->move(public_path('images'),  $fileBlogName);
+
+            if (!is_null($oldBlogImage) && file_exists('images/' . $oldBlogImage)) {
+                unlink('images/' . $oldBlogImage);
+            }
+        }
+
+
         $check = DB::table('blogs')->where('id', '=', $id)->update([
             "author" => $request->author,
+            "author_image" => $fileAuthorName ?? $oldAuthorImage,
             "title" => $request->title,
+            "blog_image" => $fileBlogName ?? $oldBlogImage,
             "slug" => $request->slug,
             "content" => $request->content,
+            "short_description" => $request->short_description,
             "author_description" => $request->author_description,
             "status" => $request->status,
             "blog_categories_id" => $request->blog_categories_id,
@@ -124,7 +171,19 @@ class BlogController extends Controller
      */
     public function destroy(string $id)
     {
+        //Destroy image in source file
+        $blog = DB::table('blogs')->find($id);
+        $blogImage = $blog->blog_image;
+        $authorImage = $blog->author_image;
 
+        if (!is_null($blogImage) && file_exists('images/' . $blogImage)) {
+            unlink('images/' . $blogImage);
+        }
+        if (!is_null($authorImage) && file_exists('images/' . $authorImage)) {
+            unlink('images/' . $authorImage);
+        }
+
+        //delete 
         $result = DB::table('blogs')->delete($id);
 
         $message = $result ? 'Deleted successfully' : 'Deleted failed';

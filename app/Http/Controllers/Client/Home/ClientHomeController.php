@@ -10,7 +10,7 @@ class ClientHomeController extends Controller
 {
     public function index()
     {
-        $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get('name');
+        $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
 
         return view('client.pages.Home.home', ['blogCategories' => $blogCategories]);
     }

@@ -66,8 +66,8 @@ Route::prefix('home')->name('home.')->group(function () {
     Route::get('product/{id}', [ClientProductsController::class, 'detail'])->name('product.detail');
 
     //Page Blog
-    Route::get('blog', [ClientBlogController::class, 'index'])->name('blog');
-    Route::get('blog/{id}', [ClientBlogController::class, 'detail'])->name('blog.detail');
+    Route::get('blog/{id}', [ClientBlogController::class, 'index'])->name('blog');
+    Route::get('blog/detail/{id}', [ClientBlogController::class, 'detail'])->name('blog.detail');
 });
 
 //Admin Management

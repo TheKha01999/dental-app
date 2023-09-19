@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ========================
-                                                                                                           page title
-                                                                                                        =========================== -->
+                                                                                                                                                                                                                                   page title
+                                                                                                                                                                                                                                =========================== -->
     <section class="page-title page-title-layout5 bg-overlay">
         <div class="bg-img"><img src="{{ asset('assets/client/images/page-titles/8.jpg') }}" alt="background"></div>
         <div class="container">
@@ -22,8 +22,8 @@
     </section><!-- /.page-title -->
 
     <!-- ======================
-                                                                                                            Blog Grid
-                                                                                                          ========================= -->
+                                                                                                                                                                                                                                    Blog Grid
+                                                                                                                                                                                                                                  ========================= -->
     <section class="blog-grid">
         <div class="container">
             <div class="row">
@@ -45,11 +45,19 @@
                                     <span class="post__meta-date">{{ $blog->created_at }}</span>
                                     <a class="post__meta-author" href="#">{{ $blog->author }}</a>
                                 </div>
-                                <h4 class="post__title"><a href="#">{{ $blog->title }}</a></h4>
-
-                                <p class="post__desc">{!! $blog->content !!}
+                                <h4 class="post__title"><a
+                                        href="{{ route('home.blog.detail', ['id' => $blog->id]) }}">{{ $blog->title }}</a>
+                                </h4>
+                                @php
+                                    $shortContent = $blog->short_description;
+                                    $shortContent = explode(' ', $shortContent);
+                                    $shortContent = array_splice($shortContent, 0, 15);
+                                    $shortContent = implode(' ', $shortContent);
+                                @endphp
+                                <p class="post__desc">{{ $shortContent }} ...
                                 </p>
-                                <a href="blog-single-post.html" class="btn btn__secondary btn__link btn__rounded">
+                                <a href="{{ route('home.blog.detail', ['id' => $blog->id]) }}"
+                                    class="btn btn__secondary btn__link btn__rounded">
                                     <span>Read More</span>
                                     <i class="icon-arrow-right"></i>
                                 </a>
@@ -84,7 +92,7 @@
         <ul class="dropdown-menu">
             @foreach ($blogCategories as $blogCategory)
                 <li class="nav__item">
-                    <a href="{{ route('home.blog.detail', ['id' => $blogCategory->id]) }}"
+                    <a href="{{ route('home.blog', ['id' => $blogCategory->id]) }}"
                         class="nav__item-link">{{ $blogCategory->name }}</a>
                 </li>
                 <!-- /.nav-item -->

@@ -51,6 +51,7 @@
                                             <th>ID</th>
                                             <th>Author</th>
                                             <th>Title</th>
+                                            <th>Stutus</th>
                                             <th>Blog Category</th>
                                             <th>Action</th>
                                         </tr>
@@ -61,9 +62,16 @@
                                                 <td>{{ $stt++ }}</td>
                                                 <td>{{ $blog->author }}</td>
                                                 <td>{{ $blog->title }}</td>
+                                                <td>
+                                                    <div
+                                                        class="{{ $blog->status === 1 ? 'btn btn-success' : 'btn btn-danger' }}">
+                                                        {{ $blog->status === 1 ? 'show' : 'hide' }}
+                                                    </div>
+                                                </td>
                                                 <td>{{ $blog->blog_category_name }}</td>
                                                 <td>
-                                                    <form action="{{ route('admin.blogs.destroy', ['blog' => $blog->id]) }}"
+                                                    <form
+                                                        action="{{ route('admin.blogs.destroy', ['blog' => $blog->id]) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('delete')

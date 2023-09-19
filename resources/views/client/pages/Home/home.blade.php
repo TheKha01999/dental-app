@@ -1062,11 +1062,12 @@
 
 @section('navbar_menu')
     <li class="nav__item has-dropdown">
-        <a href="{{ route('home.blog') }}" class="nav__item-link dropdown-toggle " data-toggle="dropdown">Blog</a>
+        <a href="#" class="nav__item-link dropdown-toggle " data-toggle="dropdown">Blog</a>
         <ul class="dropdown-menu">
             @foreach ($blogCategories as $blogCategory)
                 <li class="nav__item">
-                    <a href="departments.html" class="nav__item-link">{{ $blogCategory->name }}</a>
+                    <a href="{{ route('home.blog', ['id' => $blogCategory->id]) }}"
+                        class="nav__item-link">{{ $blogCategory->name }}</a>
                 </li>
                 <!-- /.nav-item -->
             @endforeach

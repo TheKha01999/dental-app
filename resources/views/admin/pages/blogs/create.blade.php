@@ -32,10 +32,33 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="author_image">Choose Author Image</label>
+                                        <input name="author_image" type="file" value="{{ old('author_image') }}"
+                                            class="form-control" id="author_image">
+                                        @error('author_image')
+                                            <div class="text-danger mt-2">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+
+
+                                    <div class="form-group">
                                         <label for="title">Title</label>
                                         <input name="title" type="text" value="{{ old('title') }}"
                                             class="form-control" id="title" placeholder="Enter title">
                                         @error('title')
+                                            <div class="text-danger mt-2">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="blog_image">Choose Blog Image</label>
+                                        <input name="blog_image" type="file" value="{{ old('blog_image') }}"
+                                            class="form-control" id="blog_image">
+                                        @error('blog_image')
                                             <div class="text-danger mt-2">
                                                 {{ $message }}
                                             </div>
@@ -58,6 +81,17 @@
                                         <textarea name="content" id="content" cols="30" rows="10" placeholder="Your blog content"
                                             class="form-control">{{ old('content') }}</textarea>
                                         @error('content')
+                                            <div class="text-danger mt-2">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="short_description">Short Description</label>
+                                        <textarea name="short_description" id="short_description" cols="30" rows="10" placeholder="short_description"
+                                            class="form-control">{{ old('short_description') }}</textarea>
+                                        @error('short_description')
                                             <div class="text-danger mt-2">
                                                 {{ $message }}
                                             </div>
@@ -91,8 +125,6 @@
                                             </div>
                                         @enderror
                                     </div>
-
-
 
                                     <div class="form-group">
                                         <label>Blog_Category</label>
