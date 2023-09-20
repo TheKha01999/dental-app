@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\Blog\BlogCategoryController;
 use App\Http\Controllers\Admin\Blog\BlogController;
+use App\Http\Controllers\Admin\Branch\BranchController;
 use App\Http\Controllers\Admin\ProductCategoriesController;
 use App\Http\Controllers\Admin\ProductsController;
 
@@ -64,6 +65,7 @@ Route::prefix('home')->name('home.')->group(function () {
     //Page Product
     Route::get('product', [ClientProductsController::class, 'index'])->name('product');
     Route::get('product/{id}', [ClientProductsController::class, 'detail'])->name('product.detail');
+    Route::get('product/single/{id}', [ClientProductsController::class, 'showSingle'])->name('product.single');
 
     //Page Blog
     Route::get('blog/{id}', [ClientBlogController::class, 'index'])->name('blog');
@@ -86,6 +88,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('blogs', BlogController::class);
     Route::post('blogs/slug', [BlogController::class, 'createSlug'])->name('blogs.create.slug');
     Route::post('blogs/ckeditor-upload-image', [BlogController::class, 'uploadImage'])->name('blogs.ckedit.upload.image');
+
+    //Branchs table
+    Route::resource('branchs', BranchController::class);
 });
 
 Route::get('admin', function () {

@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ========================
-                                                                                                                                                                                                                           page title
-                                                                                                                                                                                                                        =========================== -->
+                                                                                                                                                                                                                                       page title
+                                                                                                                                                                                                                                    =========================== -->
     <section class="page-title pt-30 pb-30 text-center">
         <div class="container">
             <div class="row align-items-center">
@@ -21,8 +21,8 @@
     </section><!-- /.page-title -->
 
     <!-- ======================
-                                                                                                                                                                                                                         Blog Single
-                                                                                                                                                                                                                          ========================= -->
+                                                                                                                                                                                                                                     Blog Single
+                                                                                                                                                                                                                                      ========================= -->
     <section class="blog blog-single pt-0 pb-80">
         {{-- {{ dd($blog->blog_image) }} --}}
         <div class="container">
@@ -181,7 +181,7 @@
                 </div><!-- /.col-lg-8 -->
 
                 <div class="col-sm-12 col-md-12 col-lg-4">
-                    <aside class="sidebar">
+                    <aside class="sidebar sticky-top">
                         <div class="widget widget-search">
                             <h5 class="widget__title">Search</h5>
                             <div class="widget__content">
@@ -198,7 +198,7 @@
                                 <ul class="list-unstyled mb-0">
                                     @foreach ($blogCategories as $blogCategory)
                                         <li><a href="{{ route('home.blog', ['id' => $blogCategory->id]) }}"><span
-                                                    class="cat-count">4</span><span>{{ $blogCategory->name }}</span></a>
+                                                    class="cat-count">{{ $blogCategory->totalPost }}</span><span>{{ $blogCategory->name }}</span></a>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -250,55 +250,4 @@
 
 @section('title')
     Blog
-@endsection
-
-
-@section('navbar_menu')
-    <li class="nav__item has-dropdown">
-        <a href="#" class="nav__item-link dropdown-toggle " data-toggle="dropdown">Blog</a>
-        <ul class="dropdown-menu">
-            @foreach ($blogCategories as $blogCategory)
-                <li class="nav__item">
-                    <a href="{{ route('home.blog', ['id' => $blogCategory->id]) }}"
-                        class="nav__item-link">{{ $blogCategory->name }}</a>
-                </li>
-                <!-- /.nav-item -->
-            @endforeach
-        </ul>
-        <!-- /.dropdown-menu -->
-    </li>
-@endsection
-
-@section('navbar_services')
-    <li class="nav__item has-dropdown">
-        <a data-toggle="dropdown" href="#" class="dropdown-toggle nav__item-link">Services
-        </a>
-        <ul class="dropdown-menu">
-            <li class="nav__item">
-                <a href="departments.html" class="nav__item-link">Orthodontic</a>
-            </li>
-            <!-- /.nav-item -->
-            <li class="nav__item">
-                <a href="departments-single.html" class="nav__item-link">Implant</a></a>
-            </li>
-            <!-- /.nav-item -->
-            <li class="nav__item">
-                <a href="departments-single.html" class="nav__item-link">Porcelain Crowns</a></a>
-            </li>
-            <!-- /.nav-item -->
-            <li class="nav__item">
-                <a href="departments-single.html" class="nav__item-link">Ceramic Veneer</a></a>
-            </li>
-            <!-- /.nav-item -->
-            <li class="nav__item">
-                <a href="departments-single.html" class="nav__item-link">Gummy Smile</a></a>
-            </li>
-            <!-- /.nav-item -->
-            <li class="nav__item">
-                <a href="departments-single.html" class="nav__item-link">Wisdom teeth</a></a>
-            </li>
-            <!-- /.nav-item -->
-        </ul>
-        <!-- /.dropdown-menu -->
-    </li>
 @endsection

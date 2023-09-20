@@ -13,5 +13,6 @@ class ClientHomeController extends Controller
         $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
 
         return view('client.pages.Home.home', ['blogCategories' => $blogCategories]);
+        // return view('client.pages.Home.home');
     }
 }

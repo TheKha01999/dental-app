@@ -9,11 +9,22 @@ use Illuminate\Support\Facades\DB;
 class ProductsController extends Controller
 {
     public $blogCategories;
+    public $productCategories;
 
     public function __construct()
     {
         $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
+
+        $productCategories = DB::table('products')
+            ->select(DB::raw('count(product_categories_id) as totalProduct'), 'product_categories.*')
+            ->where('products.status', '=', '1')
+            ->where('product_categories.status', '=', '1')
+            ->leftJoin('product_categories', 'products.product_categories_id', '=', 'product_categories.id')
+            ->groupBy('product_categories.id')
+            ->get();
+
         $this->blogCategories = $blogCategories;
+        $this->productCategories = $productCategories;
     }
     public function index()
     {
@@ -22,12 +33,12 @@ class ProductsController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $productCategories = DB::table('product_categories')->where('status', '=', '1')->get();
+        // $productCategories = DB::table('product_categories')->where('status', '=', '1')->get();
 
         return view(
             'client.pages.Product.list',
             [
-                'productCategories' => $productCategories,
+                'productCategories' => $this->productCategories,
                 'products' => $products,
                 'blogCategories' => $this->blogCategories
             ]
@@ -41,13 +52,32 @@ class ProductsController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $productCategories = DB::table('product_categories')->get();
+        // $productCategories = DB::table('product_categories')->get();
+
 
         return view(
             'client.pages.Product.list',
             [
-                'productCategories' => $productCategories,
+                'productCategories' => $this->productCategories,
                 'products' => $products,
+                'blogCategories' => $this->blogCategories
+            ]
+        );
+    }
+
+    public function showSingle($id)
+    {
+        $product = DB::table('products')
+            ->select('products.*', 'product_categories.name as product_category_name')
+            ->where('products.id', '=', $id)
+            ->leftJoin('product_categories', 'products.product_categories_id', '=', 'product_categories.id')
+            ->get()
+            ->first();
+        // dd($product);
+        return view(
+            'client.pages.Product.singleProduct',
+            [
+                'product' => $product,
                 'blogCategories' => $this->blogCategories
             ]
         );

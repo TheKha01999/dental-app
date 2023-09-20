@@ -1,8 +1,8 @@
 @extends('client.layout.master')
 @section('content')
     <!-- ========================
-                                                                                                                                                                               page title
-                                                                                                                                                                            =========================== -->
+                                                                                                                                                                                       page title
+                                                                                                                                                                                    =========================== -->
     <section class="page-title page-title-layout1 bg-overlay">
         <div class="bg-img"><img src="{{ asset('assets/client/images/page-titles/1.jpg') }}" alt="background"></div>
         <div class="container">
@@ -29,8 +29,8 @@
 
 
     <!-- ========================
-                                                                                                                                                                      About Layout 1
-                                                                                                                                                                    =========================== -->
+                                                                                                                                                                              About Layout 1
+                                                                                                                                                                            =========================== -->
     <section class="about-layout1 pb-0">
         <div class="container">
             <div class="row">
@@ -137,54 +137,4 @@
 
 @section('title')
     About
-@endsection
-
-@section('navbar_menu')
-    <li class="nav__item has-dropdown">
-        <a href="#" class="nav__item-link dropdown-toggle " data-toggle="dropdown">Blog</a>
-        <ul class="dropdown-menu">
-            @foreach ($blogCategories as $blogCategory)
-                <li class="nav__item">
-                    <a href="{{ route('home.blog', ['id' => $blogCategory->id]) }}"
-                        class="nav__item-link">{{ $blogCategory->name }}</a>
-                </li>
-                <!-- /.nav-item -->
-            @endforeach
-        </ul>
-        <!-- /.dropdown-menu -->
-    </li>
-@endsection
-
-@section('navbar_services')
-    <li class="nav__item has-dropdown">
-        <a data-toggle="dropdown" href="#" class="dropdown-toggle nav__item-link">Services
-        </a>
-        <ul class="dropdown-menu">
-            <li class="nav__item">
-                <a href="departments.html" class="nav__item-link">Orthodontic</a>
-            </li>
-            <!-- /.nav-item -->
-            <li class="nav__item">
-                <a href="departments-single.html" class="nav__item-link">Implant</a></a>
-            </li>
-            <!-- /.nav-item -->
-            <li class="nav__item">
-                <a href="departments-single.html" class="nav__item-link">Porcelain Crowns</a></a>
-            </li>
-            <!-- /.nav-item -->
-            <li class="nav__item">
-                <a href="departments-single.html" class="nav__item-link">Ceramic Veneer</a></a>
-            </li>
-            <!-- /.nav-item -->
-            <li class="nav__item">
-                <a href="departments-single.html" class="nav__item-link">Gummy Smile</a></a>
-            </li>
-            <!-- /.nav-item -->
-            <li class="nav__item">
-                <a href="departments-single.html" class="nav__item-link">Wisdom teeth</a></a>
-            </li>
-            <!-- /.nav-item -->
-        </ul>
-        <!-- /.dropdown-menu -->
-    </li>
 @endsection

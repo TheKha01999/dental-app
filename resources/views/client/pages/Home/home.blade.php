@@ -374,7 +374,7 @@
                         </div><!-- /.service__icon -->
                         <div class="service__content">
                             <h4 class="service__title">Neurology Clinic</h4>
-                            <p class="service__desc">Some neurologists receive subspecialty training focusing on a
+                            {{-- <p class="service__desc">Some neurologists receive subspecialty training focusing on a
                                 particular area
                                 of
                                 the fields, these training programs are called fellowships, and are one to two years.
@@ -383,7 +383,7 @@
                                 <li>Neurocritical Care</li>
                                 <li>Neuro Oncology</li>
                                 <li>Geriatric Neurology</li>
-                            </ul>
+                            </ul> --}}
                             <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
                                 <span>Read More</span>
                                 <i class="icon-arrow-right"></i>
@@ -399,15 +399,6 @@
                         </div><!-- /.service__icon -->
                         <div class="service__content">
                             <h4 class="service__title">Cardiology Clinic</h4>
-                            <p class="service__desc">All cardiologists study the disorders of the heart, but the study of
-                                adult and
-                                child heart disorders are trained to take care of small children and adult heart disease.
-                            </p>
-                            <ul class="list-items list-items-layout1 list-unstyled">
-                                <li>Neurocritical Care</li>
-                                <li>Neuro Oncology</li>
-                                <li>Geriatric Neurology</li>
-                            </ul>
                             <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
                                 <span>Read More</span>
                                 <i class="icon-arrow-right"></i>
@@ -423,16 +414,6 @@
                         </div><!-- /.service__icon -->
                         <div class="service__content">
                             <h4 class="service__title">Pathology Clinic</h4>
-                            <p class="service__desc">Pathology is the study of disease, it is the bridge between science
-                                and
-                                medicine.
-                                Also it underpins every aspect of patient care, from diagnostic testing and treatment.
-                            </p>
-                            <ul class="list-items list-items-layout1 list-unstyled">
-                                <li>Surgical Pathology</li>
-                                <li>Histopathology</li>
-                                <li>Cytopathology </li>
-                            </ul>
                             <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
                                 <span>Read More</span>
                                 <i class="icon-arrow-right"></i>
@@ -448,16 +429,6 @@
                         </div><!-- /.service__icon -->
                         <div class="service__content">
                             <h4 class="service__title">Laboratory Analysis</h4>
-                            <p class="service__desc">Analyzing the radon or radon progeny concentrations with passive
-                                devices, or
-                                the
-                                act of calibrating radon or radon progeny measurement devices.
-                            </p>
-                            <ul class="list-items list-items-layout1 list-unstyled">
-                                <li>Newborn Care</li>
-                                <li>Umbilical Cord Appearance </li>
-                                <li>Repositioning Techniques</li>
-                            </ul>
                             <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
                                 <span>Read More</span>
                                 <i class="icon-arrow-right"></i>
@@ -473,15 +444,6 @@
                         </div><!-- /.service__icon -->
                         <div class="service__content">
                             <h4 class="service__title">Pediatric Clinic</h4>
-                            <p class="service__desc">Pediatric providers see patients from birth into early adulthood to
-                                make sure
-                                children achieve stay healthy. Our care includes preventive health checkups.
-                            </p>
-                            <ul class="list-items list-items-layout1 list-unstyled">
-                                <li>Clinical laboratory</li>
-                                <li>Research Analyst</li>
-                                <li>Quality Assurance</li>
-                            </ul>
                             <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
                                 <span>Read More</span>
                                 <i class="icon-arrow-right"></i>
@@ -498,15 +460,6 @@
                         </div><!-- /.service__icon -->
                         <div class="service__content">
                             <h4 class="service__title">Cardiac Clinic</h4>
-                            <p class="service__desc">For people requiring additional follow up, the Cardiac Clinic provides
-                                rapid
-                                access to professionals specialized in diagnosing and treating heart disease.
-                            </p>
-                            <ul class="list-items list-items-layout1 list-unstyled">
-                                <li>Macular degeneration</li>
-                                <li>Diabetic retinopathy</li>
-                                <li>Excessive tearing</li>
-                            </ul>
                             <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
                                 <span>Read More</span>
                                 <i class="icon-arrow-right"></i>
@@ -1058,54 +1011,4 @@
         <!-- /.container -->
     </section>
     <!-- /.gallery 2 -->
-@endsection
-
-@section('navbar_menu')
-    <li class="nav__item has-dropdown">
-        <a href="#" class="nav__item-link dropdown-toggle " data-toggle="dropdown">Blog</a>
-        <ul class="dropdown-menu">
-            @foreach ($blogCategories as $blogCategory)
-                <li class="nav__item">
-                    <a href="{{ route('home.blog', ['id' => $blogCategory->id]) }}"
-                        class="nav__item-link">{{ $blogCategory->name }}</a>
-                </li>
-                <!-- /.nav-item -->
-            @endforeach
-        </ul>
-        <!-- /.dropdown-menu -->
-    </li>
-@endsection
-
-@section('navbar_services')
-    <li class="nav__item has-dropdown">
-        <a data-toggle="dropdown" href="#" class="dropdown-toggle nav__item-link">Services
-        </a>
-        <ul class="dropdown-menu">
-            <li class="nav__item">
-                <a href="departments.html" class="nav__item-link">Orthodontic</a>
-            </li>
-            <!-- /.nav-item -->
-            <li class="nav__item">
-                <a href="departments-single.html" class="nav__item-link">Implant</a></a>
-            </li>
-            <!-- /.nav-item -->
-            <li class="nav__item">
-                <a href="departments-single.html" class="nav__item-link">Porcelain Crowns</a></a>
-            </li>
-            <!-- /.nav-item -->
-            <li class="nav__item">
-                <a href="departments-single.html" class="nav__item-link">Ceramic Veneer</a></a>
-            </li>
-            <!-- /.nav-item -->
-            <li class="nav__item">
-                <a href="departments-single.html" class="nav__item-link">Gummy Smile</a></a>
-            </li>
-            <!-- /.nav-item -->
-            <li class="nav__item">
-                <a href="departments-single.html" class="nav__item-link">Wisdom teeth</a></a>
-            </li>
-            <!-- /.nav-item -->
-        </ul>
-        <!-- /.dropdown-menu -->
-    </li>
 @endsection

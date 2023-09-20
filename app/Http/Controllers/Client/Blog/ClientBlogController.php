@@ -14,12 +14,14 @@ class ClientBlogController extends Controller
 
     public function __construct()
     {
-        $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
-        // $blogCategories = DB::table('blog_categories')
-        //     ->select('blog_categories.*', 'blogs.count(blog_categories_id) as totalPost')
-        //     ->where('blog_categories.status', '=', '1')
-        //     ->leftJoin('blogs', 'blog_categories.id', '=', 'blogs.blog_categories_id')
-        //     ->get();
+        // $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
+        $blogCategories = DB::table('blogs')
+            ->select(DB::raw('count(blog_categories_id) as totalPost'), 'blog_categories.*')
+            ->where('blogs.status', '=', '1')
+            ->where('blog_categories.status', '=', '1')
+            ->leftJoin('blog_categories', 'blogs.blog_categories_id', '=', 'blog_categories.id')
+            ->groupBy('blog_categories.name')
+            ->get();
 
         $this->blogCategories = $blogCategories;
     }
@@ -37,7 +39,7 @@ class ClientBlogController extends Controller
             'client.pages.Blog.blog',
             [
                 'blogCategories' => $this->blogCategories,
-                'blogs' => $blogs
+                'blogs' => $blogs,
             ]
         );
     }
@@ -60,7 +62,7 @@ class ClientBlogController extends Controller
             [
                 'blogCategories' => $this->blogCategories,
                 'blog' => $blog,
-                'recentPosts' => $recentPosts
+                'recentPosts' => $recentPosts,
             ]
         );
     }

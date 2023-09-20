@@ -87,7 +87,37 @@
                         <!-- /.dropdown-menu -->
                     </li>
                     <!-- /.nav-item -->
-                    @yield('navbar_services')
+                    <li class="nav__item has-dropdown">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle nav__item-link">Services
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="nav__item">
+                                <a href="departments.html" class="nav__item-link">Orthodontic</a>
+                            </li>
+                            <!-- /.nav-item -->
+                            <li class="nav__item">
+                                <a href="departments-single.html" class="nav__item-link">Implant</a></a>
+                            </li>
+                            <!-- /.nav-item -->
+                            <li class="nav__item">
+                                <a href="departments-single.html" class="nav__item-link">Porcelain Crowns</a></a>
+                            </li>
+                            <!-- /.nav-item -->
+                            <li class="nav__item">
+                                <a href="departments-single.html" class="nav__item-link">Ceramic Veneer</a></a>
+                            </li>
+                            <!-- /.nav-item -->
+                            <li class="nav__item">
+                                <a href="departments-single.html" class="nav__item-link">Gummy Smile</a></a>
+                            </li>
+                            <!-- /.nav-item -->
+                            <li class="nav__item">
+                                <a href="departments-single.html" class="nav__item-link">Wisdom teeth</a></a>
+                            </li>
+                            <!-- /.nav-item -->
+                        </ul>
+                        <!-- /.dropdown-menu -->
+                    </li>
 
                     <!-- /.nav-item -->
                     <li class="nav__item ">
@@ -95,7 +125,19 @@
                     </li>
 
                     <!-- /.nav-item -->
-                    @yield('navbar_menu')
+                    <li class="nav__item has-dropdown">
+                        <a href="#" class="nav__item-link dropdown-toggle " data-toggle="dropdown">Blog</a>
+                        <ul class="dropdown-menu">
+                            @foreach ($blogCategories as $blogCategory)
+                                <li class="nav__item">
+                                    <a href="{{ route('home.blog', ['id' => $blogCategory->id]) }}"
+                                        class="nav__item-link">{{ $blogCategory->name }}</a>
+                                </li>
+                                <!-- /.nav-item -->
+                            @endforeach
+                        </ul>
+                        <!-- /.dropdown-menu -->
+                    </li>
 
                     <!-- /.nav-item -->
                     <li class="nav__item">

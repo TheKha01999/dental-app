@@ -23,7 +23,7 @@ class ProductsController extends Controller
         $sort = $sortBy  === 'oldest' ? 'asc' : 'desc';
 
         // Index
-        $itemPerPage = 3;
+        $itemPerPage = config('my-config.item-per-pages');
         $page = $request->page ?? 1;
         $stt = ($page *  $itemPerPage) - ($itemPerPage - 1);
 
@@ -151,7 +151,6 @@ class ProductsController extends Controller
      */
     public function destroy(string $id)
     {
-
         $product = DB::table('products')->find($id);
         $image = $product->image;
 
