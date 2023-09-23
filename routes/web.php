@@ -3,9 +3,11 @@
 use App\Http\Controllers\Admin\Blog\BlogCategoryController;
 use App\Http\Controllers\Admin\Blog\BlogController;
 use App\Http\Controllers\Admin\Branch\BranchController;
+use App\Http\Controllers\Admin\Doctor\DoctorController;
 use App\Http\Controllers\Admin\ProductCategoriesController;
 use App\Http\Controllers\Admin\ProductsController;
-
+use App\Http\Controllers\Admin\Services\ServiceCategoryController;
+use App\Http\Controllers\Admin\Services\ServiceController;
 use App\Http\Controllers\Client\About\ClientAboutController;
 use App\Http\Controllers\Client\Blog\ClientBlogController;
 use App\Http\Controllers\Client\Doctor\ClientDoctorController;
@@ -91,6 +93,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     //Branchs table
     Route::resource('branchs', BranchController::class);
+
+    //Service_categories table
+    Route::resource('service_categories', ServiceCategoryController::class);
+
+    //Services table
+    Route::resource('services', ServiceController::class);
+    Route::post('services/slug', [ServiceController::class, 'createSlug'])->name('services.create.slug');
+    Route::post('services/ckeditor-upload-image', [ServiceController::class, 'uploadImage'])->name('services.ckedit.upload.image');
+
+    //Doctors table
+    Route::resource('doctors', DoctorController::class);
 });
 
 Route::get('admin', function () {

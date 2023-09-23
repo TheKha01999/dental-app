@@ -12,7 +12,7 @@
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Create New Product</h3>
+                                <h3 class="card-title">Update Product Info</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->

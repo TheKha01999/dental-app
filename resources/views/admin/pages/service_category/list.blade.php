@@ -4,11 +4,13 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
+        {{-- session flash f5 trangg web tu mat, thong bao them thanh cong categoris list --}}
         @if (session('message'))
             <section class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-12 alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert">X</button>
                             {{ session('message') }}
                         </div>
                     </div>
@@ -22,8 +24,9 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h3 class="card-title mr-3">Blogs List</h3>
-                                <form class="form-inline ml-3" action="{{ route('admin.blogs.index') }}" method="get">
+                                <h3 class="card-title mr-3">Service Categories</h3>
+                                <form class="form-inline ml-3" action="{{ route('admin.service_categories.index') }}"
+                                    method="get">
                                     <div class="input-group input-group-sm">
                                         <input class="form-control" type="text" name='keyword' placeholder="Search"
                                             aria-label="Search" value="{{ $keyword }}">
@@ -49,36 +52,33 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Author</th>
-                                            <th>Title</th>
+                                            <th>Name</th>
                                             <th>Status</th>
-                                            <th>Blog Category</th>
-                                            <th>Action</th>
+                                            <th>Created_at</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse ($blogs as $blog)
+                                        @forelse ($serviceCategories as $serviceCategory)
                                             <tr>
                                                 <td>{{ $stt++ }}</td>
-                                                <td>{{ $blog->author }}</td>
-                                                <td>{{ $blog->title }}</td>
+                                                <td>{{ $serviceCategory->name }}</td>
                                                 <td>
                                                     <div
-                                                        class="{{ $blog->status === 1 ? 'btn btn-success' : 'btn btn-danger' }}">
-                                                        {{ $blog->status === 1 ? 'show' : 'hide' }}
+                                                        class="{{ $serviceCategory->status === 1 ? 'btn btn-success' : 'btn btn-danger' }}">
+                                                        {{ $serviceCategory->status === 1 ? 'show' : 'hide' }}
                                                     </div>
                                                 </td>
-                                                <td>{{ $blog->blog_category_name }}</td>
+                                                <td>{{ $serviceCategory->created_at }}</td>
                                                 <td>
-                                                    <form
-                                                        action="{{ route('admin.blogs.destroy', ['blog' => $blog->id]) }}"
+                                                    <form class="d-inline"
+                                                        action="{{ route('admin.service_categories.destroy', ['service_category' => $serviceCategory->id]) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <button onclick="return confirm('Are u sure !')" type="submit"
                                                             name="submit" class="btn btn-danger">Delete</button>
                                                     </form>
-                                                    <a href="{{ route('admin.blogs.show', ['blog' => $blog->id]) }}"
+                                                    <a href="{{ route('admin.service_categories.show', ['service_category' => $serviceCategory->id]) }}"
                                                         class="btn btn-primary">Detail</a>
                                                 </td>
                                             </tr>
@@ -92,7 +92,7 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer clearfix">
-                                {{ $blogs->links('pagination::bootstrap-5') }}
+                                {{ $serviceCategories->links('pagination::bootstrap-5') }}
                             </div>
                         </div>
                         <!-- /.card -->
@@ -106,9 +106,9 @@
     </div>
     <!-- /.content-wrapper -->
 @endsection
-@section('blog_list_menu_open')
+@section('service_category_list_menu_open')
     menu-open
 @endsection
-@section('blog_list_menu_active')
+@section('service_category_list_menu_active')
     active
 @endsection

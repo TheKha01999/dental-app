@@ -167,6 +167,76 @@
                      </ul>
                  </li>
 
+                 <!-- Service -->
+                 <li
+                     class="nav-item has-treeview @yield('service_category_create_menu_open') @yield('service_category_list_menu_open') 
+                  @yield('service_create_menu_open') @yield('service_list_menu_open')">
+                     <a href="#"
+                         class="nav-link @yield('service_create_menu_active') @yield('service_list_menu_active') 
+                      @yield('service_category_create_menu_active') @yield('service_category_list_menu_active')">
+                         <i class="nav-icon fas ion-fork-repo"></i>
+                         <p>
+                             Service
+                             <i class="fas fa-angle-left right"></i>
+                             {{-- <span class="badge badge-info right">6</span> --}}
+                         </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                         <li class="nav-item">
+                             <a href="{{ route('admin.service_categories.index') }}"
+                                 class="nav-link @yield('service_category_list_menu_active')">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Category lists</p>
+                             </a>
+                         </li>
+                         <li class="nav-item ">
+                             <a href="{{ route('admin.service_categories.create') }}"
+                                 class="nav-link @yield('service_category_create_menu_active')">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Create Category</p>
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a href="{{ route('admin.services.index') }}" class="nav-link @yield('service_list_menu_active')">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Service lists</p>
+                             </a>
+                         </li>
+                         <li class="nav-item ">
+                             <a href="{{ route('admin.services.create') }}" class="nav-link @yield('service_create_menu_active')">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Create Service</p>
+                             </a>
+                         </li>
+                     </ul>
+                 </li>
+
+                 <!-- Doctors -->
+                 <li class="nav-item has-treeview @yield('doctor_create_menu_open') @yield('doctor_list_menu_open')">
+                     <a href="#" class="nav-link @yield('doctor_create_menu_active') @yield('doctor_list_menu_active')">
+                         <i class="nav-icon fas ion-ios-location"></i>
+                         <p>
+                             Doctors
+                             <i class="fas fa-angle-left right"></i>
+                             {{-- <span class="badge badge-info right">6</span> --}}
+                         </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                         <li class="nav-item">
+                             <a href="{{ route('admin.doctors.index') }}" class="nav-link @yield('doctor_list_menu_active')">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Doctor lists</p>
+                             </a>
+                         </li>
+                         <li class="nav-item ">
+                             <a href="{{ route('admin.doctors.create') }}" class="nav-link @yield('doctor_create_menu_active')">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Create Doctor</p>
+                             </a>
+                         </li>
+                     </ul>
+                 </li>
+
              </ul>
          </nav>
          <!-- /.sidebar-menu -->

@@ -9,6 +9,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-12 alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert">X</button>
                             {{ session('message') }}
                         </div>
                     </div>
@@ -22,8 +23,8 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h3 class="card-title mr-3">Blogs List</h3>
-                                <form class="form-inline ml-3" action="{{ route('admin.blogs.index') }}" method="get">
+                                <h3 class="card-title mr-3">Service List</h3>
+                                <form class="form-inline ml-3" action="{{ route('admin.services.index') }}" method="get">
                                     <div class="input-group input-group-sm">
                                         <input class="form-control" type="text" name='keyword' placeholder="Search"
                                             aria-label="Search" value="{{ $keyword }}">
@@ -49,36 +50,34 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Author</th>
                                             <th>Title</th>
                                             <th>Status</th>
-                                            <th>Blog Category</th>
+                                            <th>Service Category</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse ($blogs as $blog)
+                                        @forelse ($services as $service)
                                             <tr>
                                                 <td>{{ $stt++ }}</td>
-                                                <td>{{ $blog->author }}</td>
-                                                <td>{{ $blog->title }}</td>
+                                                <td>{{ $service->title }}</td>
                                                 <td>
                                                     <div
-                                                        class="{{ $blog->status === 1 ? 'btn btn-success' : 'btn btn-danger' }}">
-                                                        {{ $blog->status === 1 ? 'show' : 'hide' }}
+                                                        class="{{ $service->status === 1 ? 'btn btn-success' : 'btn btn-danger' }}">
+                                                        {{ $service->status === 1 ? 'show' : 'hide' }}
                                                     </div>
                                                 </td>
-                                                <td>{{ $blog->blog_category_name }}</td>
+                                                <td>{{ $service->service_category_name }}</td>
                                                 <td>
                                                     <form
-                                                        action="{{ route('admin.blogs.destroy', ['blog' => $blog->id]) }}"
+                                                        action="{{ route('admin.services.destroy', ['service' => $service->id]) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <button onclick="return confirm('Are u sure !')" type="submit"
                                                             name="submit" class="btn btn-danger">Delete</button>
                                                     </form>
-                                                    <a href="{{ route('admin.blogs.show', ['blog' => $blog->id]) }}"
+                                                    <a href="{{ route('admin.services.show', ['service' => $service->id]) }}"
                                                         class="btn btn-primary">Detail</a>
                                                 </td>
                                             </tr>
@@ -92,7 +91,7 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer clearfix">
-                                {{ $blogs->links('pagination::bootstrap-5') }}
+                                {{ $services->links('pagination::bootstrap-5') }}
                             </div>
                         </div>
                         <!-- /.card -->
@@ -106,9 +105,9 @@
     </div>
     <!-- /.content-wrapper -->
 @endsection
-@section('blog_list_menu_open')
+@section('service_list_menu_open')
     menu-open
 @endsection
-@section('blog_list_menu_active')
+@section('service_list_menu_active')
     active
 @endsection
