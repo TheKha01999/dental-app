@@ -214,7 +214,7 @@
                  <!-- Doctors -->
                  <li class="nav-item has-treeview @yield('doctor_create_menu_open') @yield('doctor_list_menu_open')">
                      <a href="#" class="nav-link @yield('doctor_create_menu_active') @yield('doctor_list_menu_active')">
-                         <i class="nav-icon fas ion-ios-location"></i>
+                         <i class="nav-icon fas ion-android-people"></i>
                          <p>
                              Doctors
                              <i class="fas fa-angle-left right"></i>

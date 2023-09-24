@@ -3,16 +3,47 @@
 namespace App\Http\Controllers\Admin\Doctor;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Doctor\CreateDoctorRequest;
+use App\Http\Requests\Admin\Doctor\UpdateDoctorRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DoctorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        //SEARCH
+        $keyword = $request->keyword;
+        $sortBy = $request->sortBy ?? '';
+        $sort = $sortBy  === 'oldest' ? 'asc' : 'desc';
+
+        // Index
+        $itemPerPage = config('my-config.item-per-pages');
+        $page = $request->page ?? 1;
+        $stt = ($page *  $itemPerPage) - ($itemPerPage - 1);
+
+        //Query Builder
+        $doctors = DB::table('doctors')
+            ->select('doctors.*', 'service_categories.name as service_category_name', 'branchs.name as branch_name')
+            ->where('doctors.name', 'like', '%' . $keyword . '%')
+            ->join('service_categories', 'doctors.service_categories_id', '=', 'service_categories.id')
+            ->join('branchs', 'doctors.branch_id', '=', 'branchs.id')
+            ->orderBy('created_at', $sort)
+            ->paginate($itemPerPage);
+
+        return view(
+            'admin.pages.doctors.list',
+            [
+                'doctors' => $doctors,
+                'sortBy' => $sortBy,
+                'keyword' => $keyword,
+                'stt' => $stt
+            ]
+        );
     }
 
     /**
@@ -20,15 +51,41 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        //
+        $serviceCategories = DB::table('service_categories')->where('status', '=', '1')->get();
+        $branchs = DB::table('branchs')->where('status', '=', '1')->get();
+
+        return view('admin.pages.doctors.create', ['serviceCategories' => $serviceCategories, 'branchs' => $branchs]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateDoctorRequest $request)
     {
-        //
+        if ($request->hasFile('image')) {
+            $fileOrginialName = $request->file('image')->getClientOriginalName();
+            $fileName = pathinfo($fileOrginialName, PATHINFO_FILENAME);
+            $fileName .= '_' . time() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path('images'),  $fileName);
+        }
+
+
+        $check = DB::table('doctors')->insert([
+            "name" => $request->name,
+            "description" => $request->description,
+            "biography" => $request->biography,
+            "status" => $request->status,
+            "service_categories_id" => $request->service_categories_id,
+            "branch_id" => $request->branch_id,
+            "image" => $fileName ?? null,
+            "created_at" => Carbon::now(),
+            "updated_at" => Carbon::now()
+        ]);
+
+        $message = $check ? 'Created successfully' : 'Created failed';
+        // dd($message);
+        //session flash
+        return redirect()->route('admin.doctors.index')->with('message', $message);
     }
 
     /**
@@ -36,7 +93,18 @@ class DoctorController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $doctor = DB::table('doctors')->find($id);
+        $serviceCategories = DB::table('service_categories')->where('status', '=', 1)->get();
+        $branchs = DB::table('branchs')->where('status', '=', 1)->get();
+        // dd($productCategories);
+        return view(
+            'admin.pages.doctors.detail',
+            [
+                'doctor' => $doctor,
+                'serviceCategories' => $serviceCategories,
+                'branchs' => $branchs
+            ]
+        );
     }
 
     /**
@@ -50,9 +118,38 @@ class DoctorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateDoctorRequest $request, string $id)
     {
-        //
+        //Destroy image of dont use again old image in source file
+        $doctor = DB::table('doctors')->find($id);
+        $oldImage = $doctor->image;
+
+
+        if ($request->hasFile('image')) {
+            $fileOrginialName = $request->file('image')->getClientOriginalName();
+            $fileName = pathinfo($fileOrginialName, PATHINFO_FILENAME);
+            $fileName .= '_' . time() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path('images'),  $fileName);
+
+            if (!is_null($oldImage) && file_exists('images/' . $oldImage)) {
+                unlink('images/' . $oldImage);
+            }
+        }
+
+        $check = DB::table('doctors')->where('id', '=', $id)->update([
+            "name" => $request->name,
+            "description" => $request->description,
+            "biography" => $request->biography,
+            "status" => $request->status,
+            "service_categories_id" => $request->service_categories_id,
+            "branch_id" => $request->branch_id,
+            "image" => $fileName ?? $oldImage,
+            "updated_at" => Carbon::now()
+        ]);
+
+        $message = $check ? 'Updated successfully' : 'Updated failed';
+        //session flash
+        return redirect()->route('admin.doctors.index')->with('message', $message);
     }
 
     /**
@@ -60,6 +157,32 @@ class DoctorController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        //Destroy image in source file
+        $doctor = DB::table('doctors')->find($id);
+        $doctorImage = $doctor->image;
+
+
+        if (!is_null($doctorImage) && file_exists('images/' . $doctorImage)) {
+            unlink('images/' . $doctorImage);
+        }
+
+        //delete 
+        $result = DB::table('doctors')->delete($id);
+
+        $message = $result ? 'Deleted successfully' : 'Deleted failed';
+        //session flash
+        return redirect()->route('admin.doctors.index')->with('message', $message);
+    }
+    public function uploadImage(Request $request)
+    {
+        if ($request->hasFile('upload')) {
+            $fileOrginialName = $request->file('upload')->getClientOriginalName();
+            $fileName = pathinfo($fileOrginialName, PATHINFO_FILENAME);
+            $fileName .= '_' . time() . '.' . $request->file('upload')->getClientOriginalExtension();
+            $request->file('upload')->move(public_path('images'),  $fileName);
+
+            $url = asset('images/' . $fileName);
+            return response()->json(['fileName' => $fileName, 'uploaded' => 1, 'url' => $url]);
+        }
     }
 }

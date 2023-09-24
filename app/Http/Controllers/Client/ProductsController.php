@@ -8,13 +8,21 @@ use Illuminate\Support\Facades\DB;
 
 class ProductsController extends Controller
 {
+    //Navbar
     public $blogCategories;
+    public $serviceCategories;
+    ///////////////
     public $productCategories;
 
     public function __construct()
     {
+        //Navbar
         $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
+        $serviceCategories = DB::table('service_categories')->where('status', '=', '1')->get();
 
+        $this->blogCategories = $blogCategories;
+        $this->serviceCategories = $serviceCategories;
+        ///////////////////
         $productCategories = DB::table('products')
             ->select(DB::raw('count(product_categories_id) as totalProduct'), 'product_categories.*')
             ->where('products.status', '=', '1')
@@ -22,8 +30,6 @@ class ProductsController extends Controller
             ->leftJoin('product_categories', 'products.product_categories_id', '=', 'product_categories.id')
             ->groupBy('product_categories.id')
             ->get();
-
-        $this->blogCategories = $blogCategories;
         $this->productCategories = $productCategories;
     }
     public function index()
@@ -40,7 +46,8 @@ class ProductsController extends Controller
             [
                 'productCategories' => $this->productCategories,
                 'products' => $products,
-                'blogCategories' => $this->blogCategories
+                'blogCategories' => $this->blogCategories,
+                'serviceCategories' => $this->serviceCategories
             ]
         );
     }
@@ -60,7 +67,8 @@ class ProductsController extends Controller
             [
                 'productCategories' => $this->productCategories,
                 'products' => $products,
-                'blogCategories' => $this->blogCategories
+                'blogCategories' => $this->blogCategories,
+                'serviceCategories' => $this->serviceCategories
             ]
         );
     }
@@ -78,7 +86,8 @@ class ProductsController extends Controller
             'client.pages.Product.singleProduct',
             [
                 'product' => $product,
-                'blogCategories' => $this->blogCategories
+                'blogCategories' => $this->blogCategories,
+                'serviceCategories' => $this->serviceCategories
             ]
         );
     }

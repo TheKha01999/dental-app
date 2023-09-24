@@ -5,16 +5,10 @@
     <div class="content-wrapper" style="background:#fff">
         <!-- Content Header (Page header) -->
         @if (session('message'))
-            <section class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-12 alert alert-success">
-                            <button type="button" class="close" data-dismiss="alert">X</button>
-                            {{ session('message') }}
-                        </div>
-                    </div>
-                </div><!-- /.container-fluid -->
-            </section>
+            <div class="col-sm-12 alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">X</button>
+                {{ session('message') }}
+            </div>
         @endif
         <!-- Main content -->
         <section class="content mt-2" style="background:#fff">

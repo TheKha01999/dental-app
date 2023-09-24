@@ -56,13 +56,14 @@ Route::prefix('home')->name('home.')->group(function () {
     Route::get('about', [ClientAboutController::class, 'index'])->name('about');
 
     //Page Doctor
-    Route::get('doctors', [ClientDoctorController::class, 'index'])->name('doctors');
+    Route::get('doctors', [ClientDoctorController::class, 'showAllDoctor'])->name('allDoctors');
+    Route::get('doctors/detail/{id}', [ClientDoctorController::class, 'showSingleDoctor'])->name('singleDoctor');
 
     //Pgae Faqs
     Route::get('faqs', [ClientFaqsController::class, 'index'])->name('faqs');
 
     //Page Services
-    Route::get('services', [ClientServicesController::class, 'index'])->name('services');
+    Route::get('services/{id}', [ClientServicesController::class, 'showServicePost'])->name('services');
 
     //Page Product
     Route::get('product', [ClientProductsController::class, 'index'])->name('product');
@@ -104,6 +105,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     //Doctors table
     Route::resource('doctors', DoctorController::class);
+    Route::post('doctors/ckeditor-upload-image', [DoctorController::class, 'uploadImage'])->name('doctors.ckedit.upload.image');
 });
 
 Route::get('admin', function () {

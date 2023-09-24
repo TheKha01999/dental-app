@@ -11,7 +11,7 @@ class UpdateDoctorRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class UpdateDoctorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|min:5|max:50|',
+            "description" => "required",
+            "biography" => "required",
+            'status' => 'required',
+            "service_categories_id" => "required",
+            "branch_id" => "required",
+            'image' => 'image',
         ];
     }
 }

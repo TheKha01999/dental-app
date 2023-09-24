@@ -26,7 +26,7 @@
                                     best practices for cleanliness.
                                 </p>
                                 <div class="d-flex flex-wrap align-items-center">
-                                    <a href="services.html" class="btn btn__secondary btn__rounded mr-30">
+                                    <a href="#our_service" class="btn btn__secondary btn__rounded mr-30">
                                         <span>Our Services</span>
                                         <i class="icon-arrow-right"></i>
                                     </a>
@@ -354,7 +354,7 @@
     </section>
     <!-- /.Features Layout 1 -->
 
-    <section class="services-layout1 pt-130">
+    <section id="our_service" class="services-layout1 pt-130">
         <div class="bg-img"><img src="{{ asset('assets/client/images/backgrounds/2.jpg') }}" alt="background"></div>
         <div class="container">
             <div class="row">

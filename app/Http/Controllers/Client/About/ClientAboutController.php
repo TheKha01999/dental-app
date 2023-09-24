@@ -10,7 +10,17 @@ class ClientAboutController extends Controller
 {
     public function index()
     {
+        /////Navbar
         $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
-        return view('client.pages.About.about', ['blogCategories' => $blogCategories]);
+        $serviceCategories = DB::table('service_categories')->where('status', '=', '1')->get();
+        ///////////
+
+        return view(
+            'client.pages.About.about',
+            [
+                'blogCategories' => $blogCategories,
+                'serviceCategories' => $serviceCategories,
+            ]
+        );
     }
 }

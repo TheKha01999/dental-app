@@ -76,7 +76,7 @@
                             </li>
                             <!-- /.nav-item -->
                             <li class="nav__item">
-                                <a href="{{ route('home.doctors') }}" class="nav__item-link">Doctors</a>
+                                <a href="{{ route('home.allDoctors') }}" class="nav__item-link">Doctors</a>
                             </li>
                             <!-- /.nav-item -->
                             <li class="nav__item">
@@ -91,30 +91,13 @@
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle nav__item-link">Services
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="nav__item">
-                                <a href="departments.html" class="nav__item-link">Orthodontic</a>
-                            </li>
-                            <!-- /.nav-item -->
-                            <li class="nav__item">
-                                <a href="departments-single.html" class="nav__item-link">Implant</a></a>
-                            </li>
-                            <!-- /.nav-item -->
-                            <li class="nav__item">
-                                <a href="departments-single.html" class="nav__item-link">Porcelain Crowns</a></a>
-                            </li>
-                            <!-- /.nav-item -->
-                            <li class="nav__item">
-                                <a href="departments-single.html" class="nav__item-link">Ceramic Veneer</a></a>
-                            </li>
-                            <!-- /.nav-item -->
-                            <li class="nav__item">
-                                <a href="departments-single.html" class="nav__item-link">Gummy Smile</a></a>
-                            </li>
-                            <!-- /.nav-item -->
-                            <li class="nav__item">
-                                <a href="departments-single.html" class="nav__item-link">Wisdom teeth</a></a>
-                            </li>
-                            <!-- /.nav-item -->
+                            @foreach ($serviceCategories as $serviceCategory)
+                                <li class="nav__item">
+                                    <a href="{{ route('home.services', ['id' => $serviceCategory->id]) }}"
+                                        class="nav__item-link">{{ $serviceCategory->name }}</a>
+                                </li>
+                                <!-- /.nav-item -->
+                            @endforeach
                         </ul>
                         <!-- /.dropdown-menu -->
                     </li>
