@@ -10,6 +10,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules;
@@ -22,7 +23,15 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        //Navbar
+        $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
+        $serviceCategories = DB::table('service_categories')->where('status', '=', '1')->get();
+        //////////////
+
+        return view('auth.register', [
+            'blogCategories' => $blogCategories,
+            'serviceCategories' => $serviceCategories
+        ]);
     }
 
     /**

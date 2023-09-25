@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -16,8 +17,16 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        //Navbar
+        $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
+        $serviceCategories = DB::table('service_categories')->where('status', '=', '1')->get();
+        //////////////
+
+
         return view('profile.edit', [
             'user' => $request->user(),
+            'blogCategories' => $blogCategories,
+            'serviceCategories' => $serviceCategories
         ]);
     }
 

@@ -30,7 +30,7 @@
                                         <span>Our Services</span>
                                         <i class="icon-arrow-right"></i>
                                     </a>
-                                    <a href="about-us.html" class="btn btn__white btn__rounded">
+                                    <a href="{{ route('home.about') }}" class="btn btn__white btn__rounded">
                                         <span>More About Us</span>
                                         <i class="icon-arrow-right"></i>
                                     </a>
@@ -118,7 +118,8 @@
                             excellence.
                         </p>
                         <div class="d-flex align-items-center mb-30">
-                            <a href="doctors-grid.html" class="btn btn__primary btn__outlined btn__rounded mr-30">
+                            <a href="{{ route('home.allDoctors') }}"
+                                class="btn btn__primary btn__outlined btn__rounded mr-30">
                                 Meet Our Doctors</a>
                             <img src="{{ asset('assets/client/images/about/singnture.png') }}" alt="singnture" />
                         </div>
@@ -875,7 +876,7 @@
     <!-- /.contact layout 5 -->
 
     <!-- =========================Testimonials layout 2 =========================  -->
-    <section class="testimonials-layout2 pt-130 pb-40">
+    <section id="testomonials" class="testimonials-layout2 pt-130 pb-40">
         <div class="container">
             <div class="testimonials-wrapper">
                 <div class="row">

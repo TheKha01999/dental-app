@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Appointment\BookingController;
 use App\Http\Controllers\Admin\Blog\BlogCategoryController;
 use App\Http\Controllers\Admin\Blog\BlogController;
 use App\Http\Controllers\Admin\Branch\BranchController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Admin\ProductCategoriesController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\Services\ServiceCategoryController;
 use App\Http\Controllers\Admin\Services\ServiceController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Client\About\ClientAboutController;
 use App\Http\Controllers\Client\Blog\ClientBlogController;
 use App\Http\Controllers\Client\Doctor\ClientDoctorController;
@@ -35,8 +37,16 @@ use Illuminate\Support\Facades\Route;
 // })->name('/');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    //Navbar
+    $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
+    $serviceCategories = DB::table('service_categories')->where('status', '=', '1')->get();
+    //////////////
+
+    return view('dashboard', [
+        'blogCategories' => $blogCategories,
+        'serviceCategories' => $serviceCategories
+    ]);
+})->middleware(['auth', 'verified', 'auth.checkadmin'])->name('dashboard');
 //Luu y auth ở đây nên check có ng đăng nhập chưa ở link này vs email veryfied ở đây luôn
 
 Route::middleware('auth')->group(function () {
@@ -49,6 +59,7 @@ require __DIR__ . '/auth.php';
 
 //Page Home of Client Management Below
 Route::get('/', [ClientHomeController::class, 'index'])->name('home');
+Route::get('home/appointment', [AppointmentController::class, 'index'])->name('home.appointment');
 
 //Client Management
 Route::prefix('home')->name('home.')->group(function () {
@@ -76,7 +87,7 @@ Route::prefix('home')->name('home.')->group(function () {
 });
 
 //Admin Management
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->middleware('auth.admin')->name('admin.')->group(function () {
     //Product Categories table
     Route::resource('product_categories', ProductCategoriesController::class);
 
@@ -106,6 +117,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     //Doctors table
     Route::resource('doctors', DoctorController::class);
     Route::post('doctors/ckeditor-upload-image', [DoctorController::class, 'uploadImage'])->name('doctors.ckedit.upload.image');
+
+    //Bookings Table
+    Route::resource('bookings', BookingController::class);
+    Route::post('bookings/show-doctor-ajax', [BookingController::class, 'showDoctor'])->name('bookings.show-doctor-ajax');
 });
 
 Route::get('admin', function () {

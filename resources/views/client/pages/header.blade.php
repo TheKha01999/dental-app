@@ -20,7 +20,7 @@
                             <i class="fas fa-exclamation-circle"></i>
                             <span>Our Clinic sees over 10,000 patients every year.
                             </span>
-                            <a href="#" class="color-white">
+                            <a href="#testomonials" class="color-white">
                                 <span>Hear their real stories</span>
                                 <i class="icon-arrow-right"></i>
                             </a>
@@ -136,7 +136,7 @@
 
             <!-- /.navbar-collapse -->
             <div class="d-none d-xl-flex align-items-center position-relative ml-30">
-                <a href="appointment.html" class="btn btn__primary btn__rounded">
+                <a href="{{ route('home.appointment') }}" class="btn btn__primary btn__rounded">
                     <i class="icon-calendar"></i>
                     <span>Appointment</span>
                 </a>

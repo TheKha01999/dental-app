@@ -237,6 +237,32 @@
                      </ul>
                  </li>
 
+                 <!-- Appointment -->
+                 <li class="nav-item has-treeview @yield('booking_create_menu_open') @yield('booking_list_menu_open')">
+                     <a href="#" class="nav-link @yield('booking_create_menu_active') @yield('booking_list_menu_active')">
+                         <i class="nav-icon fas fa-calendar-week"></i>
+                         <p>
+                             Appointments
+                             <i class="fas fa-angle-left right"></i>
+                             {{-- <span class="badge badge-info right">6</span> --}}
+                         </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                         <li class="nav-item">
+                             <a href="{{ route('admin.bookings.index') }}" class="nav-link @yield('booking_list_menu_active')">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Doctor lists</p>
+                             </a>
+                         </li>
+                         <li class="nav-item ">
+                             <a href="{{ route('admin.bookings.create') }}" class="nav-link @yield('booking_create_menu_active')">
+                                 <i class="far fa-circle nav-icon"></i>
+                                 <p>Create Doctor</p>
+                             </a>
+                         </li>
+                     </ul>
+                 </li>
+
              </ul>
          </nav>
          <!-- /.sidebar-menu -->

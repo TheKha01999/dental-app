@@ -19,7 +19,16 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        //Navbar
+        $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
+        $serviceCategories = DB::table('service_categories')->where('status', '=', '1')->get();
+        //////////////
+
+
+        return view('auth.login', [
+            'blogCategories' => $blogCategories,
+            'serviceCategories' => $serviceCategories
+        ]);
     }
 
     /**
@@ -34,6 +43,10 @@ class AuthenticatedSessionController extends Controller
         // $result = DB::table('users')->where('email', $request->email)->get()->first();
 
         // Session::put('name', $result->name);
+
+        // if (Auth::check() && Auth::user()->role === 1) {
+        //     return redirect()->route('admin.products.index');
+        // }
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
