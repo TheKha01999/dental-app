@@ -159,10 +159,10 @@
     <!-- /.content-wrapper -->
 @endsection
 
-@section('product_create_menu_open')
+@section('blog_list_menu_open')
     menu-open
 @endsection
-@section('product_create_menu_active')
+@section('blog_list_menu_active')
     active
 @endsection
 

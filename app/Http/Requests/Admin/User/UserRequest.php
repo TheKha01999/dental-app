@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\Branch;
+namespace App\Http\Requests\Admin\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateBranchRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,9 @@ class UpdateBranchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:5|max:100|unique:branchs,name,' . $this->branch,
-            'email' => 'required|email|unique:branchs,email,' . $this->branch,
-            'phone' => 'required',
-            'address' => 'required',
-            'status' => 'required',
-            'image' => 'image',
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'role' => 'required',
         ];
     }
 }

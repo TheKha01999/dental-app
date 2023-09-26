@@ -14,19 +14,16 @@
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Update Product Category</h3>
+                                <h3 class="card-title">New User</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form"
-                                action="{{ route('admin.product_categories.update', ['product_category' => $productCategories->id]) }}"
-                                method="post">
+                            <form role="form" action="{{ route('admin.users.store') }}" method="post">
                                 @csrf
-                                @method('PUT')
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="name">Name</label>
-                                        <input name="name" type="text" value="{{ $productCategories->name }}"
+                                        <input name="name" type="text" value="{{ old('name') }}"
                                             class="form-control" id="name" placeholder="Enter name">
                                         {{-- loi tu truyen qa ben day --}}
                                         @error('name')
@@ -37,17 +34,27 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Status</label>
-                                        <select class="custom-select" name="status">
+                                        <label for="email">Email</label>
+                                        <input name="email" type="text" value="{{ old('email') }}"
+                                            class="form-control" id="email" placeholder="Enter email">
+                                        {{-- loi tu truyen qa ben day --}}
+                                        @error('email')
+                                            <div class="text-danger mt-2">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Role</label>
+                                        <select class="custom-select" name="role">
                                             <option value="">---Please Select---</option>
-                                            <option {{ $productCategories->status == '1' ? 'selected' : '' }}
-                                                value="1">Show
+                                            <option {{ old('status') === '1' ? 'selected' : '' }} value="1">Admin
                                             </option>
-                                            <option {{ $productCategories->status == '0' ? 'selected' : '' }}
-                                                value="0">Hide
+                                            <option {{ old('status') === '0' ? 'selected' : '' }} value="0">User
                                             </option>
                                         </select>
-                                        @error('status')
+                                        @error('role')
                                             <div class="text-danger mt-2">
                                                 {{ $message }}
                                             </div>
@@ -58,7 +65,7 @@
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <button type="submit" class="btn btn-primary">Create</button>
                                 </div>
                             </form>
                         </div>
@@ -74,9 +81,9 @@
     <!-- /.content-wrapper -->
 @endsection
 
-@section('category_list_menu_open')
+{{-- @section('category_create_menu_open')
     menu-open
 @endsection
-@section('category_list_menu_active')
+@section('category_create_menu_active')
     active
-@endsection
+@endsection --}}

@@ -161,10 +161,10 @@
     <!-- /.content-wrapper -->
 @endsection
 
-@section('product_create_menu_open')
+@section('product_list_menu_open')
     menu-open
 @endsection
-@section('product_create_menu_active')
+@section('product_list_menu_active')
     active
 @endsection
 

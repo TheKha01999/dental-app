@@ -27,7 +27,7 @@ class CreateBranchRequest extends FormRequest
             'phone' => 'required',
             'address' => 'required',
             'status' => 'required',
-            'image' => 'required',
+            'image' => 'image|required',
         ];
     }
 }

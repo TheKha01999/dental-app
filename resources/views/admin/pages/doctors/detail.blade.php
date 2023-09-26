@@ -142,10 +142,10 @@
     <!-- /.content-wrapper -->
 @endsection
 
-@section('doctor_create_menu_open')
+@section('doctor_list_menu_open')
     menu-open
 @endsection
-@section('doctor_create_menu_active')
+@section('doctor_list_menu_active')
     active
 @endsection
 

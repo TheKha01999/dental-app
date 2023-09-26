@@ -58,8 +58,8 @@ class BookingController extends Controller
      */
     public function store(BookingRequest $request)
     {
-        $originalDate = $request->day;
-        $newDate = date("d-m-Y", strtotime($originalDate));
+        // $originalDate = $request->day;
+        // $originalDate = Carbon::createFromFormat('Y-m-d', $originalDate)->format('d-m-Y');
 
         $check = DB::table('bookings')->insert([
             "user_id" => $request->user,
@@ -68,7 +68,7 @@ class BookingController extends Controller
             "doctor_id" => $request->doctor,
             "status_code" => $request->status,
             "time_code" => $request->time,
-            'date' => $newDate,
+            'date' => $request->day,
             "created_at" => Carbon::now(),
             "updated_at" => Carbon::now()
         ]);
@@ -84,7 +84,25 @@ class BookingController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $branchs = DB::table('branchs')->where('status', '=', '1')->get();
+        $users = DB::table('users')->where('role', '=', '0')->get();
+        $doctors = DB::table('doctors')->where('status', '=', '1')->get();
+        $timesCode = DB::table('booking_times')->get();
+        $statusCode = DB::table('booking_status')->get();
+        $services = DB::table('service_categories')->where('status', '=', '1')->get();
+        $booking = DB::table('bookings')->find($id);
+        return view(
+            'admin.pages.appointment.detail',
+            [
+                'branchs' => $branchs,
+                'users' => $users,
+                'doctors' => $doctors,
+                'timesCode' => $timesCode,
+                'statusCode' => $statusCode,
+                'services' => $services,
+                'booking' =>  $booking,
+            ]
+        );
     }
 
     /**
@@ -100,7 +118,21 @@ class BookingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $check = DB::table('bookings')->where('id', '=', $id)->update([
+            "user_id" => $request->user,
+            "branch_id" => $request->branch,
+            "service_id" => $request->service,
+            "doctor_id" => $request->doctor,
+            "status_code" => $request->status,
+            "time_code" => $request->time,
+            'date' => $request->day,
+
+            "updated_at" => Carbon::now()
+        ]);
+
+        $message = $check ? 'Updated successfully' : 'Updated failed';
+        //session flash
+        return redirect()->route('admin.bookings.index')->with('message', $message);
     }
 
     /**
@@ -108,7 +140,11 @@ class BookingController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $result = DB::table('bookings')->delete($id);
+
+        $message = $result ? 'Deleted successfully' : 'Deleted failed';
+        //session flash
+        return redirect()->route('admin.bookings.index')->with('message', $message);
     }
     public function showDoctor(Request $request)
     {

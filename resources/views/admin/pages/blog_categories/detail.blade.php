@@ -73,3 +73,10 @@
     </div>
     <!-- /.content-wrapper -->
 @endsection
+
+@section('blog_category_list_menu_open')
+    menu-open
+@endsection
+@section('blog_category_list_menu_active')
+    active
+@endsection

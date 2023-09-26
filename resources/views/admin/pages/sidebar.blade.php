@@ -4,7 +4,7 @@
      <a href="index3.html" class="brand-link">
          <img src="{{ asset('assets/admin/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
              class="brand-image img-circle elevation-3" style="opacity: .8">
-         <span class="brand-text font-weight-light">AdminLTE 3</span>
+         <span class="brand-text font-weight-light">Admin</span>
      </a>
 
      <!-- Sidebar -->
@@ -73,26 +73,26 @@
                      <ul class="nav nav-treeview">
                          <li class="nav-item">
                              <a href="{{ route('admin.product_categories.index') }}" class="nav-link @yield('category_list_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Category lists</p>
                              </a>
                          </li>
                          <li class="nav-item ">
                              <a href="{{ route('admin.product_categories.create') }}"
                                  class="nav-link @yield('category_create_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Create Category</p>
                              </a>
                          </li>
                          <li class="nav-item">
                              <a href="{{ route('admin.products.index') }}" class="nav-link @yield('product_list_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Product lists</p>
                              </a>
                          </li>
                          <li class="nav-item ">
                              <a href="{{ route('admin.products.create') }}" class="nav-link @yield('product_create_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Create Product</p>
                              </a>
                          </li>
@@ -106,7 +106,7 @@
                      <a href="#"
                          class="nav-link @yield('blog_create_menu_active') @yield('blog_list_menu_active') 
                          @yield('blog_category_create_menu_active') @yield('blog_category_list_menu_active')">
-                         <i class="nav-icon fas ion-ios-book"></i>
+                         <i class="nav-icon fas fa-blog"></i>
                          <p>
                              Blog
                              <i class="fas fa-angle-left right"></i>
@@ -116,25 +116,25 @@
                      <ul class="nav nav-treeview">
                          <li class="nav-item">
                              <a href="{{ route('admin.blog_categories.index') }}" class="nav-link @yield('blog_category_list_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Category lists</p>
                              </a>
                          </li>
                          <li class="nav-item ">
                              <a href="{{ route('admin.blog_categories.create') }}" class="nav-link @yield('blog_category_create_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Create Category</p>
                              </a>
                          </li>
                          <li class="nav-item">
                              <a href="{{ route('admin.blogs.index') }}" class="nav-link @yield('blog_list_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Blog lists</p>
                              </a>
                          </li>
                          <li class="nav-item ">
                              <a href="{{ route('admin.blogs.create') }}" class="nav-link @yield('blog_create_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Create blog</p>
                              </a>
                          </li>
@@ -154,13 +154,13 @@
                      <ul class="nav nav-treeview">
                          <li class="nav-item">
                              <a href="{{ route('admin.branchs.index') }}" class="nav-link @yield('branch_list_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Branch lists</p>
                              </a>
                          </li>
                          <li class="nav-item ">
                              <a href="{{ route('admin.branchs.create') }}" class="nav-link @yield('branch_create_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Create Branch</p>
                              </a>
                          </li>
@@ -174,7 +174,7 @@
                      <a href="#"
                          class="nav-link @yield('service_create_menu_active') @yield('service_list_menu_active') 
                       @yield('service_category_create_menu_active') @yield('service_category_list_menu_active')">
-                         <i class="nav-icon fas ion-fork-repo"></i>
+                         <i class="nav-icon fas fa-file-medical"></i>
                          <p>
                              Service
                              <i class="fas fa-angle-left right"></i>
@@ -185,26 +185,26 @@
                          <li class="nav-item">
                              <a href="{{ route('admin.service_categories.index') }}"
                                  class="nav-link @yield('service_category_list_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Category lists</p>
                              </a>
                          </li>
                          <li class="nav-item ">
                              <a href="{{ route('admin.service_categories.create') }}"
                                  class="nav-link @yield('service_category_create_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Create Category</p>
                              </a>
                          </li>
                          <li class="nav-item">
                              <a href="{{ route('admin.services.index') }}" class="nav-link @yield('service_list_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Service lists</p>
                              </a>
                          </li>
                          <li class="nav-item ">
                              <a href="{{ route('admin.services.create') }}" class="nav-link @yield('service_create_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Create Service</p>
                              </a>
                          </li>
@@ -214,7 +214,7 @@
                  <!-- Doctors -->
                  <li class="nav-item has-treeview @yield('doctor_create_menu_open') @yield('doctor_list_menu_open')">
                      <a href="#" class="nav-link @yield('doctor_create_menu_active') @yield('doctor_list_menu_active')">
-                         <i class="nav-icon fas ion-android-people"></i>
+                         <i class="nav-icon fas fa-user-md"></i>
                          <p>
                              Doctors
                              <i class="fas fa-angle-left right"></i>
@@ -224,13 +224,13 @@
                      <ul class="nav nav-treeview">
                          <li class="nav-item">
                              <a href="{{ route('admin.doctors.index') }}" class="nav-link @yield('doctor_list_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Doctor lists</p>
                              </a>
                          </li>
                          <li class="nav-item ">
                              <a href="{{ route('admin.doctors.create') }}" class="nav-link @yield('doctor_create_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Create Doctor</p>
                              </a>
                          </li>
@@ -250,14 +250,14 @@
                      <ul class="nav nav-treeview">
                          <li class="nav-item">
                              <a href="{{ route('admin.bookings.index') }}" class="nav-link @yield('booking_list_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
-                                 <p>Doctor lists</p>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
+                                 <p>Appointment</p>
                              </a>
                          </li>
                          <li class="nav-item ">
                              <a href="{{ route('admin.bookings.create') }}" class="nav-link @yield('booking_create_menu_active')">
-                                 <i class="far fa-circle nav-icon"></i>
-                                 <p>Create Doctor</p>
+                                 <i class="fas fa-window-minimize nav-icon"></i>
+                                 <p>Make Appointment</p>
                              </a>
                          </li>
                      </ul>

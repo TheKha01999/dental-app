@@ -110,3 +110,10 @@
     </div>
     <!-- /.content-wrapper -->
 @endsection
+
+@section('branch_list_menu_open')
+    menu-open
+@endsection
+@section('branch_list_menu_active')
+    active
+@endsection

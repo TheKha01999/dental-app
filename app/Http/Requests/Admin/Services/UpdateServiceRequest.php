@@ -28,6 +28,7 @@ class UpdateServiceRequest extends FormRequest
             "description" => "required",
             'status' => 'required',
             "service_categories_id" => "required",
+            'image' => 'image',
         ];
     }
 }

@@ -12,7 +12,7 @@
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Update Service Post</h3>
+                                <h3 class="card-title">Update Service's Post</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -128,8 +128,11 @@
     <!-- /.content-wrapper -->
 @endsection
 
-@section('service_create_menu_open')
+@section('service_list_menu_open')
     menu-open
+@endsection
+@section('service_list_menu_active')
+    active
 @endsection
 
 @section('js-custom')

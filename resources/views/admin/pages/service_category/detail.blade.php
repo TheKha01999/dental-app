@@ -84,3 +84,10 @@
     </div>
     <!-- /.content-wrapper -->
 @endsection
+
+@section('service_category_list_menu_open')
+    menu-open
+@endsection
+@section('service_category_list_menu_active')
+    active
+@endsection

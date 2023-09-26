@@ -30,6 +30,7 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!--CK EDITOR 5-->
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
+    <link href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
 
 </head>
 
@@ -94,6 +95,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('assets/admin/dist/js/demo.js') }}"></script>
     <!--ckEDITOR5 Script -->
+    <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     @yield('js-custom')
 </body>
 

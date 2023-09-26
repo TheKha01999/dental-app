@@ -22,32 +22,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
-                            {{-- <div class="card-header d-flex align-items-center">
-                                <h3 class="card-title mr-3">Blog Categories</h3>
-                                <form class="form-inline ml-3" action="{{ route('admin.blog_categories.index') }}"
-                                    method="get">
-                                    <div class="input-group input-group-sm">
-                                        <input class="form-control" type="text" name='keyword' placeholder="Search"
-                                            aria-label="Search" value="{{ $keyword }}">
-
-                                        <select class="form-control" name="sortBy">
-                                            <option selected>-- Select option --</option>
-                                            <option {{ $sortBy === 'oldest' ? 'selected' : '' }} value="oldest">Oldest
-                                            </option>
-                                            <option {{ $sortBy === 'latest' ? 'selected' : '' }} value="latest">Latest
-                                            </option>
-                                        </select>
-                                        <div class="input-group-append">
-                                            <button class="btn" type="submit">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div> --}}
-                            <!-- /.card-header -->
                             <div class="card-body">
-                                <table class="table table-bordered">
+                                <table id="table-booking" class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -58,6 +34,7 @@
                                             <th>Date</th>
                                             <th>Time</th>
                                             <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -68,21 +45,38 @@
                                                 <td>{{ $booking->doctor_name }}</td>
                                                 <td>{{ $booking->branch_name }}</td>
                                                 <td>{{ $booking->service_name }}</td>
-                                                <td>{{ $booking->date }}</td>
+                                                @php
+                                                    $Newdate = date('d-m-Y', strtotime($booking->date));
+                                                @endphp
+                                                <td>{{ $Newdate }}</td>
                                                 <td>{{ $booking->time }}</td>
-                                                <td>{{ $booking->status }}</td>
-                                                {{-- <td>
+                                                @php
+                                                    if ($booking->status_code == 'S1') {
+                                                        $color = 'gray';
+                                                    } elseif ($booking->status_code == 'S2') {
+                                                        $color = 'green';
+                                                    } elseif ($booking->status_code == 'S3') {
+                                                        $color = 'red';
+                                                    } else {
+                                                        $color = '#d35400';
+                                                    }
+                                                @endphp
+                                                <td>
+                                                    <strong style="color: {{ $color }}">
+                                                        {{ $booking->status }}</strong>
+                                                </td>
+                                                <td>
                                                     <form class="d-inline"
-                                                        action="{{ route('admin.blog_categories.destroy', ['blog_category' => $blogCategory->id]) }}"
+                                                        action="{{ route('admin.bookings.destroy', ['booking' => $booking->id]) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <button onclick="return confirm('Are u sure !')" type="submit"
                                                             name="submit" class="btn btn-danger">Delete</button>
                                                     </form>
-                                                    <a href="{{ route('admin.blog_categories.show', ['blog_category' => $blogCategory->id]) }}"
+                                                    <a href="{{ route('admin.bookings.show', ['booking' => $booking->id]) }}"
                                                         class="btn btn-primary">Detail</a>
-                                                </td> --}}
+                                                </td>
                                             </tr>
                                         @empty
                                             <tr>
@@ -94,7 +88,6 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer clearfix">
-                                {{-- {{ $blogCategories->links('pagination::bootstrap-5') }} --}}
                             </div>
                         </div>
                         <!-- /.card -->
@@ -113,4 +106,11 @@
 @endsection
 @section('booking_list_menu_active')
     active
+@endsection
+@section('js-custom')
+    <script type="text/javascript">
+        $('#table-booking').dataTable({
+            "pageLength": 4
+        });
+    </script>
 @endsection

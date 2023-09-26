@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\Appointment\BookingController;
 use App\Http\Controllers\Admin\Blog\BlogCategoryController;
 use App\Http\Controllers\Admin\Blog\BlogController;
 use App\Http\Controllers\Admin\Branch\BranchController;
+use App\Http\Controllers\Admin\Dashboard\AdminController;
+use App\Http\Controllers\Admin\Dashboard\UserController;
 use App\Http\Controllers\Admin\Doctor\DoctorController;
 use App\Http\Controllers\Admin\ProductCategoriesController;
 use App\Http\Controllers\Admin\ProductsController;
@@ -121,6 +123,9 @@ Route::prefix('admin')->middleware('auth.admin')->name('admin.')->group(function
     //Bookings Table
     Route::resource('bookings', BookingController::class);
     Route::post('bookings/show-doctor-ajax', [BookingController::class, 'showDoctor'])->name('bookings.show-doctor-ajax');
+
+    //User Controller
+    Route::resource('users', UserController::class);
 });
 
 Route::get('admin', function () {
