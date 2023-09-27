@@ -95,10 +95,13 @@
                                         @enderror
                                     </div>
                                     {{-- {{ $booking->date }} --}}
+                                    @php
+                                        $Newdate = date('d-m-Y', strtotime($booking->date));
+                                    @endphp
                                     <div class="form-group">
                                         <label for="day">Day</label>
-                                        <input name="day" type="date" value="{{ $booking->date }}"
-                                            class="form-control" id="day" placeholder="Enter day">
+                                        <input name="day" type="text" value="{{ $Newdate }}"
+                                            class="form-control" id="datepicker" placeholder="day-month-year (01-09-1999)">
 
                                         @error('day')
                                             <div class="text-danger mt-2">
@@ -221,6 +224,15 @@
                         });
                     }
                 });
+            });
+        });
+    </script>
+    <script>
+        // var dateToday = new Date();
+        $(function() {
+            $("#datepicker").datepicker({
+                minDate: 1,
+                dateFormat: 'dd-mm-yy'
             });
         });
     </script>

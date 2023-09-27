@@ -92,8 +92,8 @@
 
                                     <div class="form-group">
                                         <label for="day">Day</label>
-                                        <input name="day" type="date" value="{{ old('day') }}"
-                                            class="form-control" id="day" placeholder="Enter day">
+                                        <input name="day" type="text" value="{{ old('day') }}"
+                                            class="form-control" id="datepicker" placeholder="day-month-year (01-09-1999)">
 
                                         @error('day')
                                             <div class="text-danger mt-2">
@@ -171,6 +171,7 @@
             $('#branch').on('change', function() {
                 let branch_id = $('#branch').val();
                 let service_id = $('#service').val();
+                console.log(branch_id, service_id);
                 $.ajax({
                     method: "POST", //method of form
                     url: "{{ route('admin.bookings.show-doctor-ajax') }}", //action of form
@@ -196,6 +197,7 @@
             $('#service').on('change', function() {
                 let service_id = $('#service').val();
                 let branch_id = $('#branch').val();
+                console.log(branch_id, service_id);
                 $.ajax({
                     method: "POST", //method of form
                     url: "{{ route('admin.bookings.show-doctor-ajax') }}", //action of form
@@ -216,6 +218,16 @@
                         });
                     }
                 });
+            });
+        });
+    </script>
+
+    <script>
+        // var dateToday = new Date();
+        $(function() {
+            $("#datepicker").datepicker({
+                minDate: 1,
+                dateFormat: 'dd-mm-yy'
             });
         });
     </script>

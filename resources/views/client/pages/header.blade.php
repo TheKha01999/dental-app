@@ -86,6 +86,14 @@
                         </ul>
                         <!-- /.dropdown-menu -->
                     </li>
+                    @php
+                        $blogCategories = DB::table('blog_categories')
+                            ->where('status', '=', '1')
+                            ->get();
+                        $serviceCategories = DB::table('service_categories')
+                            ->where('status', '=', '1')
+                            ->get();
+                    @endphp
                     <!-- /.nav-item -->
                     <li class="nav__item has-dropdown">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle nav__item-link">Services

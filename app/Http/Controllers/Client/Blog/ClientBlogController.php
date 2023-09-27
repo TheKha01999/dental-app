@@ -13,7 +13,7 @@ class ClientBlogController extends Controller
     //Navbar
     public $blogCategories;
     public $serviceCategories;
-    ////
+    // ////
     public function __construct()
     {
         // $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
@@ -43,8 +43,8 @@ class ClientBlogController extends Controller
             'client.pages.Blog.blog',
             [
                 'blogs' => $blogs,
-                'blogCategories' => $this->blogCategories,
-                'serviceCategories' => $this->serviceCategories,
+                // 'blogCategories' => $this->blogCategories,
+                // 'serviceCategories' => $this->serviceCategories,
             ]
         );
     }
@@ -68,7 +68,7 @@ class ClientBlogController extends Controller
                 'blogCategories' => $this->blogCategories,
                 'blog' => $blog,
                 'recentPosts' => $recentPosts,
-                'serviceCategories' => $this->serviceCategories,
+                // 'serviceCategories' => $this->serviceCategories,
             ]
         );
     }

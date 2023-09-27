@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Appointment;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Appointment\BookingRequest;
+use App\Http\Requests\Admin\Appointment\UpdateBookingRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +24,7 @@ class BookingController extends Controller
             ->join('users', 'users.id', '=', 'bookings.user_id')
             ->join('booking_times', 'booking_times.code', '=', 'bookings.time_code')
             ->join('booking_status', 'booking_status.code', '=', 'bookings.status_code')
+            ->orderBy('bookings.created_at', 'desc')
             ->get();
         // dd($bookings);
         return view('admin.pages.appointment.list', ['bookings' => $bookings]);
@@ -40,6 +42,7 @@ class BookingController extends Controller
         $statusCode = DB::table('booking_status')->get();
         $services = DB::table('service_categories')->where('status', '=', '1')->get();
         // dd([$branchs, $users, $doctors, $timesCode, $statusCode]);
+
         return view(
             'admin.pages.appointment.create',
             [
@@ -58,9 +61,9 @@ class BookingController extends Controller
      */
     public function store(BookingRequest $request)
     {
-        // $originalDate = $request->day;
-        // $originalDate = Carbon::createFromFormat('Y-m-d', $originalDate)->format('d-m-Y');
-
+        $originalDate = $request->day;
+        $originalDate = Carbon::createFromFormat('d-m-Y', $originalDate)->format('Y-m-d');
+        // dd($originalDate);
         $check = DB::table('bookings')->insert([
             "user_id" => $request->user,
             "branch_id" => $request->branch,
@@ -68,7 +71,7 @@ class BookingController extends Controller
             "doctor_id" => $request->doctor,
             "status_code" => $request->status,
             "time_code" => $request->time,
-            'date' => $request->day,
+            'date' => $originalDate,
             "created_at" => Carbon::now(),
             "updated_at" => Carbon::now()
         ]);
@@ -86,11 +89,17 @@ class BookingController extends Controller
     {
         $branchs = DB::table('branchs')->where('status', '=', '1')->get();
         $users = DB::table('users')->where('role', '=', '0')->get();
-        $doctors = DB::table('doctors')->where('status', '=', '1')->get();
         $timesCode = DB::table('booking_times')->get();
         $statusCode = DB::table('booking_status')->get();
+
         $services = DB::table('service_categories')->where('status', '=', '1')->get();
+
         $booking = DB::table('bookings')->find($id);
+
+        $doctorID = $booking->doctor_id;
+
+        $doctors = DB::table('doctors')->where('status', '=', '1')->where('id', '=', $doctorID)->get();
+
         return view(
             'admin.pages.appointment.detail',
             [
@@ -116,8 +125,10 @@ class BookingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateBookingRequest $request, string $id)
     {
+        $originalDate = $request->day;
+        $originalDate = Carbon::createFromFormat('d-m-Y', $originalDate)->format('Y-m-d');
         $check = DB::table('bookings')->where('id', '=', $id)->update([
             "user_id" => $request->user,
             "branch_id" => $request->branch,
@@ -125,7 +136,7 @@ class BookingController extends Controller
             "doctor_id" => $request->doctor,
             "status_code" => $request->status,
             "time_code" => $request->time,
-            'date' => $request->day,
+            'date' => $originalDate,
 
             "updated_at" => Carbon::now()
         ]);
@@ -148,15 +159,40 @@ class BookingController extends Controller
     }
     public function showDoctor(Request $request)
     {
-        // $id = $request->branch_id;
-        // $id = (int)$id;
+        $branch_id = $request->branch_id ?? null;
+        $service_id = $request->service_id ?? null;
+
+        // dd($branch_id, $service_id);
+
+        if (!is_null($branch_id) && is_null($service_id)) {
+            $doctors = DB::table('doctors')
+                ->where('status', '=', '1')
+                ->where('branch_id', '=', $branch_id)
+                ->get();
+            return response()->json(['doctors' => $doctors]);
+        }
+
+        if (is_null($branch_id) && !is_null($service_id)) {
+            $doctors = DB::table('doctors')
+                ->where('status', '=', '1')
+                ->where('service_categories_id', '=',  $service_id)
+                ->get();
+            return response()->json(['doctors' => $doctors]);
+        }
+
+        if (!is_null($branch_id) && !is_null($service_id)) {
+            $doctors = DB::table('doctors')
+                ->where('status', '=', '1')
+                ->where('branch_id', '=', $branch_id)
+                ->where('service_categories_id', '=', $service_id)
+                ->get();
+            return response()->json(['doctors' => $doctors]);
+        }
+
         $doctors = DB::table('doctors')
             ->where('status', '=', '1')
-            ->where('branch_id', '=', $request->branch_id)
-            ->where('service_categories_id', '=', $request->service_id)
             ->get();
-
+        // dd($doctors);
         return response()->json(['doctors' => $doctors]);
-        // dd(response()->json(['doctors' => $doctors]));
     }
 }
