@@ -56,6 +56,48 @@
                      </ul>
                  </li>
 
+
+
+                 <!-- User (patient or admin) -->
+                 <li
+                     class="nav-item has-treeview @yield('user_create_menu_open') @yield('user_list_menu_open') @yield('admin_create_menu_open') @yield('admin_list_menu_open')">
+                     <a href="#"
+                         class="nav-link @yield('user_create_menu_active') @yield('user_list_menu_active') @yield('admin_create_menu_active') @yield('admin_list_menu_active')">
+                         <i class="nav-icon fas fa-users"></i>
+                         <p>
+                             User / Admin
+                             <i class="fas fa-angle-left right"></i>
+                             {{-- <span class="badge badge-info right">6</span> --}}
+                         </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                         <li class="nav-item">
+                             <a href="{{ route('admin.users.index') }}" class="nav-link @yield('user_list_menu_active')">
+                                 <i class="fas fa-window-minimize nav-icon"></i>
+                                 <p>User List</p>
+                             </a>
+                         </li>
+                         <li class="nav-item ">
+                             <a href="{{ route('admin.users.create') }}" class="nav-link @yield('user_create_menu_active')">
+                                 <i class="fas fa-window-minimize nav-icon"></i>
+                                 <p>Create User</p>
+                             </a>
+                         </li>
+                         <li class="nav-item ">
+                             <a href="{{ route('admin.admins.index') }}" class="nav-link @yield('admin_list_menu_active')">
+                                 <i class="fas fa-window-minimize nav-icon"></i>
+                                 <p>Admin List</p>
+                             </a>
+                         </li>
+                         <li class="nav-item ">
+                             <a href="{{ route('admin.admins.create') }}" class="nav-link @yield('admin_create_menu_active')">
+                                 <i class="fas fa-window-minimize nav-icon"></i>
+                                 <p>Create Admin</p>
+                             </a>
+                         </li>
+                     </ul>
+                 </li>
+
                  <!-- Product -->
                  <li
                      class="nav-item has-treeview @yield('category_create_menu_open') @yield('category_list_menu_open') 
@@ -72,7 +114,8 @@
                      </a>
                      <ul class="nav nav-treeview">
                          <li class="nav-item">
-                             <a href="{{ route('admin.product_categories.index') }}" class="nav-link @yield('category_list_menu_active')">
+                             <a href="{{ route('admin.product_categories.index') }}"
+                                 class="nav-link @yield('category_list_menu_active')">
                                  <i class="fas fa-window-minimize nav-icon"></i>
                                  <p>Category lists</p>
                              </a>
@@ -262,6 +305,8 @@
                          </li>
                      </ul>
                  </li>
+
+
 
              </ul>
          </nav>

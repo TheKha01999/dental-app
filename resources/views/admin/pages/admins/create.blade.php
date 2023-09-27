@@ -18,7 +18,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action="{{ route('admin.users.store') }}" method="post">
+                            <form role="form" action="{{ route('admin.admins.store') }}" method="post">
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group">
@@ -44,23 +44,6 @@
                                             </div>
                                         @enderror
                                     </div>
-
-                                    <div class="form-group">
-                                        <label>Role</label>
-                                        <select class="custom-select" name="role">
-                                            <option value="">---Please Select---</option>
-                                            <option {{ old('status') === '1' ? 'selected' : '' }} value="1">Admin
-                                            </option>
-                                            <option {{ old('status') === '0' ? 'selected' : '' }} value="0">User
-                                            </option>
-                                        </select>
-                                        @error('role')
-                                            <div class="text-danger mt-2">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-
                                 </div>
                                 <!-- /.card-body -->
 
@@ -81,9 +64,9 @@
     <!-- /.content-wrapper -->
 @endsection
 
-{{-- @section('category_create_menu_open')
+@section('user_create_menu_open')
     menu-open
 @endsection
-@section('category_create_menu_active')
+@section('user_create_menu_active')
     active
-@endsection --}}
+@endsection

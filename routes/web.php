@@ -126,6 +126,11 @@ Route::prefix('admin')->middleware('auth.admin')->name('admin.')->group(function
 
     //User Controller
     Route::resource('users', UserController::class);
+    Route::post('users/update-user-password/{user}', [UserController::class, 'updatePassword'])->name('users.update-user-password');
+
+    //Admin Controller
+    Route::resource('admins', AdminController::class);
+    Route::post('admins/update-admin-password/{admin}', [AdminController::class, 'updatePassword'])->name('admins.update-admin-password');
 });
 
 Route::get('admin', function () {

@@ -3,23 +3,24 @@
 namespace App\Http\Controllers\Admin\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\User\UpdateUserNameEmailRequest;
-use App\Http\Requests\Admin\User\UpdateUserPasswordRequest;
-use App\Http\Requests\Admin\User\UserRequest;
+use App\Http\Requests\Admin\Admins\CreateAdminRequest;
+use App\Http\Requests\Admin\Admins\UpdateAdminNameEmailRequest;
+use App\Http\Requests\Admin\Admins\UpdateAdminPasswordRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = DB::table('users')->where('role', '0')->orderBy('created_at', 'desc')->get();
-        return view('admin.pages.users.list', ['users' => $users]);
+        $admins = DB::table('users')->where('role', '1')->where('id', '<>', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        return view('admin.pages.admins.list', ['admins' => $admins]);
     }
 
     /**
@@ -27,28 +28,30 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.users.create');
+        return view('admin.pages.admins.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserRequest $request)
+    public function store(CreateAdminRequest $request)
     {
         $password =  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
         $email_verified_at = Carbon::now();
+        $role = 1;
         $check = DB::table('users')->insert([
             "name" => $request->name,
             "email" => $request->email,
             'email_verified_at' => $email_verified_at,
+            'role' => $role,
             'password' => $password,
             "created_at" => Carbon::now(),
             "updated_at" => Carbon::now()
         ]);
         $message = $check ? 'Created successfully' : 'Created failed';
-        // dd($message);
+        dd($message);
         //session flash
-        return redirect()->route('admin.users.index')->with('message', $message);
+        return redirect()->route('admin.admins.index')->with('message', $message);
     }
 
     /**
@@ -56,9 +59,9 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $user = DB::table('users')->find($id);
+        $admin = DB::table('users')->find($id);
 
-        return view('admin.pages.users.detail', ['user' => $user]);
+        return view('admin.pages.admins.detail', ['admin' => $admin]);
     }
 
     /**
@@ -72,10 +75,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserNameEmailRequest $request, string $id)
+    public function update(UpdateAdminNameEmailRequest $request, string $id)
     {
-        // $password =  Hash::make($request->password);
-
         $check = DB::table('users')->where('id', '=', $id)->update([
             "name" => $request->name,
             "email" => $request->email,
@@ -84,7 +85,7 @@ class UserController extends Controller
         ]);
         $message = $check ? 'Updated successfully' : 'Updated failed';
         //session flash
-        return redirect()->route('admin.users.index')->with('message', $message);
+        return redirect()->route('admin.admins.index')->with('message', $message);
     }
 
     /**
@@ -96,9 +97,9 @@ class UserController extends Controller
 
         $message = $result ? 'Deleted successfully' : 'Deleted failed';
         //session flash
-        return redirect()->route('admin.users.index')->with('message', $message);
+        return redirect()->route('admin.admins.index')->with('message', $message);
     }
-    public function updatePassword(UpdateUserPasswordRequest $request, string $id)
+    public function updatePassword(UpdateAdminPasswordRequest $request, string $id)
     {
         $password =  Hash::make($request->password);
 
@@ -108,6 +109,6 @@ class UserController extends Controller
         ]);
         $message = $check ? 'Updated password successfully' : 'Updated password failed';
         //session flash
-        return redirect()->route('admin.users.index')->with('message', $message);
+        return redirect()->route('admin.admins.index')->with('message', $message);
     }
 }

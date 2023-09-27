@@ -96,7 +96,7 @@ class DoctorController extends Controller
         $doctor = DB::table('doctors')->find($id);
         $serviceCategories = DB::table('service_categories')->where('status', '=', 1)->get();
         $branchs = DB::table('branchs')->where('status', '=', 1)->get();
-        // dd($productCategories);
+
         return view(
             'admin.pages.doctors.detail',
             [
