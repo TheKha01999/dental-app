@@ -36,6 +36,8 @@
     <script src="{{ asset('assets/client/js/jquery-3.5.1.min.js') }}"></script>
     <script src="{{ asset('assets/client/js/plugins.js') }}"></script>
     <script src="{{ asset('assets/client/js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @yield('js-custom')
 </body>
 
 </html>

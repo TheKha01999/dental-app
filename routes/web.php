@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Appointment\BookingController;
 use App\Http\Controllers\Admin\Blog\BlogCategoryController;
 use App\Http\Controllers\Admin\Blog\BlogController;
 use App\Http\Controllers\Admin\Branch\BranchController;
+use App\Http\Controllers\Admin\Cart\CartController;
 use App\Http\Controllers\Admin\Dashboard\AdminController;
 use App\Http\Controllers\Admin\Dashboard\UserController;
 use App\Http\Controllers\Admin\Doctor\DoctorController;
@@ -86,8 +87,20 @@ Route::prefix('home')->name('home.')->group(function () {
     //Page Blog
     Route::get('blog/{id}', [ClientBlogController::class, 'index'])->name('blog');
     Route::get('blog/detail/{id}', [ClientBlogController::class, 'detail'])->name('blog.detail');
+
+    //Page cart
+    Route::get('product/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('product.add-to-cart');
+    Route::get('product/delete-item-in-cart/{productId}', [CartController::class, 'deleteItem'])->name('product.delete-item-in-cart');
+    Route::get('product/update-item-in-cart/{productId}/{qty?}', [CartController::class, 'updateItem'])->name('product.update-item-in-cart');
+    Route::get('cart', [CartController::class, 'index'])->name('cart.index');
 });
 
+Route::get('check', function () {
+    dd(session()->get('cart'));
+});
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 //Admin Management
 Route::prefix('admin')->middleware('auth.admin')->name('admin.')->group(function () {
     //Product Categories table

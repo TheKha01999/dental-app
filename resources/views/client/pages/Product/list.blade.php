@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ========================
-                                                                                                                                                                                                               page title
-                                                                                                                                                                                                            =========================== -->
+                                                                                                                                                                                                                                                                       page title
+                                                                                                                                                                                                                                                                    =========================== -->
     <section class="page-title page-title-layout5 text-center">
         <div class="bg-img"><img src="{{ asset('assets/client/images/backgrounds/6.jpg') }}" alt="background"></div>
         <div class="container">
@@ -22,8 +22,8 @@
     </section><!-- /.page-title -->
 
     <!-- ========================
-                                                                                                                                                                                                                 shop
-                                                                                                                                                                                                              =========================== -->
+                                                                                                                                                                                                                                                                         shop
+                                                                                                                                                                                                                                                                      =========================== -->
     <section class="shop-grid">
         <div class="container">
             <div class="row">
@@ -45,7 +45,8 @@
                                     <div class="product__img">
                                         <img src="{{ asset('images/' . $product->image) }}" alt="Product" loading="lazy">
                                         <div class="product__action">
-                                            <a href="#" class="btn btn__primary btn__rounded">
+                                            <a data-url="{{ route('home.product.add-to-cart', ['productId' => $product->id]) }}"
+                                                href="#" class="btn btn__primary btn__rounded add-to-cart">
                                                 <i class="icon-cart"></i> <span>Add To Cart</span>
                                             </a>
                                         </div><!-- /.product-action -->
@@ -54,7 +55,7 @@
                                         <h4 class="product__title"><a
                                                 href="{{ route('home.product.single', ['id' => $product->id]) }}">{{ $product->name }}</a>
                                         </h4>
-                                        <span class="product__price">${{ $product->price }}</span>
+                                        <span class="product__price">${{ number_format($product->price, 2) }}</span>
                                     </div><!-- /.product-content -->
                                 </div><!-- /.product-item -->
                             </div><!-- /.col-lg-4 -->
@@ -84,8 +85,6 @@
                                 </form>
                             </div><!-- /.widget-content -->
                         </div><!-- /.widget-search -->
-
-
 
                         <div class="widget widget-categories">
                             <h5 class="widget__title">Categories</h5>
@@ -177,4 +176,25 @@
 
 @section('title')
     Products
+@endsection
+@section('js-custom')
+    <script>
+        $(document).ready(function() {
+            $('.add-to-cart').on('click', function(event) {
+                event.preventDefault();
+                let url = $(this).data('url');
+                $.ajax({
+                    method: 'get', //method form
+                    url: url, //action form
+                    success: function(response) {
+                        Swal.fire({
+                            icon: 'success',
+                            // title: 'Notification',
+                            text: response.message,
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

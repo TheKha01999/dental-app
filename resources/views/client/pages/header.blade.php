@@ -68,8 +68,9 @@
                     </li>
                     <!-- /.nav-item -->
                     <li class="nav__item has-dropdown">
-                        <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link">About
-                            Us</a>
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link">
+                            About Us
+                        </a>
                         <ul class="dropdown-menu">
                             <li class="nav__item">
                                 <a href="{{ route('home.about') }}" class="nav__item-link">About Us</a>
@@ -111,8 +112,20 @@
                     </li>
 
                     <!-- /.nav-item -->
-                    <li class="nav__item ">
-                        <a href="{{ route('home.product') }}" class="nav__item-link">Shop</a>
+                    <li class="nav__item has-dropdown">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link">
+                            Our Shop
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="nav__item">
+                                <a href="{{ route('home.product') }}" class="nav__item-link">All Products</a>
+                            </li>
+                            <li class="nav__item">
+                                <a href="{{ route('home.cart.index') }}" class="nav__item-link"
+                                    id="total-product">Shopping cart - {{ count(session()->get('cart', [])) ?? 0 }}</a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-menu -->
                     </li>
 
                     <!-- /.nav-item -->
@@ -134,6 +147,55 @@
                     <li class="nav__item">
                         <a href="contact-us.html" class="nav__item-link">Contacts</a>
                     </li>
+
+                    {{-- user --}}
+                    <li class="nav__item has-dropdown">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link">
+                            <i class="fa fa-user"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @if (Route::has('login'))
+                                <div>
+                                    @auth
+                                        <li class="nav__item">
+                                            <a href="#" class="nav__item-link">Xin Chao
+                                                {{ Auth::user()->name }} !
+                                            </a>
+                                        </li>
+                                        <li class="nav__item">
+                                            <a class="nav__item-link" href="{{ url('/dashboard') }}">Dashboard</a>
+                                        </li>
+                                        <li class="nav__item">
+                                            <a class="nav__item-link" href="{{ route('profile.edit') }}">Edit Profile</a>
+                                        </li>
+
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <li class="nav__item">
+                                                <a onclick="event.preventDefault(); this.closest('form').submit();"
+                                                    class="nav__item-link" href="{{ route('logout') }}">
+                                                    Log out
+                                                </a>
+                                            </li>
+                                        </form>
+                                    @else
+                                        <li class="nav__item">
+                                            <a class="nav__item-link" href="{{ route('login') }}">Login</a>
+                                        </li>
+
+                                        @if (Route::has('register'))
+                                            <li class="nav__item">
+                                                <a class="nav__item-link" href="{{ route('register') }}">Register</a>
+                                            </li>
+                                        @endif
+                                    @endauth
+                                </div>
+                            @endif
+
+                            <!-- /.nav-item -->
+                        </ul>
+                        <!-- /.dropdown-menu -->
+                    </li>
                     <!-- /.nav-item -->
                 </ul>
                 <!-- /.navbar-nav -->
@@ -152,9 +214,11 @@
             <button class="action__btn-search ml-30">
                 <i class="fa fa-search"></i>
             </button>
-            <button class="ml-30 action__btn-cart">
-                <i class="fa fa-shopping-cart"></i>
-            </button>
+            {{-- <div class="ml-30 action__btn-cart">
+                <a href="#" class="nav__item-link">
+                    <i class="fa fa-shopping-cart"></i>           
+                </a>
+            </div>
             <div class="dropdown ml-30 action__btn-user">
                 <button data-toggle="dropdown">
                     <i class="fa fa-user"></i>
@@ -162,8 +226,7 @@
                 <div class="dropdown-menu">
                     @if (Route::has('login'))
                         <div>
-                            @auth
-                                {{-- <a class="dropdown-item" href="">Xin Chao {{ Session::get('name') }} !</a> --}}
+                            @auth               
                                 <a class="dropdown-item" href="#">Xin Chao {{ Auth::user()->name }} !</a>
                                 <a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a>
                                 <x-dropdown-link :href="route('profile.edit')">
@@ -188,7 +251,7 @@
                         </div>
                     @endif
                 </div>
-            </div>
+            </div> --}}
         </div>
         <!-- /.container -->
     </nav>
