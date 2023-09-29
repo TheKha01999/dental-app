@@ -1,9 +1,6 @@
 @extends('client.layout.master')
 
 @section('content')
-    <!-- ========================
-                                                       page title
-                                                    =========================== -->
     <section class="page-title pt-30 pb-30">
         <div class="container">
             <div class="row">
@@ -20,17 +17,10 @@
         </div><!-- /.container -->
     </section><!-- /.page-title -->
 
-    <!-- ========================
-                                                         shop single
-                                                      =========================== -->
     <section class="shop pb-40 pt-0">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="alert alert-primary d-flex flex-wrap justify-content-between align-items-center mb-40">
-                        <h3 class="alert__title my-1">“Green Tea” has been added to your cart.</h3>
-                        <a href="cart.html" class="btn btn__secondary btn__rounded">View Cart</a>
-                    </div><!-- /.alert-panel-->
                     <div class="row product-item-single">
                         <div class="col-sm-6">
                             <div class="product__img">
@@ -57,12 +47,17 @@
                                 </p>
                             </div><!-- /.product-desc -->
                             <div class="product__quantity d-flex mb-30">
-                                <div class="quantity__input-wrap mr-20">
-                                    <i class="decrease-qty fa fa-minus"></i>
+                                <div class="quantity__input-wrap mr-20"
+                                    data-url="{{ route('home.product.update-item-in-cart', ['productId' => $product->id]) }}"
+                                    data-id="{{ $product->id }}">
+
+                                    <i class="decrease-qty fa fa-minus qtybtn"></i>
                                     <input type="number" value="1" class="qty-input">
-                                    <i class="increase-qty fa fa-plus"></i>
+                                    <i class="increase-qty fa fa-plus qtybtn"></i>
+
                                 </div>
-                                <a class="btn btn__secondary btn__rounded" href="#">add to cart</a>
+                                <a data-url="{{ route('home.product.add-to-cart', ['productId' => $product->id]) }}"
+                                    class="btn btn__secondary btn__rounded add-to-cart" href="#">add to cart</a>
                             </div><!-- /.product-quantity -->
                             <div class="product__meta-details">
                                 <ul class="list-unstyled mb-30">
@@ -185,6 +180,42 @@
             </div><!-- /.row -->
         </div><!-- /.container -->
     </section><!-- /.shop single -->
+@endsection
 
-    <!-- ========================
+@section('js-custom')
+    <script>
+        $(document).ready(function() {
+            $('.add-to-cart').on('click', function(event) {
+                event.preventDefault();
+                let url = $(this).data('url');
+                let qty = $('.qty-input').val();
+                url = `${url}/${qty}`;
+
+                $.ajax({
+                    method: 'get', //method form
+                    url: url, //action form
+                    success: function(response) {
+                        Swal.fire({
+                            icon: 'success',
+                            // title: 'Notification',
+                            text: response.message,
+                        });
+                        $('#total-product').html(`Shopping cart - ${response.total_items}`);
+                    },
+                    statusCode: {
+                        401: function() {
+                            window.location.href = '{{ route('login') }}';
+                        },
+                        404: function() {
+                            Swal.fire({
+                                icon: 'error',
+                                text: "Can't add product to cart",
+                            });
+                        },
+                    },
+                });
+            });
+
+        });
+    </script>
 @endsection

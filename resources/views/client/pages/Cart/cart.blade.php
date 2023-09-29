@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ========================
-                                                                                                                                                                                                                                                                                                                                                                           page title
-                                                                                                                                                                                                                                                                                                                                                                        =========================== -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               page title
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            =========================== -->
     <section class="page-title pt-30 pb-30">
         <div class="container">
             <div class="row">
@@ -21,8 +21,8 @@
     </section><!-- /.page-title -->
 
     <!-- =========================
-                                                                                                                                                                                                                                                                                                                                                                                      Shopping Cart
-                                                                                                                                                                                                                                                                                                                                                                              =========================== -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Shopping Cart
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  =========================== -->
     <section class="shopping-cart pt-0 pb-100">
         <div class="container">
             <div class="row">
@@ -66,36 +66,17 @@
                                             {{ number_format($item['qty'] * $item['price'], 2) }}</td>
                                     </tr>
                                 @endforeach
-                                {{-- <tr class="cart-product">
-                                    <td class="d-flex align-items-center">
-                                        <i class="fas fa-times cart-product__remove"></i>
-                                        <div class="cart-product__img">
-                                            <img src="assets/images/products/3.jpg" alt="product" />
-                                        </div>
-                                        <h5 class="cart-product__title">Biotin Complex</h5>
-                                    </td>
-                                    <td class="cart-product__price">$ 14.00</td>
-                                    <td class="cart-product__quantity">
-                                        <div class="quantity__input-wrap">
-                                            <i class="fa fa-minus decrease-qty"></i>
-                                            <input type="number" value="1" class="qty-input">
-                                            <i class="fa fa-plus increase-qty"></i>
-                                        </div>
-                                    </td>
-                                    <td class="cart-product__total">$ 39.00</td>
-                                </tr> --}}
                                 <tr class="cart-product__action">
                                     <td colspan="4">
                                         <div
                                             class="cart-product__action-content d-flex align-items-center justify-content-between">
-                                            <form class="d-flex flex-wrap">
-                                                <input type="text" class="form-control mb-10 mr-10"
-                                                    placeholder="Coupon Code">
-                                                <button type="submit" class="btn btn__secondary mb-10">Apply
-                                                    Coupon</button>
-                                            </form>
+                                            <a href="{{ route('home.product') }}" class="btn btn__secondary mb-10">
+                                                &larr; Continue shopping </a>
+
                                             <div>
-                                                <a class="btn btn__secondary mr-10" href="#">update cart</a>
+                                                <a class="btn btn__secondary mr-10 empty-cart" href="#">
+                                                    Delete cart
+                                                </a>
                                                 <a class="btn btn__secondary" href="#">Checkout</a>
                                             </div>
                                         </div>
@@ -142,6 +123,10 @@
                             text: response.message,
                         });
                         $(`tr#${id}`).empty();
+                        $('#total-product').html(`Shopping cart - ${response.total_items}`);
+                        $('.total_checkout').html('$ ' + response.total_price.toFixed(2)
+                            .replace(
+                                /(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
                     }
                 });
             });
@@ -157,9 +142,6 @@
 
                 url = `${url}/${qty}`;
 
-                // alert(url)
-                // return;
-
                 $.ajax({
                     method: 'GET',
                     url: url,
@@ -169,20 +151,40 @@
                             text: response.message,
                         });
                         //chỗ này chỉ hiển thị lên màn hình thôi, lúc load lại thì bên html đã lấy qty * price rồi nên thấy đúng, nếu k có dòng dưới thì phải đc load lại trang mới thấy đc               
+                        //totalPrice cua 1 san pham
                         $(`tr#${id} .cart-product__total`).html("$ " + totalPrice.toFixed(2)
                             .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
 
-
-                        // $('#total-product').html("Shopping cart - "
-                        //     response.total_items);
-                        // $('#total-price-cart').html('$' + response.total_price.toFixed(2)
-                        //     .replace(
-                        //         /(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
-
-                        //response.total_price la total cua tat ca product
+                        //totalPrice cua tat ca san pham
                         $('.total_checkout').html('$ ' + response.total_price.toFixed(2)
                             .replace(
                                 /(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.empty-cart').on('click', function(e) {
+                e.preventDefault();
+                $.ajax({
+                    method: 'post',
+                    url: '{{ route('home.product.emmptyCart') }}',
+                    data: {
+                        '_token': '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            icon: 'success',
+                            text: response.message,
+                        });
+
+                        $('#total-product').html(`Shopping cart - ${response.total_items}`);
+                        $('.total_checkout').html('$ ' + response.total_price.toFixed(2)
+                            .replace(
+                                /(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+                        $(".cart-product").empty();
                     }
                 });
             });

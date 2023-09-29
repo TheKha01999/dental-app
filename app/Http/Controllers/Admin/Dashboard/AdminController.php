@@ -49,7 +49,7 @@ class AdminController extends Controller
             "updated_at" => Carbon::now()
         ]);
         $message = $check ? 'Created successfully' : 'Created failed';
-        dd($message);
+        // dd($message);
         //session flash
         return redirect()->route('admin.admins.index')->with('message', $message);
     }

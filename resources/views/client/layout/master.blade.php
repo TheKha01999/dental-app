@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{ asset('assets/client/css/libraries.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/client/css/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/client/css/general.css') }}" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
 
 <body>
@@ -37,6 +39,7 @@
     <script src="{{ asset('assets/client/js/plugins.js') }}"></script>
     <script src="{{ asset('assets/client/js/main.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     @yield('js-custom')
 </body>
 

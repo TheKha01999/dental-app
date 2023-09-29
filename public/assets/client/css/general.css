@@ -38,3 +38,34 @@
         padding: 5px 0 5px;
     }
 } */
+
+body>section.contact-layout2.pt-60.bg-overlay.bg-overlay-blue-gradient.pb-60>div>div>div>div>form>div>div:nth-child(3)>div>div>ul,
+body>section.contact-layout2.pt-60.bg-overlay.bg-overlay-blue-gradient.pb-60>div>div>div>div>form>div>div:nth-child(5)>div>div>ul,
+body>section.contact-layout2.pt-60.bg-overlay.bg-overlay-blue-gradient.pb-60>div>div>div>div>form>div>div:nth-child(8)>div>div>ul {
+    height: 200px;
+    overflow-y: scroll;
+}
+
+/* .form-group {
+    position: relative;
+}
+
+.error-message {
+    position: absolute;
+    top: 57px;
+    left: 28px;
+} */
+/* .form-group {
+    margin-bottom: 1px;
+    margin-top: 1px;
+} */
+
+.form-control {
+    margin-bottom: 20px;
+}
+
+/* DASHBOARD */
+/* .appointment {
+    height: 100vh;
+    overflow-y: scroll;
+} */

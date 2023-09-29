@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\Services\ServiceCategoryController;
 use App\Http\Controllers\Admin\Services\ServiceController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Client\About\ClientAboutController;
+use App\Http\Controllers\Client\Appointment\ClientBookingController;
 use App\Http\Controllers\Client\Blog\ClientBlogController;
 use App\Http\Controllers\Client\Doctor\ClientDoctorController;
 use App\Http\Controllers\Client\Faqs\ClientFaqsController;
@@ -40,15 +41,20 @@ use Illuminate\Support\Facades\Route;
 // })->name('/');
 
 Route::get('/dashboard', function () {
-    //Navbar
-    $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
-    $serviceCategories = DB::table('service_categories')->where('status', '=', '1')->get();
-    //////////////
 
-    return view('dashboard', [
-        'blogCategories' => $blogCategories,
-        'serviceCategories' => $serviceCategories
-    ]);
+    $bookings = DB::table('bookings')
+        ->select('bookings.*', 'branchs.name as branch_name', 'service_categories.name as service_name', 'doctors.name as doctor_name', 'booking_times.time as time', 'booking_status.status as status', 'users.name as name')
+        ->join('branchs', 'branchs.id', '=', 'bookings.branch_id')
+        ->join('service_categories', 'service_categories.id', '=', 'bookings.service_id')
+        ->join('doctors', 'doctors.id', '=', 'bookings.doctor_id')
+        ->join('users', 'users.id', '=', 'bookings.user_id')
+        ->join('booking_times', 'booking_times.code', '=', 'bookings.time_code')
+        ->join('booking_status', 'booking_status.code', '=', 'bookings.status_code')
+        ->orderBy('bookings.created_at', 'desc')
+        ->get();
+    // dd($bookings);
+
+    return view('dashboard', ['bookings' => $bookings]);
 })->middleware(['auth', 'verified', 'auth.checkadmin'])->name('dashboard');
 //Luu y auth ở đây nên check có ng đăng nhập chưa ở link này vs email veryfied ở đây luôn
 
@@ -62,7 +68,6 @@ require __DIR__ . '/auth.php';
 
 //Page Home of Client Management Below
 Route::get('/', [ClientHomeController::class, 'index'])->name('home');
-Route::get('home/appointment', [AppointmentController::class, 'index'])->name('home.appointment');
 
 //Client Management
 Route::prefix('home')->name('home.')->group(function () {
@@ -88,11 +93,20 @@ Route::prefix('home')->name('home.')->group(function () {
     Route::get('blog/{id}', [ClientBlogController::class, 'index'])->name('blog');
     Route::get('blog/detail/{id}', [ClientBlogController::class, 'detail'])->name('blog.detail');
 
+    //Page Appointmnet
+    Route::get('appointment', [ClientBookingController::class, 'index'])->name('appointment');
+    Route::post('appointment/store', [ClientBookingController::class, 'store'])->name('appointment.store');
+    Route::post('appointment/show-doctor-ajax', [ClientBookingController::class, 'showDoctor'])->name('appointment.show-doctor-ajax');
+
     //Page cart
-    Route::get('product/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('product.add-to-cart');
-    Route::get('product/delete-item-in-cart/{productId}', [CartController::class, 'deleteItem'])->name('product.delete-item-in-cart');
-    Route::get('product/update-item-in-cart/{productId}/{qty?}', [CartController::class, 'updateItem'])->name('product.update-item-in-cart');
-    Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+    // Route::get('product/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('product.add-to-cart');
+    Route::middleware('auth')->group(function () {
+        Route::get('product/add-to-cart/{productId}/{qty?}', [CartController::class, 'addToCart'])->name('product.add-to-cart');
+        Route::get('product/delete-item-in-cart/{productId}', [CartController::class, 'deleteItem'])->name('product.delete-item-in-cart');
+        Route::get('product/update-item-in-cart/{productId}/{qty?}', [CartController::class, 'updateItem'])->name('product.update-item-in-cart');
+        Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+        Route::post('product/emmptyCart', [CartController::class, 'emmptyCart'])->name('product.emmptyCart');
+    });
 });
 
 Route::get('check', function () {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Cart;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,9 +14,13 @@ class CartController extends Controller
         $cart = session()->get('cart') ?? [];
         return view('client.pages.Cart.cart', ['cart' => $cart]);
     }
-    public function addToCart($productId)
+    public function addToCart($productId, $qty)
     {
-        $product = DB::table('products')->find($productId);
+        $quantity = $qty;
+        $product = Product::findOrFail($productId);
+
+        // $product = DB::table('products')->find($productId);
+
         $cart = session()->get('cart') ?? [];
         $imagesLink = is_null($product->image) || !file_exists('images/' . $product->image) ? 'https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg' : asset('images/' . $product->image);
 
@@ -23,12 +28,17 @@ class CartController extends Controller
             'name' => $product->name,
             'price' => $product->price,
             'image' => $imagesLink,
-            'qty' => ($cart[$productId]['qty'] ?? 0) + 1
+            'qty' => ($cart[$productId]['qty'] ?? 0) + $quantity
         ];
 
         session()->put('cart', $cart);
-
-        return response()->json(['message' => 'Add product to cart success']);
+        $total_items = count($cart);
+        return response()->json(
+            [
+                'message' => 'Add product to cart success',
+                'total_items' => $total_items,
+            ]
+        );
     }
     public function deleteItem($productId)
     {
@@ -37,7 +47,15 @@ class CartController extends Controller
             unset($cart[$productId]);
             session()->put('cart', $cart);
         }
-        return response()->json(['message' => 'Delete item success']);
+        $total_items = count($cart);
+        $total_price = $this->calculateTotalPrice($cart);
+        return response()->json(
+            [
+                'message' => 'Delete item success',
+                'total_items' => $total_items,
+                'total_price' => $total_price,
+            ]
+        );
     }
     public function calculateTotalPrice($cart): float
     {
@@ -56,11 +74,20 @@ class CartController extends Controller
         }
 
         $total_price = $this->calculateTotalPrice($cart);
-        $total_items = count($cart);
+        // $total_items = count($cart);
         return response()->json([
             'message' => 'Update item success',
             'total_price' => $total_price,
-            'total_items' => $total_items
+            // 'total_items' => $total_items
+        ]);
+    }
+    public function emmptyCart()
+    {
+        session()->put('cart', []);
+        return response()->json([
+            'message' => 'Cart delete success',
+            'total_price' => 0,
+            'total_items' => 0,
         ]);
     }
 }

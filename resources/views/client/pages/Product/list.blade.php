@@ -1,9 +1,7 @@
 @extends('client.layout.master')
 
 @section('content')
-    <!-- ========================
-                                                                                                                                                                                                                                                                       page title
-                                                                                                                                                                                                                                                                    =========================== -->
+    =========================== -->
     <section class="page-title page-title-layout5 text-center">
         <div class="bg-img"><img src="{{ asset('assets/client/images/backgrounds/6.jpg') }}" alt="background"></div>
         <div class="container">
@@ -20,10 +18,7 @@
             </div><!-- /.row -->
         </div><!-- /.container -->
     </section><!-- /.page-title -->
-
-    <!-- ========================
-                                                                                                                                                                                                                                                                         shop
-                                                                                                                                                                                                                                                                      =========================== -->
+    =========================== -->
     <section class="shop-grid">
         <div class="container">
             <div class="row">
@@ -177,12 +172,15 @@
 @section('title')
     Products
 @endsection
+
 @section('js-custom')
     <script>
         $(document).ready(function() {
             $('.add-to-cart').on('click', function(event) {
                 event.preventDefault();
                 let url = $(this).data('url');
+                let qty = 1;
+                url = `${url}/${qty}`;
                 $.ajax({
                     method: 'get', //method form
                     url: url, //action form
@@ -192,7 +190,19 @@
                             // title: 'Notification',
                             text: response.message,
                         });
-                    }
+                        $('#total-product').html(`Shopping cart - ${response.total_items}`);
+                    },
+                    statusCode: {
+                        401: function() {
+                            window.location.href = '{{ route('login') }}';
+                        },
+                        404: function() {
+                            Swal.fire({
+                                icon: 'error',
+                                text: "Can't add product to cart",
+                            });
+                        },
+                    },
                 });
             });
         });

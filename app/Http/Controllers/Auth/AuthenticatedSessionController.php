@@ -40,13 +40,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // $result = DB::table('users')->where('email', $request->email)->get()->first();
-
-        // Session::put('name', $result->name);
-
-        // if (Auth::check() && Auth::user()->role === 1) {
-        //     return redirect()->route('admin.products.index');
-        // }
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
