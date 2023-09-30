@@ -23,15 +23,9 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        //Navbar
-        $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
-        $serviceCategories = DB::table('service_categories')->where('status', '=', '1')->get();
-        //////////////
 
-        return view('auth.register', [
-            'blogCategories' => $blogCategories,
-            'serviceCategories' => $serviceCategories
-        ]);
+
+        return view('auth.register');
     }
 
     /**

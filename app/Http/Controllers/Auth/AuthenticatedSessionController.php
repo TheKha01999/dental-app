@@ -19,16 +19,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        //Navbar
-        $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
-        $serviceCategories = DB::table('service_categories')->where('status', '=', '1')->get();
-        //////////////
-
-
-        return view('auth.login', [
-            'blogCategories' => $blogCategories,
-            'serviceCategories' => $serviceCategories
-        ]);
+        return view('auth.login');
     }
 
     /**

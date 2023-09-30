@@ -10,10 +10,6 @@ class ClientDoctorController extends Controller
 {
     public function showAllDoctor()
     {
-        //Navbar
-        $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
-        $serviceCategories = DB::table('service_categories')->where('status', '=', '1')->get();
-        ///////////////////////
 
         $doctors = DB::table('doctors')
             ->select('doctors.*', 'service_categories.name as specialist')
@@ -25,18 +21,13 @@ class ClientDoctorController extends Controller
         return view(
             'client.pages.Doctors.list',
             [
-                'blogCategories' => $blogCategories,
-                'serviceCategories' => $serviceCategories,
                 'doctors' => $doctors
             ]
         );
     }
     public function showSingleDoctor($id)
     {
-        //Navbar
-        $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
-        $serviceCategories = DB::table('service_categories')->where('status', '=', '1')->get();
-        ///////////////////////
+
 
         $doctor = DB::table('doctors')
             ->select('doctors.*', 'service_categories.name as specialist')
@@ -50,8 +41,6 @@ class ClientDoctorController extends Controller
         return view(
             'client.pages.Doctors.singleDoctor',
             [
-                'blogCategories' => $blogCategories,
-                'serviceCategories' => $serviceCategories,
                 'doctor' => $doctor
             ]
         );

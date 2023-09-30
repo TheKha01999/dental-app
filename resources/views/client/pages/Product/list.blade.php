@@ -1,7 +1,6 @@
 @extends('client.layout.master')
 
 @section('content')
-    =========================== -->
     <section class="page-title page-title-layout5 text-center">
         <div class="bg-img"><img src="{{ asset('assets/client/images/backgrounds/6.jpg') }}" alt="background"></div>
         <div class="container">
@@ -18,7 +17,7 @@
             </div><!-- /.row -->
         </div><!-- /.container -->
     </section><!-- /.page-title -->
-    =========================== -->
+
     <section class="shop-grid">
         <div class="container">
             <div class="row">

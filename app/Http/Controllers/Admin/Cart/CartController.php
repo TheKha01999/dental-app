@@ -90,4 +90,9 @@ class CartController extends Controller
             'total_items' => 0,
         ]);
     }
+    public function checkout()
+    {
+        $cart = session()->get('cart', []);
+        return view('client.pages.Checkout.checkout', ['cart' => $cart]);
+    }
 }

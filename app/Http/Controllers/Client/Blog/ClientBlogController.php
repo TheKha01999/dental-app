@@ -12,7 +12,6 @@ class ClientBlogController extends Controller
 {
     //Navbar
     public $blogCategories;
-    public $serviceCategories;
     // ////
     public function __construct()
     {
@@ -24,10 +23,8 @@ class ClientBlogController extends Controller
             ->leftJoin('blog_categories', 'blogs.blog_categories_id', '=', 'blog_categories.id')
             ->groupBy('blog_categories.name')
             ->get();
-        $serviceCategories = DB::table('service_categories')->where('status', '=', '1')->get();
 
         $this->blogCategories = $blogCategories;
-        $this->serviceCategories = $serviceCategories;
     }
     public function index($id)
     {
@@ -43,8 +40,6 @@ class ClientBlogController extends Controller
             'client.pages.Blog.blog',
             [
                 'blogs' => $blogs,
-                // 'blogCategories' => $this->blogCategories,
-                // 'serviceCategories' => $this->serviceCategories,
             ]
         );
     }
@@ -68,7 +63,6 @@ class ClientBlogController extends Controller
                 'blogCategories' => $this->blogCategories,
                 'blog' => $blog,
                 'recentPosts' => $recentPosts,
-                // 'serviceCategories' => $this->serviceCategories,
             ]
         );
     }

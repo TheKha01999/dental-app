@@ -16,12 +16,14 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Client\About\ClientAboutController;
 use App\Http\Controllers\Client\Appointment\ClientBookingController;
 use App\Http\Controllers\Client\Blog\ClientBlogController;
+use App\Http\Controllers\Client\CheckOut\OrderController;
 use App\Http\Controllers\Client\Doctor\ClientDoctorController;
 use App\Http\Controllers\Client\Faqs\ClientFaqsController;
 use App\Http\Controllers\Client\Home\ClientHomeController;
 use App\Http\Controllers\Client\ProductsController as ClientProductsController;
 use App\Http\Controllers\Client\Services\ClientServicesController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +46,7 @@ Route::get('/dashboard', function () {
 
     $bookings = DB::table('bookings')
         ->select('bookings.*', 'branchs.name as branch_name', 'service_categories.name as service_name', 'doctors.name as doctor_name', 'booking_times.time as time', 'booking_status.status as status', 'users.name as name')
+        ->where('bookings.user_id', Auth::user()->id)
         ->join('branchs', 'branchs.id', '=', 'bookings.branch_id')
         ->join('service_categories', 'service_categories.id', '=', 'bookings.service_id')
         ->join('doctors', 'doctors.id', '=', 'bookings.doctor_id')
@@ -94,8 +97,8 @@ Route::prefix('home')->name('home.')->group(function () {
     Route::get('blog/detail/{id}', [ClientBlogController::class, 'detail'])->name('blog.detail');
 
     //Page Appointmnet
-    Route::get('appointment', [ClientBookingController::class, 'index'])->name('appointment');
-    Route::post('appointment/store', [ClientBookingController::class, 'store'])->name('appointment.store');
+    Route::get('appointment', [ClientBookingController::class, 'index'])->name('appointment')->middleware(['auth', 'auth.checkadmin']);
+    Route::post('appointment/store', [ClientBookingController::class, 'store'])->name('appointment.store')->middleware(['auth', 'auth.checkadmin']);
     Route::post('appointment/show-doctor-ajax', [ClientBookingController::class, 'showDoctor'])->name('appointment.show-doctor-ajax');
 
     //Page cart
@@ -106,7 +109,11 @@ Route::prefix('home')->name('home.')->group(function () {
         Route::get('product/update-item-in-cart/{productId}/{qty?}', [CartController::class, 'updateItem'])->name('product.update-item-in-cart');
         Route::get('cart', [CartController::class, 'index'])->name('cart.index');
         Route::post('product/emmptyCart', [CartController::class, 'emmptyCart'])->name('product.emmptyCart');
+        Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
+        Route::post('placeorder', [OrderController::class, 'placeOrder'])->name('place-order');
     });
+
+    //page checkout
 });
 
 Route::get('check', function () {
