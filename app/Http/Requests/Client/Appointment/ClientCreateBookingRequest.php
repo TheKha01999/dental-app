@@ -22,7 +22,7 @@ class ClientCreateBookingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user' => 'required',
+            // 'user' => 'required',
             'branch' => 'required',
             'service' => 'required',
             'day' => 'required',

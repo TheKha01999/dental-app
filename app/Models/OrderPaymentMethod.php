@@ -9,9 +9,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class OrderPaymentMethod extends Model
 {
     use HasFactory, SoftDeletes;
+    const STATUS_PENDING = 'pending';
     protected $table = 'order_payment_methods';
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id');
     }
+    protected $fillable = [
+        'order_id',
+        'payment_provider',
+        'status',
+        'total',
+        'note'
+    ];
 }

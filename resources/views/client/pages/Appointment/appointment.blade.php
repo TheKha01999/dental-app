@@ -75,8 +75,8 @@
                                 <div class="col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <i class="icon-news form-group-icon"></i>
-                                        <input type="text" value="{{ Auth::user()->id }}" class="form-control"
-                                            placeholder="{{ Auth::user()->name }}" id="user" name="user" required>
+                                        <input type="text" value="{{ Auth::user()->name }}" class="form-control"
+                                            id="user" name="user" disabled>
                                         @error('user')
                                             <label id="contact-name-error" class="error"> {{ $message }}</label>
                                         @enderror

@@ -92,7 +92,7 @@
                         <div class="mb-3">
                             <label for="address2">Phone Number</label>
                             <input name="phone" type="text" class="form-control" id="phone"
-                                placeholder="Ex: 0909990009">
+                                value="{{ Auth::user()->phone }}" placeholder="Ex: 0909990009">
                         </div>
 
                         <div class="mb-3">

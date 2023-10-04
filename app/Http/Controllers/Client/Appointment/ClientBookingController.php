@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Appointment\ClientCreateBookingRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ClientBookingController extends Controller
@@ -35,7 +36,7 @@ class ClientBookingController extends Controller
         $status = 'S1';
         // dd($originalDate);
         $check = DB::table('bookings')->insert([
-            "user_id" => $request->user,
+            "user_id" => Auth::user()->id,
             "branch_id" => $request->branch,
             "service_id" => $request->service,
             "doctor_id" => $request->doctor,
@@ -47,7 +48,7 @@ class ClientBookingController extends Controller
         ]);
 
         $message = $check ? 'Created successfully' : 'Created failed';
-        dd($message);
+        // dd($message);
         return redirect()->route('dashboard')->with('message', $message);
     }
     public function showDoctor(Request $request)
