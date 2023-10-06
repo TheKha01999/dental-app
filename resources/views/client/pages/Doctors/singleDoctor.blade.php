@@ -68,20 +68,24 @@
                                 </div>
                                 <h4 class="widget__title">Opening Hours</h4>
                                 <ul class="time__list list-unstyled mb-0">
-                                    <li><span>Monday - Friday</span><span>8.00 - 7:00 pm</span></li>
-                                    <li><span>Saturday</span><span>9.00 - 10:00 pm</span></li>
-                                    <li><span>Sunday</span><span>10.00 - 12:00 pm</span></li>
+                                    <li><span>Monday</span><span>9.00 - 5:00 pm</span></li>
+                                    <li><span>Tuesday</span><span>9.00 - 5:00 pm</span></li>
+                                    <li><span>Wednesday</span><span>9.00 - 5:00 pm</span></li>
+                                    <li><span>Thursday</span><span>9.00 - 5:00 pm</span></li>
+                                    <li><span>Friday</span><span>9.00 - 5:00 pm</span></li>
+                                    <li><span>Saturday</span><span>9.00 - 5:00 pm</span></li>
+                                    <li><span>Sunday</span><span>9.00 - 5:00 pm</span></li>
                                 </ul>
                             </div><!-- /.widget-content -->
                         </div><!-- /.widget-schedule -->
                     </aside><!-- /.sidebar -->
                 </div><!-- /.col-lg-4 -->
                 <div class="col-sm-12 col-md-12 col-lg-8">
-                    <div class="text-block mb-50">
-                        {{ $doctor->biography }}
+                    <div class="text-block mb-50 text-block__desc">
+                        {!! $doctor->biography !!}
                     </div><!-- /.text-block -->
 
-                    <section class="contact-layout4 bg-overlay bg-overlay-secondary-gradient pb-50 pb-50">
+                    {{-- <section class="contact-layout4 bg-overlay bg-overlay-secondary-gradient pb-50 pb-50">
                         <div class="bg-img"><img src="assets/images/banners/3.jpg" alt="banner"></div>
                         <div class="contact-panel mb-0">
                             <form class="contact-panel__form" method="post" action="assets/php/contact.php"
@@ -160,7 +164,7 @@
                                 </div><!-- /.row -->
                             </form>
                         </div>
-                    </section><!-- /.contact layout 2 -->
+                    </section><!-- /.contact layout 2 --> --}}
                 </div><!-- /.col-lg-8 -->
             </div><!-- /.row -->
         </div><!-- /.container -->

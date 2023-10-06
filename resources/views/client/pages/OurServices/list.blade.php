@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ========================
-                                                                   page title
-                                                                =========================== -->
+                                                                                                                   page title
+                                                                                                                =========================== -->
     <section class="page-title page-title-layout2 bg-overlay text-center pb-0">
         <div class="bg-img"><img src="{{ asset('images/' . $service->image) }}" alt="background"></div>
         <div class="container">
@@ -26,8 +26,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-8">
-                    <div class="text-block mb-50">
-                        {{ $service->content }}
+                    <div class="text-block mb-50 text-block__desc">
+                        {!! $service->content !!}
                     </div><!-- /.text-block -->
 
 

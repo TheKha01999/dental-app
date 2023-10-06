@@ -110,7 +110,9 @@ Route::prefix('home')->name('home.')->group(function () {
         Route::get('cart', [CartController::class, 'index'])->name('cart.index');
         Route::post('product/emmptyCart', [CartController::class, 'emmptyCart'])->name('product.emmptyCart');
         Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
+
         Route::post('placeorder', [OrderController::class, 'placeOrder'])->name('place-order');
+        Route::get('vnpay-callback', [OrderController::class, 'vnpayCallback'])->name('vnpay-callback');
     });
 
     //page checkout

@@ -34,7 +34,13 @@
                                         href="{{ route('home.singleDoctor', ['id' => $doctor->id]) }}">{{ $doctor->name }}</a>
                                 </h5>
                                 <p class="member__job">{{ $doctor->specialist }}</p>
-                                <p class="member__desc">{{ $doctor->description }}</p>
+                                @php
+                                    $shortContent = $doctor->description;
+                                    $shortContent = explode(' ', $shortContent);
+                                    $shortContent = array_splice($shortContent, 0, 22);
+                                    $shortContent = implode(' ', $shortContent);
+                                @endphp
+                                <p class="member__desc">{{ $shortContent }}...</p>
                                 <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
                                     <a href="{{ route('home.singleDoctor', ['id' => $doctor->id]) }}"
                                         class="btn btn__secondary btn__link btn__rounded">
