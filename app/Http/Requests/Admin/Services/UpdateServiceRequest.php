@@ -22,7 +22,7 @@ class UpdateServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|min:5|max:100|unique:services,title,' . $this->service,
+            'title' => 'required|min:5|max:1000|unique:services,title,' . $this->service,
             "slug" => "required",
             "content" => "required",
             "description" => "required",

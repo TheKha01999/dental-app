@@ -10,7 +10,7 @@
                     <p class="pagetitle__desc">Medcity has been present in Europe since 1990, offering innovative solutions,
                         specializing in medical services for treatment of medical infrastructure.
                     </p>
-                    <a href="appointment.html" class="btn btn__primary btn__rounded">
+                    <a href="{{ route('home.appointment') }}" class="btn btn__primary btn__rounded">
                         <span>Make Appointment</span>
                         <i class="icon-arrow-right"></i>
                     </a>

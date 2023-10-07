@@ -10,18 +10,21 @@ class ClientHomeController extends Controller
 {
     public function index()
     {
-        //Navbar
-        // $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
-        // $serviceCategories = DB::table('service_categories')->where('status', '=', '1')->get();
-        /////
-        return view('client.pages.Home.home');
-        // return view(
-        //     'client.pages.Home.home',
-        //     [
-        //         'blogCategories' => $blogCategories,
-        //         'serviceCategories' => $serviceCategories
-        //     ]
-        // );
-        // return view('client.pages.Home.home');
+
+        $serviceCategories = DB::table('service_categories')->where('status', '=', '1')->get();
+        $doctors = DB::table('doctors')
+            ->select('doctors.*', 'service_categories.name as specialist')
+            ->where('doctors.status', '1')
+            ->where('service_categories.status', '1')
+            ->join('service_categories', 'service_categories.id', '=', 'doctors.service_categories_id')
+            ->get();
+
+        return view(
+            'client.pages.Home.home',
+            [
+                'doctors' => $doctors,
+                'serviceCategories' => $serviceCategories
+            ]
+        );
     }
 }

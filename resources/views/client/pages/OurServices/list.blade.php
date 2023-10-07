@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ========================
-                                                                                                                   page title
-                                                                                                                =========================== -->
+                                                                                                                                           page title
+                                                                                                                                        =========================== -->
     <section class="page-title page-title-layout2 bg-overlay text-center pb-0">
         <div class="bg-img"><img src="{{ asset('images/' . $service->image) }}" alt="background"></div>
         <div class="container">
@@ -43,65 +43,19 @@
                         <div class="slick-carousel"
                             data-slick='{"slidesToShow": 3, "slidesToScroll": 1, "autoplay": true, "arrows": false, "dots": false, "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
                             <!-- Member #1 -->
-                            <div class="member">
-                                <div class="member__img">
-                                    <img src="assets/images/team/1.jpg" alt="member img">
-                                </div><!-- /.member-img -->
-                                <div class="member__info">
-                                    <h5 class="member__name"><a href="doctors-single-doctor1.html">Mike Dooley</a></h5>
-                                    <p class="member__job">Cardiology Specialist</p>
-                                </div><!-- /.member-info -->
-                            </div><!-- /.member -->
-                            <!-- Member #2 -->
-                            <div class="member">
-                                <div class="member__img">
-                                    <img src="assets/images/team/2.jpg" alt="member img">
-                                </div><!-- /.member-img -->
-                                <div class="member__info">
-                                    <h5 class="member__name"><a href="doctors-single-doctor1.html">Dermatologists</a></h5>
-                                    <p class="member__job">Cardiology Specialist</p>
-                                </div><!-- /.member-info -->
-                            </div><!-- /.member -->
-                            <!-- Member #3 -->
-                            <div class="member">
-                                <div class="member__img">
-                                    <img src="assets/images/team/3.jpg" alt="member img">
-                                </div><!-- /.member-img -->
-                                <div class="member__info">
-                                    <h5 class="member__name"><a href="doctors-single-doctor1.html">Maria Andaloro</a></h5>
-                                    <p class="member__job">Pediatrician</p>
-                                </div><!-- /.member-info -->
-                            </div><!-- /.member -->
-                            <!-- Member #4 -->
-                            <div class="member">
-                                <div class="member__img">
-                                    <img src="assets/images/team/4.jpg" alt="member img">
-                                </div><!-- /.member-img -->
-                                <div class="member__info">
-                                    <h5 class="member__name"><a href="doctors-single-doctor1.html">Dupree Black</a></h5>
-                                    <p class="member__job">Urologist</p>
-                                </div><!-- /.member-info -->
-                            </div><!-- /.member -->
-                            <!-- Member #5 -->
-                            <div class="member">
-                                <div class="member__img">
-                                    <img src="assets/images/team/5.jpg" alt="member img">
-                                </div><!-- /.member-img -->
-                                <div class="member__info">
-                                    <h5 class="member__name"><a href="doctors-single-doctor1.html">Markus skar</a></h5>
-                                    <p class="member__job">Laboratory</p>
-                                </div><!-- /.member-info -->
-                            </div><!-- /.member -->
-                            <!-- Member #6 -->
-                            <div class="member">
-                                <div class="member__img">
-                                    <img src="assets/images/team/6.jpg" alt="member img">
-                                </div><!-- /.member-img -->
-                                <div class="member__info">
-                                    <h5 class="member__name"><a href="doctors-single-doctor1.html">Kiano Barker</a></h5>
-                                    <p class="member__job">Pathologist </p>
-                                </div><!-- /.member-info -->
-                            </div><!-- /.member -->
+                            @foreach ($doctors as $doctor)
+                                <div class="member">
+                                    <div class="member__img">
+                                        <img src="{{ asset('images/' . $doctor->image) }}" alt="member img">
+                                    </div><!-- /.member-img -->
+                                    <div class="member__info">
+                                        <h5 class="member__name"><a
+                                                href="{{ route('home.singleDoctor', ['id' => $doctor->id]) }}">{{ $doctor->name }}</a>
+                                        </h5>
+                                        <p class="member__job">{{ $doctor->specialist }}</p>
+                                    </div><!-- /.member-info -->
+                                </div><!-- /.member -->
+                            @endforeach
                         </div><!-- /.carousel -->
                     </section><!-- /.Team -->
                 </div><!-- /.col-lg-8 -->
@@ -142,9 +96,13 @@
                                 </div>
                                 <h4 class="widget__title">Opening Hours</h4>
                                 <ul class="time__list list-unstyled mb-0">
-                                    <li><span>Monday - Friday</span><span>8.00 - 7:00 pm</span></li>
-                                    <li><span>Saturday</span><span>9.00 - 10:00 pm</span></li>
-                                    <li><span>Sunday</span><span>10.00 - 12:00 pm</span></li>
+                                    <li><span>Monday</span><span>9.00 - 5:00 pm</span></li>
+                                    <li><span>Tuesday</span><span>9.00 - 5:00 pm</span></li>
+                                    <li><span>Wednesday</span><span>9.00 - 5:00 pm</span></li>
+                                    <li><span>Thursday</span><span>9.00 - 5:00 pm</span></li>
+                                    <li><span>Friday</span><span>9.00 - 5:00 pm</span></li>
+                                    <li><span>Saturday</span><span>9.00 - 5:00 pm</span></li>
+                                    <li><span>Sunday</span><span>9.00 - 5:00 pm</span></li>
                                 </ul>
                             </div><!-- /.widget-content -->
                         </div><!-- /.widget-schedule -->

@@ -1,8 +1,8 @@
 @extends('client.layout.master')
 @section('content')
     <!-- ========================
-                                                                                                                                                                                       page title
-                                                                                                                                                                                    =========================== -->
+                                                                                                                                                                                               page title
+                                                                                                                                                                                            =========================== -->
     <section class="page-title page-title-layout1 bg-overlay">
         <div class="bg-img"><img src="{{ asset('assets/client/images/page-titles/1.jpg') }}" alt="background"></div>
         <div class="container">
@@ -13,11 +13,11 @@
                         solutions, specializing in medical services for treatment of medical infrastructure.
                     </p>
                     <div class="d-flex flex-wrap align-items-center">
-                        <a href="appointment.html" class="btn btn__primary btn__rounded mr-30">
+                        <a href="{{ route('home.allDoctors') }}" class="btn btn__primary btn__rounded mr-30">
                             <span>Find A Doctor</span>
                             <i class="icon-arrow-right"></i>
                         </a>
-                        <a href="services.html" class="btn btn__white btn__rounded">
+                        <a href="{{ route('home.services', ['id' => 1]) }}" class="btn btn__white btn__rounded">
                             <span>Our Services</span>
                             <i class="icon-arrow-right"></i>
                         </a>
@@ -29,8 +29,8 @@
 
 
     <!-- ========================
-                                                                                                                                                                              About Layout 1
-                                                                                                                                                                            =========================== -->
+                                                                                                                                                                                      About Layout 1
+                                                                                                                                                                                    =========================== -->
     <section class="about-layout1 pb-0">
         <div class="container">
             <div class="row">

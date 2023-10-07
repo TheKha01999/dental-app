@@ -367,107 +367,25 @@
                 </div><!-- /.col-lg-6 -->
             </div><!-- /.row -->
             <div class="row">
-                <!-- service item #1 -->
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <div class="service-item">
-                        <div class="service__icon">
-                            <img src="{{ asset('assets/client/images/services/1.jpg') }}" alt="">
-                        </div><!-- /.service__icon -->
-                        <div class="service__content">
-                            <h4 class="service__title">Neurology Clinic</h4>
-                            {{-- <p class="service__desc">Some neurologists receive subspecialty training focusing on a
-                                particular area
-                                of
-                                the fields, these training programs are called fellowships, and are one to two years.
-                            </p>
-                            <ul class="list-items list-items-layout1 list-unstyled">
-                                <li>Neurocritical Care</li>
-                                <li>Neuro Oncology</li>
-                                <li>Geriatric Neurology</li>
-                            </ul> --}}
-                            <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
-                                <span>Read More</span>
-                                <i class="icon-arrow-right"></i>
-                            </a>
-                        </div><!-- /.service__content -->
-                    </div><!-- /.service-item -->
-                </div><!-- /.col-lg-4 -->
-                <!-- service item #2 -->
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <div class="service-item">
-                        <div class="service__icon">
-                            <img src="{{ asset('assets/client/images/services/2.jpg') }}" alt="">
-                        </div><!-- /.service__icon -->
-                        <div class="service__content">
-                            <h4 class="service__title">Cardiology Clinic</h4>
-                            <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
-                                <span>Read More</span>
-                                <i class="icon-arrow-right"></i>
-                            </a>
-                        </div><!-- /.service__content -->
-                    </div><!-- /.service-item -->
-                </div><!-- /.col-lg-4 -->
-                <!-- service item #3 -->
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <div class="service-item">
-                        <div class="service__icon">
-                            <img src="{{ asset('assets/client/images/services/3.jpg') }}" alt="">
-                        </div><!-- /.service__icon -->
-                        <div class="service__content">
-                            <h4 class="service__title">Pathology Clinic</h4>
-                            <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
-                                <span>Read More</span>
-                                <i class="icon-arrow-right"></i>
-                            </a>
-                        </div><!-- /.service__content -->
-                    </div><!-- /.service-item -->
-                </div><!-- /.col-lg-4 -->
-                <!-- service item #4 -->
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <div class="service-item">
-                        <div class="service__icon">
-                            <img src="{{ asset('assets/client/images/services/4.jpg') }}" alt="">
-                        </div><!-- /.service__icon -->
-                        <div class="service__content">
-                            <h4 class="service__title">Laboratory Analysis</h4>
-                            <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
-                                <span>Read More</span>
-                                <i class="icon-arrow-right"></i>
-                            </a>
-                        </div><!-- /.service__content -->
-                    </div><!-- /.service-item -->
-                </div><!-- /.col-lg-4 -->
-                <!-- service item #5 -->
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <div class="service-item">
-                        <div class="service__icon">
-                            <img src="{{ asset('assets/client/images/services/5.jpg') }}" alt="">
-                        </div><!-- /.service__icon -->
-                        <div class="service__content">
-                            <h4 class="service__title">Pediatric Clinic</h4>
-                            <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
-                                <span>Read More</span>
-                                <i class="icon-arrow-right"></i>
-                            </a>
-                        </div><!-- /.service__content -->
-                    </div><!-- /.service-item -->
-                </div><!-- /.col-lg-4 -->
-                <!-- service item #6 -->
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <div class="service-item">
-                        <div class="service__icon">
-                            <img src="{{ asset('assets/client/images/services/6.jpg') }}" alt="">
+                @foreach ($serviceCategories as $serviceCategory)
+                    <!-- service item #1 -->
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="service-item">
+                            <div class="service__icon">
+                                <img src="{{ asset('images/' . $serviceCategory->image) }}" alt="">
+                            </div><!-- /.service__icon -->
+                            <div class="service__content">
+                                <h4 class="service__title">{{ $serviceCategory->name }}</h4>
 
-                        </div><!-- /.service__icon -->
-                        <div class="service__content">
-                            <h4 class="service__title">Cardiac Clinic</h4>
-                            <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
-                                <span>Read More</span>
-                                <i class="icon-arrow-right"></i>
-                            </a>
-                        </div><!-- /.service__content -->
-                    </div><!-- /.service-item -->
-                </div><!-- /.col-lg-4 -->
+                                <a href="{{ route('home.services', ['id' => $serviceCategory->id]) }}"
+                                    class="btn btn__secondary btn__outlined btn__rounded">
+                                    <span>Read More</span>
+                                    <i class="icon-arrow-right"></i>
+                                </a>
+                            </div><!-- /.service__content -->
+                        </div><!-- /.service-item -->
+                    </div><!-- /.col-lg-4 -->
+                @endforeach
             </div><!-- /.row -->
         </div><!-- /.container -->
     </section><!-- /.Services Layout 1 -->
@@ -495,44 +413,52 @@
                     <div class="slick-carousel"
                         data-slick='{"slidesToShow": 3, "slidesToScroll": 1, "autoplay": true, "arrows": false, "dots": false, "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
                         <!-- Member #1 -->
-                        <div class="member">
-                            <div class="member__img">
-                                <img src="{{ asset('assets/client/images/team/1.jpg') }}" alt="member img" />
-                            </div>
-                            <!-- /.member-img -->
-                            <div class="member__info">
-                                <h5 class="member__name">
-                                    <a href="doctors-single-doctor1.html">Mike Dooley</a>
-                                </h5>
-                                <p class="member__job">Cardiology Specialist</p>
-                                <p class="member__desc">
-                                    Muldoone obtained his undergraduate degree in Biomedical
-                                    Engineering at Tulane University prior to attending St
-                                    George's University School of Medicine
-                                </p>
-                                <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
-                                    <a href="doctors-single-doctor1.html"
-                                        class="btn btn__secondary btn__link btn__rounded">
-                                        <span>Read More</span>
-                                        <i class="icon-arrow-right"></i>
-                                    </a>
-                                    <ul class="social-icons list-unstyled mb-0">
-                                        <li>
-                                            <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="phone"><i class="fas fa-phone-alt"></i></a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.social-icons -->
+                        @foreach ($doctors as $doctor)
+                            <div class="member">
+                                <div class="member__img">
+                                    <img src="{{ asset('images/' . $doctor->image) }}" alt="member img" />
                                 </div>
+                                <!-- /.member-img -->
+                                <div class="member__info">
+                                    <h5 class="member__name">
+                                        <a
+                                            href="{{ route('home.singleDoctor', ['id' => $doctor->id]) }}">{{ $doctor->name }}</a>
+                                    </h5>
+                                    <p class="member__job">{{ $doctor->specialist }}</p>
+                                    @php
+                                        $shortContent = $doctor->description;
+                                        $shortContent = explode(' ', $shortContent);
+                                        $shortContent = array_splice($shortContent, 0, 22);
+                                        $shortContent = implode(' ', $shortContent);
+                                    @endphp
+                                    <p class="member__desc">
+                                        {{ $shortContent }}...
+                                    </p>
+                                    <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
+                                        <a href="{{ route('home.singleDoctor', ['id' => $doctor->id]) }}"
+                                            class="btn btn__secondary btn__link btn__rounded">
+                                            <span>Read More</span>
+                                            <i class="icon-arrow-right"></i>
+                                        </a>
+                                        <ul class="social-icons list-unstyled mb-0">
+                                            <li>
+                                                <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="phone"><i class="fas fa-phone-alt"></i></a>
+                                            </li>
+                                        </ul>
+                                        <!-- /.social-icons -->
+                                    </div>
+                                </div>
+                                <!-- /.member-info -->
                             </div>
-                            <!-- /.member-info -->
-                        </div>
-                        <!-- /.member -->
+                        @endforeach
+
+                        {{-- <!-- /.member -->
                         <!-- Member #2 -->
                         <div class="member">
                             <div class="member__img">
@@ -727,7 +653,7 @@
                             </div>
                             <!-- /.member-info -->
                         </div>
-                        <!-- /.member -->
+                        <!-- /.member --> --}}
                     </div>
                     <!-- /.carousel -->
                 </div>
