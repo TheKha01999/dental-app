@@ -2,16 +2,16 @@
 
 @section('content')
     <!-- ========================
-                                                                                                                                                                                                                                       page title
-                                                                                                                                                                                                                                    =========================== -->
+                                                                                                                                                                                                                                               page title
+                                                                                                                                                                                                                                            =========================== -->
     <section class="page-title pt-30 pb-30 text-center">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-12">
                     <nav>
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item"><a href="blog.html">Blog</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url()->previous() }}">Blog</a></li>
                             <li class="breadcrumb-item active" aria-current="page">{{ $blog->title }}</li>
                         </ol>
                     </nav>
@@ -21,8 +21,8 @@
     </section><!-- /.page-title -->
 
     <!-- ======================
-                                                                                                                                                                                                                                     Blog Single
-                                                                                                                                                                                                                                      ========================= -->
+                                                                                                                                                                                                                                             Blog Single
+                                                                                                                                                                                                                                              ========================= -->
     <section class="blog blog-single pt-0 pb-80">
         {{-- {{ dd($blog->blog_image) }} --}}
         <div class="container">

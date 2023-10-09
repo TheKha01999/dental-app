@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ========================
-                                                                                                                                                                                                                                       page title
-                                                                                                                                                                                                                                    =========================== -->
+                                                                                                                                                                                                                                               page title
+                                                                                                                                                                                                                                            =========================== -->
     <section class="page-title page-title-layout5 bg-overlay">
         <div class="bg-img"><img src="{{ asset('assets/client/images/page-titles/8.jpg') }}" alt="background"></div>
         <div class="container">
@@ -22,8 +22,8 @@
     </section><!-- /.page-title -->
 
     <!-- ======================
-                                                                                                                                                                                                                                        Blog Grid
-                                                                                                                                                                                                                                      ========================= -->
+                                                                                                                                                                                                                                                Blog Grid
+                                                                                                                                                                                                                                              ========================= -->
     <section class="blog-grid">
         <div class="container">
             <div class="row">
@@ -33,8 +33,7 @@
                         <div class="post-item">
                             <div class="post__img">
                                 <a href="blog-single-post.html">
-                                    <img src="{{ asset('assets/client/images/blog/grid/1.jpg') }}" alt="post image"
-                                        loading="lazy">
+                                    <img src="{{ asset('images/' . $blog->blog_image) }}" alt="post image" loading="lazy">
                                 </a>
                             </div><!-- /.post__img -->
                             <div class="post__body">
@@ -84,5 +83,3 @@
 @section('title')
     Blog
 @endsection
-
-

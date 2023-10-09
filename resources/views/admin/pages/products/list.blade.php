@@ -61,7 +61,7 @@
                                             <tr>
                                                 <td>{{ $stt++ }}</td>
                                                 <td>{{ $product->name }}</td>
-                                                <td>{{ $product->price }}</td>
+                                                <td>{{ number_format($product->price, 2, '.', ',') }} VND</td>
                                                 <td>
                                                     @php
                                                         $imagesLink = is_null($product->image) || !file_exists('images/' . $product->image) ? 'https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg' : asset('images/' . $product->image);

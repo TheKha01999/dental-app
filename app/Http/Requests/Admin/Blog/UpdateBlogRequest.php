@@ -22,7 +22,7 @@ class UpdateBlogRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|min:5|max:20|unique:blogs,title,' . $this->blog,
+            'title' => 'required|min:5|max:1000|unique:blogs,title,' . $this->blog,
             'blog_image' => 'image',
             'author' => 'required',
             'author_image' => 'image',
