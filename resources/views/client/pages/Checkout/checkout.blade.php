@@ -32,16 +32,18 @@
                         @foreach ($cart as $item)
                             @php $total += $item['price'] * $item['qty'] @endphp
                             <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                <div>
+                                <div style="width: 70%">
                                     <h6 class="my-0">{{ $item['name'] }}</h6>
                                 </div>
-                                <span class="text-muted">${{ number_format($item['price'] * $item['qty'], 2) }}</span>
+                                <span class="text-muted">
+                                    {{ number_format($item['price'] * $item['qty'], 0, '.', ',') }} VND
+                                </span>
                             </li>
                         @endforeach
 
                         <li class="list-group-item d-flex justify-content-between">
                             <span>Total (USD)</span>
-                            <strong>${{ number_format($total, 2) }}</strong>
+                            <strong>{{ number_format($total, 0, '.', ',') }} VND</strong>
                         </li>
                     </ul>
 

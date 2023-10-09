@@ -16,12 +16,27 @@ class CartController extends Controller
     }
     public function addToCart($productId, $qty)
     {
+        $cart = session()->get('cart') ?? [];
         $quantity = $qty;
         $product = Product::findOrFail($productId);
-
+        $product_remain = 0;
+        if ($cart !== []) {
+            $product_qty = $product->qty - ($cart[$productId]['qty'] ?? 0);
+        } else {
+            $product_qty = $product->qty;
+        }
         // $product = DB::table('products')->find($productId);
 
-        $cart = session()->get('cart') ?? [];
+        if ($quantity > $product_qty) {
+            return response()->json(
+                [
+                    'message' => 'Add product to cart fail. Only ' . $product_qty . ' products left in stock',
+                    'result' => false,
+                ]
+            );
+        }
+
+
         $imagesLink = is_null($product->image) || !file_exists('images/' . $product->image) ? 'https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg' : asset('images/' . $product->image);
 
         $cart[$productId] = [
@@ -30,6 +45,7 @@ class CartController extends Controller
             'image' => $imagesLink,
             'qty' => ($cart[$productId]['qty'] ?? 0) + $quantity
         ];
+        $product_remain = $product->qty - $cart[$productId]['qty'];
 
         session()->put('cart', $cart);
         $total_items = count($cart);
@@ -37,6 +53,8 @@ class CartController extends Controller
             [
                 'message' => 'Add product to cart success',
                 'total_items' => $total_items,
+                'result' => true,
+                'qty_remain' => $product_remain
             ]
         );
     }

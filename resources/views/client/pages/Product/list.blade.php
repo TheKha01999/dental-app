@@ -38,18 +38,35 @@
                                 <div class="product-item">
                                     <div class="product__img">
                                         <img src="{{ asset('images/' . $product->image) }}" alt="Product" loading="lazy">
+                                        @php
+                                            $cart = session()->get('cart', []);
+                                            if (isset($cart[$product->id]['qty'])) {
+                                                $qty_remain = $product->qty - $cart[$product->id]['qty'];
+                                            } else {
+                                                $qty_remain = $product->qty;
+                                            }
+                                        @endphp
                                         <div class="product__action">
-                                            <a data-url="{{ route('home.product.add-to-cart', ['productId' => $product->id]) }}"
-                                                href="#" class="btn btn__primary btn__rounded add-to-cart">
-                                                <i class="icon-cart"></i> <span>Add To Cart</span>
-                                            </a>
+                                            @if (!$qty_remain || !$product->qty)
+                                                <a style="pointer-events:none;"
+                                                    data-url="{{ route('home.product.add-to-cart', ['productId' => $product->id]) }}"
+                                                    href="#" class="btn btn-danger btn__rounded add-to-cart">
+                                                    <i class="icon-cart"></i> <span>Sold Out</span>
+                                                </a>
+                                            @else
+                                                <a data-url="{{ route('home.product.add-to-cart', ['productId' => $product->id]) }}"
+                                                    href="#" class="btn btn__primary btn__rounded add-to-cart">
+                                                    <i class="icon-cart"></i> <span>Add To Cart</span>
+                                                </a>
+                                            @endif
                                         </div><!-- /.product-action -->
                                     </div><!-- /.product-img -->
                                     <div class="product__info">
                                         <h4 class="product__title"><a
                                                 href="{{ route('home.product.single', ['id' => $product->id]) }}">{{ $product->name }}</a>
                                         </h4>
-                                        <span class="product__price">${{ number_format($product->price, 2) }}</span>
+                                        <span class="product__price">{{ number_format($product->price, 0, '.', ',') }}
+                                            VND</span>
                                     </div><!-- /.product-content -->
                                 </div><!-- /.product-item -->
                             </div><!-- /.col-lg-4 -->
@@ -184,12 +201,26 @@
                     method: 'get', //method form
                     url: url, //action form
                     success: function(response) {
-                        Swal.fire({
-                            icon: 'success',
-                            // title: 'Notification',
-                            text: response.message,
-                        });
-                        $('#total-product').html(`Shopping cart - ${response.total_items}`);
+                        if (response.result) {
+                            Swal.fire({
+                                icon: 'success',
+                                // title: 'Notification',
+                                text: response.message,
+                            });
+                            $('#total-product').html(`Shopping cart - ${response.total_items}`);
+                            if (!response.qty_remain) {
+                                $('.add-to-cart').css('pointer-events', 'none');
+                                $('.add-to-cart').html('Sold Out');
+                                $(".add-to-cart").removeClass("btn__primary").addClass(
+                                    "btn-danger");
+                            }
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                // title: 'Notification',
+                                text: response.message,
+                            });
+                        }
                     },
                     statusCode: {
                         401: function() {

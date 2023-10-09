@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ========================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           page title
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        =========================== -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       page title
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    =========================== -->
     <section class="page-title pt-30 pb-30">
         <div class="container">
             <div class="row">
@@ -21,8 +21,8 @@
     </section><!-- /.page-title -->
 
     <!-- =========================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Shopping Cart
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              =========================== -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  Shopping Cart
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          =========================== -->
     <section class="shopping-cart pt-0 pb-100">
         <div class="container">
             <div class="row">
@@ -50,7 +50,9 @@
                                             </div>
                                             <h5 class="cart-product__title">{{ $item['name'] }}</h5>
                                         </td>
-                                        <td class="cart-product__price">$ {{ number_format($item['price'], 2) }}</td>
+                                        <td class="cart-product__price">
+                                            {{ number_format($item['price'], 0, '.', ',') }} VND
+                                        </td>
                                         <td class="cart-product__quantity">
                                             <div class="quantity__input-wrap" data-price="{{ $item['price'] }}"
                                                 data-url="{{ route('home.product.update-item-in-cart', ['productId' => $productId]) }}"
@@ -62,8 +64,9 @@
 
                                             </div>
                                         </td>
-                                        <td class="cart-product__total">$
-                                            {{ number_format($item['qty'] * $item['price'], 2) }}</td>
+                                        <td class="cart-product__total">
+                                            {{ number_format($item['qty'] * $item['price'], 0, '.', ',') }} VND
+                                        </td>
                                     </tr>
                                 @endforeach
                                 <tr class="cart-product__action">
@@ -92,10 +95,17 @@
                     <div class="cart__total-amount">
                         <h6>Cart Totals</h6>
                         <ul class="list-unstyled mb-30">
-                            <li><span>Cart Subtotal :</span><span class="total_checkout">$
-                                    {{ number_format($total, 2) }}</span></li>
-                            <li><span>Order Total :</span><span class="total_checkout">$
-                                    {{ number_format($total, 2) }}</span>
+                            <li>
+                                <span>Cart Subtotal :</span>
+                                <span class="total_checkout">
+                                    {{ number_format($total, 0, '.', ',') }} VND
+                                </span>
+                            </li>
+                            <li>
+                                <span>Order Total :</span>
+                                <span class="total_checkout">
+                                    {{ number_format($total, 0, '.', ',') }} VND
+                                </span>
                             </li>
                         </ul>
                         <a href="{{ route('home.checkout') }}" class="btn btn__primary">Proceed To Checkout</a>
@@ -125,9 +135,11 @@
                         });
                         $(`tr#${id}`).empty();
                         $('#total-product').html(`Shopping cart - ${response.total_items}`);
-                        $('.total_checkout').html('$ ' + response.total_price.toFixed(2)
-                            .replace(
-                                /(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+                        // $('.total_checkout').html('$ ' + response.total_price.toFixed(2)
+                        //     .replace(
+                        //         /(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+                        $('.total_checkout').html(response.total_price.toLocaleString() +
+                            ' VND');
                     }
                 });
             });
@@ -153,13 +165,16 @@
                         });
                         //chỗ này chỉ hiển thị lên màn hình thôi, lúc load lại thì bên html đã lấy qty * price rồi nên thấy đúng, nếu k có dòng dưới thì phải đc load lại trang mới thấy đc               
                         //totalPrice cua 1 san pham
-                        $(`tr#${id} .cart-product__total`).html("$ " + totalPrice.toFixed(2)
-                            .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
-
-                        //totalPrice cua tat ca san pham
-                        $('.total_checkout').html('$ ' + response.total_price.toFixed(2)
-                            .replace(
-                                /(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+                        // $(`tr#${id} .cart-product__total`).html("$ " + totalPrice.toFixed(2)
+                        //     .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+                        $(`tr#${id} .cart-product__total`).html(totalPrice.toLocaleString() +
+                            ' VND');
+                        // totalPrice cua tat ca san pham
+                        // $('.total_checkout').html('$ ' + response.total_price.toFixed(2)
+                        //     .replace(
+                        //         /(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+                        $('.total_checkout').html(response.total_price.toLocaleString() +
+                            ' VND');
                     }
                 });
             });
@@ -182,9 +197,11 @@
                         });
 
                         $('#total-product').html(`Shopping cart - ${response.total_items}`);
-                        $('.total_checkout').html('$ ' + response.total_price.toFixed(2)
-                            .replace(
-                                /(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+                        // $('.total_checkout').html('$ ' + response.total_price.toFixed(2)
+                        //     .replace(
+                        //         /(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+                        $('.total_checkout').html(response.total_price.toLocaleString() +
+                            ' VND');
                         $(".cart-product").empty();
                     }
                 });

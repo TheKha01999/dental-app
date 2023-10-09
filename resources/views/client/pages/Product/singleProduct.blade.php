@@ -16,7 +16,14 @@
             </div><!-- /.row -->
         </div><!-- /.container -->
     </section><!-- /.page-title -->
-
+    @php
+        $cart = session()->get('cart', []);
+        if (isset($cart[$product->id]['qty'])) {
+            $qty_remain = $product->qty - $cart[$product->id]['qty'];
+        } else {
+            $qty_remain = $product->qty;
+        }
+    @endphp
     <section class="shop pb-40 pt-0">
         <div class="container">
             <div class="row">
@@ -36,12 +43,12 @@
                                     <i class="fa fa-star active"></i>
                                     <i class="fa fa-star active"></i>
                                     <i class="fa fa-star active"></i>
-                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star active"></i>
                                 </span>
-                                <span>4 Review(s)</span>
-                                <a href="#">Add Review</a>
+                                {{-- <span>4 Review(s)</span> --}}
+                                {{-- <a href="#">Add Review</a> --}}
                             </div><!-- /.product-meta-review -->
-                            <span class="product__price mb-20">$ {{ $product->price }}</span>
+                            <span class="product__price mb-20">{{ number_format($product->price, 0, '.', ',') }} VND</span>
                             <div class="product__desc">
                                 <p>{{ $product->short_description }}
                                 </p>
@@ -56,14 +63,22 @@
                                     <i class="increase-qty fa fa-plus qtybtn"></i>
 
                                 </div>
-                                <a data-url="{{ route('home.product.add-to-cart', ['productId' => $product->id]) }}"
-                                    class="btn btn__secondary btn__rounded add-to-cart" href="#">add to cart</a>
+                                @if (!$qty_remain || !$product->qty)
+                                    <a style="pointer-events:none;" data-url="#"
+                                        class="btn btn-danger btn__rounded add-to-cart" href="#">Sold
+                                        Out</a>
+                                @else
+                                    <a data-url="{{ route('home.product.add-to-cart', ['productId' => $product->id]) }}"
+                                        class="btn btn__secondary btn__rounded add-to-cart" href="#">add to cart</a>
+                                @endif
                             </div><!-- /.product-quantity -->
+
                             <div class="product__meta-details">
                                 <ul class="list-unstyled mb-30">
                                     {{-- <li><span>SKU :</span> <span>#0214</span></li> --}}
                                     <li><span>Stock:</span>
-                                        <span>{{ $product->qty >= '1' ? 'Available' : 'Sold out' }}</span>
+                                        <span class="qty_stock">{{ $qty_remain }} in
+                                            stock</span>
                                     </li>
                                     <li><span>Category :</span> <span>{{ $product->product_category_name }}</span></li>
                                     <li><span>Tags :</span> <span>Beauty, Supplements</span></li>
@@ -80,7 +95,7 @@
                         <nav class="nav nav-tabs">
                             <a class="nav__link active" data-toggle="tab" href="#Description">Description</a>
                             <a class="nav__link" data-toggle="tab" href="#Details">Details</a>
-                            <a class="nav__link" data-toggle="tab" href="#Reviews">Reviews (3)</a>
+                            {{-- <a class="nav__link" data-toggle="tab" href="#Reviews">Reviews (3)</a> --}}
                         </nav>
                         <div class="tab-content mb-50" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="Description">
@@ -89,7 +104,7 @@
                             <div class="tab-pane fade" id="Details">
                                 <p>{{ $product->information }}</p>
                             </div><!-- /.details-tab -->
-                            <div class="tab-pane fade" id="Reviews">
+                            {{-- <div class="tab-pane fade" id="Reviews">
                                 <form class="reviews__form">
                                     <div class="form-group">
                                         <input type="text" class="form-control" placeholder="Name">
@@ -102,7 +117,7 @@
                                     </div><!-- /.form-group -->
                                     <button type="submit" class="btn btn__primary btn__rounded">Submit</button>
                                 </form>
-                            </div><!-- /.reviews-tab -->
+                            </div><!-- /.reviews-tab --> --}}
                         </div>
                     </div><!-- /.product-tabs -->
                     <h6 class="related__products-title text-center-xs mb-25">Related Products</h6>
@@ -195,12 +210,27 @@
                     method: 'get', //method form
                     url: url, //action form
                     success: function(response) {
-                        Swal.fire({
-                            icon: 'success',
-                            // title: 'Notification',
-                            text: response.message,
-                        });
-                        $('#total-product').html(`Shopping cart - ${response.total_items}`);
+                        if (response.result) {
+                            Swal.fire({
+                                icon: 'success',
+                                // title: 'Notification',
+                                text: response.message,
+                            });
+                            $('#total-product').html(`Shopping cart - ${response.total_items}`);
+                            $('.qty_stock').html(response.qty_remain + ' in stock');
+                            if (!response.qty_remain) {
+                                $('.add-to-cart').css('pointer-events', 'none');
+                                $('.add-to-cart').html('Sold Out');
+                                $(".add-to-cart").removeClass("btn__secondary").addClass(
+                                    "btn-danger");
+                            }
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                // title: 'Notification',
+                                text: response.message,
+                            });
+                        }
                     },
                     statusCode: {
                         401: function() {
