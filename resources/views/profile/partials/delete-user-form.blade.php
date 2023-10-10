@@ -65,7 +65,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Enter your password to delete your account.</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Enter your password to delete.</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -76,25 +76,30 @@
                     @method('delete')
 
                     <p class="mt-1 text-sm text-gray-600">
-                        {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
+                        Once your account is deleted, all of its resources and data will be permanently deleted. Please
+                        enter your password to confirm you would like to permanently delete your account.
                     </p>
 
-                    <div class="mt-6">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password" placeholder="Password"
-                            class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                        @php
-                            $messages = $errors->userDeletion->get('password');
-                        @endphp
-                        @if ($messages)
-                            @foreach ((array) $messages as $message)
-                                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                            @endforeach
-                        @endif
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="password">Password:</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" type="password" name="password" id="password"
+                                placeholder="Password">
+                            @php
+                                $messages = $errors->userDeletion->get('password');
+                            @endphp
+                            @if ($messages)
+                                @foreach ((array) $messages as $message)
+                                    <div class="text-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn__secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </div>
             </form>

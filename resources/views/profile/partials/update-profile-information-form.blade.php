@@ -56,7 +56,7 @@
 </section> --}}
 
 
-<form id="send-verification" method="post" action="{{ route('verification.send') }}">
+{{-- <form id="send-verification" method="post" action="{{ route('verification.send') }}">
     @csrf
 </form>
 
@@ -100,7 +100,7 @@
         @endif
     </div>
     <div class="flex items-center gap-4">
-        {{-- <x-primary-button>{{ __('Save') }}</x-primary-button> --}}
+        
         <button class="btn btn-primary mt-3 px-0 py-1 " style="height: 40px; width:20px; background-color: #21cdc0;"
             type="submit">Save</button>
         @if (session('status') === 'profile-updated')
@@ -108,10 +108,58 @@
                 class="text-sm text-gray-600">{{ __('Saved.') }}</p>
         @endif
     </div>
+</form> --}}
+
+
+<form id="send-verification" method="post" action="{{ route('verification.send') }}">
+    @csrf
 </form>
 
+<form method="post" action="{{ route('profile.update') }}" class="form-horizontal" role="form">
+    @csrf
+    @method('patch')
+    <div class="form-group">
+        <label class="col-lg-3 control-label" for="name">Name:</label>
+        <div class="col-lg-8">
+            <input name="name" id="name" class="form-control" type="text" value="{{ $user->name }}"
+                autofocus>
+            @error('name')
+                <div class="text-danger mt-2">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-3 control-label" for="email">Email:</label>
+        <div class="col-lg-8">
+            <input class="form-control" type="text" name="email" id="email" value="{{ $user->email }}">
+            @error('email')
+                <div class="text-danger mt-2">
+                    {{ $message }}
+                </div>
+            @enderror
 
+            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
+                <div>
+                    <p class="text-sm mt-2 text-gray-800">
+                        Your email address is unverified
+                        <button form="send-verification" class="underline text-sm text-gray-600 ">
+                            Click here to re-send the verification email.
+                        </button>
+                    </p>
+                    @if (session('status') === 'verification-link-sent')
+                        <p class="mt-2 font-medium text-sm text-green-600">
+                            A new verification link has been sent to your email address.
+                        </p>
+                    @endif
+                </div>
+            @endif
+        </div>
+    </div>
 
+    <button class="mt-3 btn btn__secondary btn__rounded" type="submit">Save</button>
+</form>
 
 
 

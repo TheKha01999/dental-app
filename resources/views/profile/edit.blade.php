@@ -45,7 +45,52 @@
 
     <!-- Update or Edit Profile -->
     <section>
-        <div class="container">
+        <div class="container bootstrap snippets bootdey">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-3 mb-4">
+                    <form action="">
+                        <div class="text-center">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                                class="avatar img-circle img-thumbnail" alt="avatar">
+                            <h6>Upload a different photo...</h6>
+                            <input type="file" class="mb-4">
+                            <button form="avatar-sumbit" type="submit " class="btn btn__secondary btn__rounded">
+                                Update avatar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- edit form column -->
+                <div class="col-md-9 personal-info">
+                    @if (session('status') === 'profile-updated' || session('status') === 'password-updated')
+                        <div class="alert alert-info alert-dismissable">
+                            <a class="panel-close close" data-dismiss="alert">×</a>
+                            Your updated saved !
+                        </div>
+                    @endif
+
+                    <div class="edit-profile">
+                        <h3 class="heading__title mb-40"> Profile Information</h3>
+                        @include('profile.partials.update-profile-information-form')
+                    </div>
+
+                    <div class="edit-profile">
+                        <h3 class="heading__title mb-40"> Update Password</h3>
+                        @include('profile.partials.update-password-form')
+                    </div>
+
+                    <div class="edit-profile">
+                        <h3 class="heading__title mb-40"> Delete Account</h3>
+                        @include('profile.partials.delete-user-form')
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {{-- <div class="container">
             <div class="row">
                 <div class="col">
                     <h2 class="text-lg font-medium text-gray-900">
@@ -100,7 +145,7 @@
                     @include('profile.partials.delete-user-form')
                 </div>
             </div>
-        </div>
+        </div> --}}
     </section>
 @endsection
 

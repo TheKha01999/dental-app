@@ -43,7 +43,63 @@
 </section> --}}
 
 
-<section>
+<form method="post" action="{{ route('password.update') }}" class="form-horizontal" role="form">
+    @csrf
+    @method('put')
+    <div class="form-group">
+        <label class="col-lg-3 control-label" for="current_password">Current Password:</label>
+        <div class="col-lg-8">
+            <input type="password" name="current_password" id="current_password"class="form-control">
+            @php
+                $messages = $errors->updatePassword->get('current_password');
+            @endphp
+            @if ($messages)
+                @foreach ((array) $messages as $message)
+                    <div class="text-danger mt-2">
+                        {{ $message }}
+                    </div>
+                @endforeach
+            @endif
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-3 control-label" for="password">New Password:</label>
+        <div class="col-lg-8">
+            <input class="form-control" type="password" name="password" id="password">
+            @php
+                $messages = $errors->updatePassword->get('password');
+            @endphp
+            @if ($messages)
+                @foreach ((array) $messages as $message)
+                    <div class="text-danger mt-2">
+                        {{ $message }}
+                    </div>
+                @endforeach
+            @endif
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-3 control-label" for="password_confirmation">Confirm Password:</label>
+        <div class="col-lg-8">
+            <input class="form-control" type="password" name="password_confirmation" id="password_confirmation">
+            @php
+                $messages = $errors->updatePassword->get('password_confirmation');
+            @endphp
+            @if ($messages)
+                @foreach ((array) $messages as $message)
+                    <div class="text-danger mt-2">
+                        {{ $message }}
+                    </div>
+                @endforeach
+            @endif
+        </div>
+    </div>
+    <button class="mt-3 btn btn__secondary btn__rounded" type="submit">Save</button>
+</form>
+
+{{-- moinhat --}}
+{{-- <section>
     <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
         @csrf
         @method('put')
@@ -98,7 +154,7 @@
             @endif
         </div>
     </form>
-</section>
+</section> --}}
 
 
 {{-- <label for="current_password">Current Password</label>

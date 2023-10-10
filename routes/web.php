@@ -19,6 +19,7 @@ use App\Http\Controllers\Client\Blog\ClientBlogController;
 use App\Http\Controllers\Client\CheckOut\OrderController;
 use App\Http\Controllers\Client\Doctor\ClientDoctorController;
 use App\Http\Controllers\Client\Faqs\ClientFaqsController;
+use App\Http\Controllers\Client\Google\GoogleController;
 use App\Http\Controllers\Client\Home\ClientHomeController;
 use App\Http\Controllers\Client\ProductsController as ClientProductsController;
 use App\Http\Controllers\Client\Services\ClientServicesController;
@@ -114,14 +115,31 @@ Route::prefix('home')->name('home.')->group(function () {
         Route::post('placeorder', [OrderController::class, 'placeOrder'])->name('place-order');
         Route::get('vnpay-callback', [OrderController::class, 'vnpayCallback'])->name('vnpay-callback');
     });
-
-    //page checkout
 });
+//Login with google
+Route::get('google-redirect', [GoogleController::class, 'redirect'])->name('google.redirect');
+Route::get('google-callback', [GoogleController::class, 'callback'])->name('google.callback');
 
 Route::get('check', function () {
     dd(session()->get('cart'));
 });
 
+Route::get('test-send-sms', function () {
+    $sid = env('TWILIO_ACCOUNT_SID');
+    $token = env('TWILIO_AUTH_TOKEN');
+    $client = new Twilio\Rest\Client($sid, $token);
+    // Use the Client to make requests to the Twilio REST API
+    $client->messages->create(
+        // The number you'd like to send the message to
+        '+840777171086',
+        [
+            // A Twilio phone number you purchased at https://console.twilio.com
+            'from' => env('TWILIO_PHONE_NUMBER'),
+            // The body of the text message you'd like to send
+            'body' => "Test Send SMS"
+        ]
+    );
+});
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //Admin Management
