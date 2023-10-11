@@ -30,78 +30,69 @@
     </section><!-- /.page-title -->
     <section>
         <div class="container">
-            <h1 class="">Your Info</h1>
-            <div class="appointment">
+            <h3 class="heading__title mb-40">Appointment</h3>
 
-                @foreach ($bookings as $booking)
-                    <div class="row border px-2 py-2 mb-3">
-                        <div class="col-md-4">
-                            <h6>{{ Auth::user()->name }}</h6>
-                            <h6>{{ Auth::user()->email }}</h6>
-                            <h6>Patient</h6>
-
-                        </div>
-                        <div class="col-md-8 border">
-                            <div class="row">
-                                <div class="col-md-2">Chi nhánh</div>
-                                <div class="col-md-10">{{ $booking->branch_name }}</div>
+            <div class="row row-custom">
+                <div class="col-sm-12">
+                    @foreach ($bookings as $booking)
+                        @php
+                            $Newdate = date('d-m-Y', strtotime($booking->date));
+                            
+                        @endphp
+                        <div class="card margin-bottom">
+                            <div class="card-header">
+                                <p class="text-block__desc">
+                                    Appointment date: {{ $Newdate }} - Time: {{ $booking->time }}
+                                </p>
                             </div>
-                            <div class="row">
-                                <div class="col-md-2">Dịch vụ</div>
-                                <div class="col-md-10">{{ $booking->service_name }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">Bác sĩ</div>
-                                <div class="col-md-10">{{ $booking->doctor_name }}</div>
-                            </div>
-                            @php
-                                $Newdate = date('d-m-Y', strtotime($booking->date));
-                            @endphp
-                            <div class="row">
-                                <div class="col-md-2">Ngày</div>
-                                <div class="col-md-10">{{ $Newdate }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">Vào lúc </div>
-                                <div class="col-md-10">{{ $booking->time }}</div>
-                            </div>
-                            @php
-                                if ($booking->status_code == 'S1') {
-                                    $color = 'gray';
-                                } elseif ($booking->status_code == 'S2') {
-                                    $color = 'green';
-                                } elseif ($booking->status_code == 'S3') {
-                                    $color = 'red';
-                                } else {
-                                    $color = '#d35400';
-                                }
-                            @endphp
-                            <div class="row">
-                                <div class="col-md-2">Trạng thái </div>
-                                <div class="col-md-10" style="color:{{ $color }}">
-                                    <h5 style="color: {{ $color }}"> {{ $booking->status }}</h5>
+                            <div class="card-body">
+                                <div class="grid-2-colum">
+                                    <div class="box-cover border-sp">
+                                        <h5>Customer Infomation</h5>
+                                        <div class="grid-appointment">
+                                            <p class="text-block__desc">Name:</p>
+                                            <p class="text-block__desc">{{ Auth::user()->name }}</p>
+                                            <p class="text-block__desc">Email:</p>
+                                            <p class="text-block__desc">{{ Auth::user()->email }}</p>
+                                            <p class="text-block__desc">Phone:</p>
+                                            <p class="text-block__desc">{{ Auth::user()->phone }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="box-cover">
+                                        <h5>Treatment Infomation</h5>
+                                        <div class="grid-appointment">
+                                            <p class="text-block__desc">Branch:</p>
+                                            <p class="text-block__desc">{{ $booking->branch_name }}</p>
+                                            <p class="text-block__desc">Doctor:</p>
+                                            <p class="text-block__desc">{{ $booking->doctor_name }}</p>
+                                            <p class="text-block__desc">Service:</p>
+                                            <p class="text-block__desc">{{ $booking->service_name }}</p>
+                                            @php
+                                                if ($booking->status_code == 'S1') {
+                                                    $color = '#e1b12c';
+                                                } elseif ($booking->status_code == 'S2') {
+                                                    $color = 'green';
+                                                } elseif ($booking->status_code == 'S3') {
+                                                    $color = 'red';
+                                                } else {
+                                                    $color = '#b33939';
+                                                }
+                                            @endphp
+                                            <p class="text-block__desc">Status:</p>
+                                            <p style="color:{{ $color }}" class="text-block__desc status">
+                                                {{ $booking->status }}</p>
+                                        </div>
+                                        <div class="text-right mt-3">
+                                            <a href="#" class="btn btn-danger">Cancel</a>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
-                    </div>
-                @endforeach
-
-                {{-- <div class="row border px-2 py-2">
-                    <div class="col-md-4 border">
-                        <h6>{{ Auth::user()->name }}</h6>
-                        <h6>{{ Auth::user()->email }}</h6>
-                        <h6>Patient</h6>
-
-                    </div>
-                    <div class="col-md-8 border">
-                        <div class="row">
-                            <div class="col-md-3">Bác sĩ</div>
-                            <div class="col-md-3">Thế Kha</div>
-                        </div>
-                    </div>
-                </div> --}}
+                    @endforeach
+                </div>
             </div>
-
         </div>
     </section>
 @endsection
