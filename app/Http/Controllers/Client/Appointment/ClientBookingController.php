@@ -90,4 +90,16 @@ class ClientBookingController extends Controller
         // dd($doctors);
         return response()->json(['doctors' => $doctors]);
     }
+    public function cancelBooking($id)
+    {
+        // dd($id);
+        $check = DB::table('bookings')->where('id', '=', $id)->update([
+            "status_code" => 'S3',
+            "updated_at" => Carbon::now()
+        ]);
+
+        $message = $check ? 'Appointment Canceled' : 'Appointment Canceled Failed';
+        //session flash
+        return redirect()->route('dashboard')->with('message', $message);
+    }
 }

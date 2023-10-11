@@ -31,13 +31,18 @@
     <section>
         <div class="container">
             <h3 class="heading__title mb-40">Appointment</h3>
+            @if (session('message'))
+                <div class="alert alert-info alert-dismissable">
+                    <a class="panel-close close" data-dismiss="alert" style="cursor: pointer">×</a>
+                    {{ session('message') }}
+                </div>
+            @endif
 
             <div class="row row-custom">
                 <div class="col-sm-12">
                     @foreach ($bookings as $booking)
                         @php
                             $Newdate = date('d-m-Y', strtotime($booking->date));
-                            
                         @endphp
                         <div class="card margin-bottom">
                             <div class="card-header">
@@ -83,7 +88,13 @@
                                                 {{ $booking->status }}</p>
                                         </div>
                                         <div class="text-right mt-3">
-                                            <a href="#" class="btn btn-danger">Cancel</a>
+                                            <form mnethod="get"
+                                                action="{{ route('home.appointment.cancel-booking', ['id' => $booking->id]) }}">
+                                                @csrf
+                                                @if ($booking->status_code === 'S1' || $booking->status_code === 'S2')
+                                                    <button type="submit" class="btn btn-danger">Cancel</button>
+                                                @endif
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

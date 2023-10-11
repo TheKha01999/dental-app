@@ -24,7 +24,7 @@ class CreateBranchRequest extends FormRequest
         return [
             'name' => 'required|min:5|max:100|unique:branchs,name',
             'email' => 'required|email|unique:branchs,email',
-            'phone' => 'required',
+            'phone' => ['required', 'regex:/(84[3|5|7|8|9])+([0-9]{8})\b/'],
             'address' => 'required',
             'status' => 'required',
             'image' => 'image|required',

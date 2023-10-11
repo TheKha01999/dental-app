@@ -29,7 +29,9 @@
                                             <input type="text" id="name" class="form-control form-control-lg"
                                                 name="name" autofocus="autofocus" value="{{ old('name') }}" />
                                             @error('name')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                <div class="text-danger mt-1">
+                                                    {{ $message }}
+                                                </div>
                                             @enderror
                                         </div>
 
@@ -39,7 +41,9 @@
                                             <input type="email" id="email" class="form-control form-control-lg"
                                                 name="email" value="{{ old('email') }}" />
                                             @error('email')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                <div class="text-danger mt-1">
+                                                    {{ $message }}
+                                                </div>
                                             @enderror
                                         </div>
 
@@ -49,7 +53,9 @@
                                             <input class="form-control form-control-lg" id="password" type="password"
                                                 name="password" />
                                             @error('password')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                <div class="text-danger mt-1">
+                                                    {{ $message }}
+                                                </div>
                                             @enderror
                                         </div>
 
@@ -59,7 +65,9 @@
                                             <input class="form-control form-control-lg" id="password_confirmation"
                                                 type="password" name="password_confirmation" />
                                             @error('password_confirmation')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                <div class="text-danger mt-1">
+                                                    {{ $message }}
+                                                </div>
                                             @enderror
                                         </div>
 

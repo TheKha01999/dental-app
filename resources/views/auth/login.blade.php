@@ -5,7 +5,7 @@
         <div class="container py-5 h-100">
             @if (session('message'))
                 <div class="alert alert-info alert-dismissable">
-                    <a class="panel-close close" data-dismiss="alert">×</a>
+                    <a class="panel-close close" data-dismiss="alert" style="cursor: pointer">×</a>
                     {{ session('message') }}
                 </div>
             @endif
@@ -36,7 +36,9 @@
                                             <input type="email" id="email" class="form-control form-control-lg"
                                                 name="email" autofocus="autofocus" value="{{ old('email') }}" />
                                             @error('email')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                <div class="text-danger mt-1">
+                                                    {{ $message }}
+                                                </div>
                                             @enderror
                                         </div>
 
@@ -45,7 +47,9 @@
                                             <input type="password" class="form-control form-control-lg" id="password"
                                                 type="password" name="password" />
                                             @error('password')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                <div class="text-danger mt-1">
+                                                    {{ $message }}
+                                                </div>
                                             @enderror
                                         </div>
 
