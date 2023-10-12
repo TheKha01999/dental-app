@@ -151,7 +151,18 @@
                     {{-- user --}}
                     <li class="nav__item has-dropdown">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link">
-                            <i class="fa fa-user"></i>
+                            @if (Route::has('login'))
+                                @auth
+                                    @php
+                                        $imagesLink = is_null(Auth::user()->image) || !file_exists('images/' . Auth::user()->image) ? 'https://bootdey.com/img/Content/avatar/avatar7.png' : asset('images/' . Auth::user()->image);
+                                    @endphp
+                                    <img class="rounded-circle" width="40" src="{{ $imagesLink }}"
+                                        alt="{{ Auth::user()->image }}">
+                                @else
+                                    <i class="fa fa-user"></i>
+                                @endauth
+                            @endif
+                            {{-- <i class="fa fa-user"></i> --}}
                         </a>
                         <ul class="dropdown-menu">
                             @if (Route::has('login'))
@@ -162,9 +173,17 @@
                                                 {{ Auth::user()->name }} !
                                             </a>
                                         </li>
-                                        <li class="nav__item">
-                                            <a class="nav__item-link" href="{{ url('/dashboard') }}">Dashboard</a>
-                                        </li>
+                                        @if (Auth::user()->role === 1)
+                                            <li class="nav__item">
+                                                <a class="nav__item-link"
+                                                    href="{{ route('admin.product_categories.index') }}">Admin Page</a>
+                                            </li>
+                                        @else
+                                            <li class="nav__item">
+                                                <a class="nav__item-link" href="{{ url('/dashboard') }}">Dashboard</a>
+                                            </li>
+                                        @endif
+
                                         <li class="nav__item">
                                             <a class="nav__item-link" href="{{ route('profile.edit') }}">Edit Profile</a>
                                         </li>

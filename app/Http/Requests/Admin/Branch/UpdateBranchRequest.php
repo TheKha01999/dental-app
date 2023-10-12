@@ -24,7 +24,7 @@ class UpdateBranchRequest extends FormRequest
         return [
             'name' => 'required|min:5|max:100|unique:branchs,name,' . $this->branch,
             'email' => 'required|email|unique:branchs,email,' . $this->branch,
-            'phone' => 'required',
+            'phone' => ['required', 'regex:/(84[3|5|7|8|9])+([0-9]{8})\b/'],
             'address' => 'required',
             'status' => 'required',
             'image' => 'image',

@@ -18,7 +18,8 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action="{{ route('admin.users.store') }}" method="post">
+                            <form role="form" action="{{ route('admin.users.store') }}" method="post"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group">
@@ -44,9 +45,30 @@
                                             </div>
                                         @enderror
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="phone">Phone</label>
+                                        <input name="phone" type="text" value="{{ old('phone') }}"
+                                            class="form-control" id="phone" placeholder="Enter phone">
+                                        {{-- loi tu truyen qa ben day --}}
+                                        @error('phone')
+                                            <div class="text-danger mt-2">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="image">Avatar</label>
+                                        <input name="image" type="file" class="form-control" id="image">
+                                        @error('image')
+                                            <div class="text-danger mt-2">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
                                 </div>
                                 <!-- /.card-body -->
-
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary">Create</button>
                                 </div>

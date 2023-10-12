@@ -25,7 +25,8 @@ class ClientCreateBookingRequest extends FormRequest
             // 'user' => 'required',
             'branch' => 'required',
             'service' => 'required',
-            'day' => 'required',
+            'day' => 'required|date_format:d-m-Y|after:today',
+            'phone' => ['required', 'regex:/(84[3|5|7|8|9])+([0-9]{8})\b/'],
             'doctor' => 'required',
             'time' => 'required',
         ];

@@ -103,8 +103,11 @@
                                 <div class="col-sm-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <i class="icon-phone form-group-icon"></i>
-                                        <input type="text" value="" class="form-control" placeholder="Phone"
-                                            id="phone" name="phone">
+                                        <input type="text" value="{{ Auth::user()->phone }}" class="form-control"
+                                            placeholder="Phone" id="phone" name="phone">
+                                        @error('phone')
+                                            <label id="contact-name-error" class="error"> {{ $message }}</label>
+                                        @enderror
                                     </div>
                                 </div><!-- /.col-lg-4 -->
                                 <div class="col-sm-4 col-md-4 col-lg-4">

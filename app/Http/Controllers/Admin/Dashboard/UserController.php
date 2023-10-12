@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\UpdateUserNameEmailRequest;
 use App\Http\Requests\Admin\User\UpdateUserPasswordRequest;
 use App\Http\Requests\Admin\User\UserRequest;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = DB::table('users')->where('role', '0')->orderBy('created_at', 'desc')->get();
+        $users = DB::table('users')->where('role', '0')->whereNull('deleted_at')->orderBy('created_at', 'desc')->get();
         return view('admin.pages.users.list', ['users' => $users]);
     }
 
@@ -35,17 +36,26 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
+        if ($request->hasFile('image')) {
+            $fileOrginialName = $request->file('image')->getClientOriginalName();
+            $fileName = pathinfo($fileOrginialName, PATHINFO_FILENAME);
+            $fileName .= '_' . time() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path('images'),  $fileName);
+        }
+
         $password =  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
         $email_verified_at = Carbon::now();
         $check = DB::table('users')->insert([
             "name" => $request->name,
             "email" => $request->email,
+            "image" => $fileName ?? null,
+            "phone" => $request->phone,
             'email_verified_at' => $email_verified_at,
             'password' => $password,
             "created_at" => Carbon::now(),
             "updated_at" => Carbon::now()
         ]);
-        $message = $check ? 'Created successfully' : 'Created failed';
+        $message = $check ? 'Created user successfully' : 'Created user failed';
         // dd($message);
         //session flash
         return redirect()->route('admin.users.index')->with('message', $message);
@@ -76,9 +86,25 @@ class UserController extends Controller
     {
         // $password =  Hash::make($request->password);
 
+        $user = DB::table('users')->find($id);
+        $oldImageFileName = $user->image;
+
+        if ($request->hasFile('image')) {
+            $fileOrginialName = $request->file('image')->getClientOriginalName();
+            $fileName = pathinfo($fileOrginialName, PATHINFO_FILENAME);
+            $fileName .= '_' . time() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path('images'),  $fileName);
+
+            if (!is_null($oldImageFileName) && file_exists('images/' . $oldImageFileName)) {
+                unlink('images/' . $oldImageFileName);
+            }
+        }
+
         $check = DB::table('users')->where('id', '=', $id)->update([
             "name" => $request->name,
             "email" => $request->email,
+            "phone" => $request->phone,
+            "image" => $fileName ?? $oldImageFileName,
             // 'password' => $password,
             "updated_at" => Carbon::now()
         ]);
@@ -92,11 +118,17 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $result = DB::table('users')->delete($id);
+        $user = User::find((int)$id);
 
-        $message = $result ? 'Deleted successfully' : 'Deleted failed';
-        //session flash
-        return redirect()->route('admin.users.index')->with('message', $message);
+        $image = $user->image;
+
+        if (!is_null($image) && file_exists('images/' . $image)) {
+            unlink('images/' . $image);
+        }
+
+        $user->delete();
+
+        return redirect()->route('admin.users.index')->with('message', 'Deleted successfully');
     }
     public function updatePassword(UpdateUserPasswordRequest $request, string $id)
     {

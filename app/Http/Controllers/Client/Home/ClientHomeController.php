@@ -18,12 +18,19 @@ class ClientHomeController extends Controller
             ->where('service_categories.status', '1')
             ->join('service_categories', 'service_categories.id', '=', 'doctors.service_categories_id')
             ->get();
-
+        $branchs = DB::table('branchs')->where('status', '=', '1')->get();
+        $timesCode = DB::table('booking_times')->get();
+        $statusCode = DB::table('booking_status')->get();
+        $services = DB::table('service_categories')->where('status', '=', '1')->get();
         return view(
             'client.pages.Home.home',
             [
                 'doctors' => $doctors,
-                'serviceCategories' => $serviceCategories
+                'serviceCategories' => $serviceCategories,
+                'branchs' => $branchs,
+                'timesCode' => $timesCode,
+                'statusCode' => $statusCode,
+                'services' => $services,
             ]
         );
     }

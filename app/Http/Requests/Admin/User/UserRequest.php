@@ -22,8 +22,10 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'name'  => ['required', 'regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/', 'min:2', 'max:100'],
             'email' => 'required|email|unique:users,email',
+            'phone' => ['required', 'regex:/(84[3|5|7|8|9])+([0-9]{8})\b/'],
+            'image' => 'image'
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client\CheckOut;
 
 use App\Events\PlaceOrderSuccess;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Client\Checkout\ClientCheckoutRequest;
 use App\Mail\MailToAdmin;
 use App\Mail\MailToCustomer;
 use App\Models\Order;
@@ -20,10 +21,16 @@ use Illuminate\Support\Facades\Redirect;
 
 class OrderController extends Controller
 {
-    public function placeOrder(Request $request)
+    public function placeOrder(ClientCheckoutRequest $request)
     {
         try {
             DB::beginTransaction();
+            $cart = session()->get('cart', []);
+
+            if ($cart === []) {
+                return redirect()->route('home.checkout')->with('message', 'There are no products in the cart yet !!');
+            }
+
             $order = new Order;
             $order->user_id = Auth::user()->id;
             $order->address = $request->address;
@@ -32,7 +39,7 @@ class OrderController extends Controller
             $order->save();
 
             // die;
-            $cart = session()->get('cart', []);
+
             $total = 0;
 
             foreach ($cart as $productId => $item) {

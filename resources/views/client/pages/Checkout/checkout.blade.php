@@ -59,6 +59,12 @@
 
                 <!-- Left -->
                 <div class="col-md-8 order-md-1">
+                    @if (session('message'))
+                        <div class="alert alert-info alert-dismissable">
+                            <a class="panel-close close" data-dismiss="alert" style="cursor: pointer">×</a>
+                            {{ session('message') }}
+                        </div>
+                    @endif
                     <h4 class="mb-3">Billing address</h4>
                     <form class="needs-validation" novalidate="" method="post" action="{{ route('home.place-order') }}">
                         @csrf
@@ -85,16 +91,23 @@
                         <div class="mb-3">
                             <label for="address">Address</label>
                             <input name="address" type="text" class="form-control" id="address"
-                                placeholder="Street Address">
-                            <div class="invalid-feedback">
-                                Please enter your shipping address.
-                            </div>
+                                placeholder="Street Address" value="{{ old('address') }}">
+                            @error('address')
+                                <div class="text-danger mt-1">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="address2">Phone Number</label>
                             <input name="phone" type="text" class="form-control" id="phone"
-                                value="{{ Auth::user()->phone }}" placeholder="Ex: 0909990009">
+                                value="{{ Auth::user()->phone }}" placeholder="Ex: 84777171086">
+                            @error('phone')
+                                <div class="text-danger mt-1">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
@@ -106,16 +119,37 @@
                         <h4 class="mb-3">Payment</h4>
 
                         <div class="d-block my-3">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="cod" value="cod"
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="cod" value="cod"
+                                    name="payment_method" checked>
+                                <label class="form-check-label" for="cod">
+                                    COD
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="vnpay" value="vnpay"
+                                    name="payment_method">
+                                <label class="form-check-label" for="vnpay">
+                                    VN Pay
+                                </label>
+                            </div>
+                            @error('payment_method')
+                                <div class="text-danger mt-1">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+
+                            {{-- <div class="custom-control custom-checkbox">
+                                <input type="radio" class="custom-control-input" id="cod" value="cod"
                                     name="payment_method">
                                 <label class="custom-control-label" for="cod">COD</label>
                             </div>
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="vnpay" value="vnpay"
+                                <input type="radio" class="custom-control-input" id="vnpay" value="vnpay"
                                     name="payment_method">
                                 <label class="custom-control-label" for="vnpay">VN Pay</label>
-                            </div>
+                            </div> --}}
                         </div>
 
                         {{-- <div class="row">
