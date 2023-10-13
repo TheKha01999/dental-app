@@ -19,7 +19,7 @@
                             <!-- /.card-header -->
                             <!-- form start -->
                             <form role="form" action="{{ route('admin.admins.update', ['admin' => $admin->id]) }}"
-                                method="post">
+                                method="post" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="card-body">
@@ -41,6 +41,27 @@
                                             class="form-control" id="email" placeholder="Enter email">
                                         {{-- loi tu truyen qa ben day --}}
                                         @error('email')
+                                            <div class="text-danger mt-2">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone">Phone</label>
+                                        <input name="phone" type="text" value="{{ $admin->phone }}"
+                                            class="form-control" id="phone" placeholder="Enter phone">
+                                        {{-- loi tu truyen qa ben day --}}
+                                        @error('phone')
+                                            <div class="text-danger mt-2">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="image">Avatar</label>
+                                        <input name="image" type="file" class="form-control" id="image">
+                                        @error('image')
                                             <div class="text-danger mt-2">
                                                 {{ $message }}
                                             </div>

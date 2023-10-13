@@ -49,25 +49,33 @@
             <div class="row">
                 <!-- left column -->
                 <div class="col-md-3 mb-4">
-                    <form action="">
-                        <div class="text-center">
-                            @php
-                                $imagesLink = is_null($user->image) || !file_exists('images/' . $user->image) ? 'https://bootdey.com/img/Content/avatar/avatar7.png' : asset('images/' . $user->image);
-                            @endphp
-                            <img src="{{ $imagesLink }}" alt="{{ $user->name }}"
-                                class="avatar img-circle img-thumbnail">
-                            <h6>Upload a different photo...</h6>
-                            <input type="file" class="mb-4">
-                            <button form="avatar-sumbit" type="submit " class="btn btn__secondary btn__rounded">
+
+                    <div class="text-center">
+                        @php
+                            $imagesLink = is_null($user->image) || !file_exists('images/' . $user->image) ? 'https://bootdey.com/img/Content/avatar/avatar7.png' : asset('images/' . $user->image);
+                        @endphp
+                        <img src="{{ $imagesLink }}" alt="{{ $user->name }}" class="avatar img-circle img-thumbnail">
+                        <h6>Upload a different photo...</h6>
+                        <form action="{{ route('profile.updateAvatar') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input name="image" type="file" class="mb-4">
+                            @error('image')
+                                <div class="text-danger mb-3">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                            <button type="submit " class="btn btn__secondary btn__rounded">
                                 Update avatar
                             </button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
 
                 <!-- edit form column -->
                 <div class="col-md-9 personal-info">
-                    @if (session('status') === 'profile-updated' || session('status') === 'password-updated')
+                    @if (session('status') === 'profile-updated' ||
+                            session('status') === 'password-updated' ||
+                            session('status') === 'avatar-updated')
                         <div class="alert alert-info alert-dismissable">
                             <a class="panel-close close" data-dismiss="alert">×</a>
                             Your updated saved !

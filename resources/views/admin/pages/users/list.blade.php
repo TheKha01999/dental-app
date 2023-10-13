@@ -4,7 +4,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper mt-4">
         <!-- Main content -->
-        <section class="content mt-2">
+        <section class="content">
             <div class="container-fluid">
                 @if (session('message'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">

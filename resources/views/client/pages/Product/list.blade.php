@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-sm-12 col-md-8 col-lg-9">
                     <div class="sorting-options d-flex flex-wrap justify-content-between align-items-center mb-30">
-                        <span>Showing 1:9 of 45 product</span>
+                        {{-- <span>Showing 1:9 of 45 product</span> --}}
                         <select>
                             <option selected="" value="0">Sort by latest</option>
                             <option value="1">Sort by Popular</option>
@@ -77,9 +77,10 @@
                         <div class="col-sm-12 col-md-12 col-lg-12 text-center">
                             <nav class="pagination-area">
                                 <ul class="pagination justify-content-center">
-                                    <li><a class="current" href="#">1</a></li>
+                                    {{ $products->links('admin.pagination.pagination') }}
+                                    {{-- <li><a class="current" href="#">1</a></li>
                                     <li><a href="#">2</a></li>
-                                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li> --}}
                                 </ul>
                             </nav><!-- /.pagination-area -->
                         </div><!-- /.col-lg-12 -->

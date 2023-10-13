@@ -17,16 +17,10 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        //Navbar
-        $blogCategories = DB::table('blog_categories')->where('status', '=', '1')->get();
-        $serviceCategories = DB::table('service_categories')->where('status', '=', '1')->get();
-        //////////////
 
 
         return view('profile.edit', [
             'user' => $request->user(),
-            'blogCategories' => $blogCategories,
-            'serviceCategories' => $serviceCategories
         ]);
     }
 
@@ -35,6 +29,7 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        $request->user()->phone = $request->phone;
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
@@ -65,5 +60,27 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+    public function updateAvatar(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image',
+        ]);
+
+        $oldImageFileName = $request->user()->image;
+
+        if ($request->hasFile('image')) {
+            $fileOrginialName = $request->file('image')->getClientOriginalName();
+            $fileName = pathinfo($fileOrginialName, PATHINFO_FILENAME);
+            $fileName .= '_' . time() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path('images'),  $fileName);
+
+            if (!is_null($oldImageFileName) && file_exists('images/' . $oldImageFileName)) {
+                unlink('images/' . $oldImageFileName);
+            }
+        }
+        $request->user()->image = $fileName;
+        $request->user()->save();
+        return Redirect::route('profile.edit')->with('status', 'avatar-updated');
     }
 }

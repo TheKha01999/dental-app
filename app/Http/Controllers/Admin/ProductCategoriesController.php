@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductCategoriesRequest;
 use App\Http\Requests\UpdateProductCategoriesRequest;
+use App\Models\ProductCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +29,7 @@ class ProductCategoriesController extends Controller
 
         $productCategories = DB::table('product_categories')
             ->where('name', 'like', '%' . $keyword . '%')
+            ->whereNull('deleted_at')
             ->orderBy('created_at', $sort)
             ->paginate($itemPerPage);
         return view(
@@ -104,12 +106,13 @@ class ProductCategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        // $productCategories = DB::table('product_categories')->find($id);
+        $productCategory = ProductCategory::find((int)$id);
+        $productCategory->status = 0;
+        $productCategory->save();
 
-        $check = DB::table('product_categories')->delete($id);
+        $productCategory->delete();
 
-        $message = $check ? 'Deleted successfully' : 'Deleted failed';
 
-        return redirect()->route('admin.product_categories.index')->with('message', $message);
+        return redirect()->route('admin.product_categories.index')->with('message', 'Deleted successfully');
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Admins\CreateAdminRequest;
 use App\Http\Requests\Admin\Admins\UpdateAdminNameEmailRequest;
 use App\Http\Requests\Admin\Admins\UpdateAdminPasswordRequest;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = DB::table('users')->where('role', '1')->where('id', '<>', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        $admins = DB::table('users')->where('role', '1')->where('id', '<>', Auth::user()->id)->whereNull('deleted_at')->orderBy('created_at', 'desc')->get();
         return view('admin.pages.admins.list', ['admins' => $admins]);
     }
 
@@ -36,6 +37,13 @@ class AdminController extends Controller
      */
     public function store(CreateAdminRequest $request)
     {
+        if ($request->hasFile('image')) {
+            $fileOrginialName = $request->file('image')->getClientOriginalName();
+            $fileName = pathinfo($fileOrginialName, PATHINFO_FILENAME);
+            $fileName .= '_' . time() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path('images'),  $fileName);
+        }
+
         $password =  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
         $email_verified_at = Carbon::now();
         $role = 1;
@@ -44,11 +52,13 @@ class AdminController extends Controller
             "email" => $request->email,
             'email_verified_at' => $email_verified_at,
             'role' => $role,
+            "image" => $fileName ?? null,
+            "phone" => $request->phone,
             'password' => $password,
             "created_at" => Carbon::now(),
             "updated_at" => Carbon::now()
         ]);
-        $message = $check ? 'Created successfully' : 'Created failed';
+        $message = $check ? 'Created admin successfully' : 'Created admin failed';
         // dd($message);
         //session flash
         return redirect()->route('admin.admins.index')->with('message', $message);
@@ -77,9 +87,25 @@ class AdminController extends Controller
      */
     public function update(UpdateAdminNameEmailRequest $request, string $id)
     {
+        $admin = DB::table('users')->find($id);
+        $oldImageFileName = $admin->image;
+
+        if ($request->hasFile('image')) {
+            $fileOrginialName = $request->file('image')->getClientOriginalName();
+            $fileName = pathinfo($fileOrginialName, PATHINFO_FILENAME);
+            $fileName .= '_' . time() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path('images'),  $fileName);
+
+            if (!is_null($oldImageFileName) && file_exists('images/' . $oldImageFileName)) {
+                unlink('images/' . $oldImageFileName);
+            }
+        }
+
         $check = DB::table('users')->where('id', '=', $id)->update([
             "name" => $request->name,
             "email" => $request->email,
+            "phone" => $request->phone,
+            "image" => $fileName ?? $oldImageFileName,
             // 'password' => $password,
             "updated_at" => Carbon::now()
         ]);
@@ -93,11 +119,19 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        $result = DB::table('users')->delete($id);
 
-        $message = $result ? 'Deleted successfully' : 'Deleted failed';
+        $admin = User::find((int)$id);
+
+        $image = $admin->image;
+
+        if (!is_null($image) && file_exists('images/' . $image)) {
+            unlink('images/' . $image);
+        }
+
+        $admin->delete();
+
         //session flash
-        return redirect()->route('admin.admins.index')->with('message', $message);
+        return redirect()->route('admin.admins.index')->with('message', 'Deleted successfully');
     }
     public function updatePassword(UpdateAdminPasswordRequest $request, string $id)
     {

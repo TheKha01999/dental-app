@@ -157,6 +157,17 @@
             @endif
         </div>
     </div>
+    <div class="form-group">
+        <label class="col-lg-3 control-label" for="phone">Phone:</label>
+        <div class="col-lg-8">
+            <input name="phone" id="phone" class="form-control" type="text" value="{{ $user->phone }}">
+            @error('phone')
+                <div class="text-danger mt-2">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+    </div>
 
     <button class="mt-3 btn btn__secondary btn__rounded" type="submit">Save</button>
 </form>

@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class ProductsController extends Controller
 {
-    //Navbar
-    // public $blogCategories;
-    // public $serviceCategories;
-    ///////////////
     public $productCategories;
 
     public function __construct()
@@ -27,11 +23,18 @@ class ProductsController extends Controller
     }
     public function index()
     {
+        // $products = DB::table('products')
+        //     ->where('status', '=', '1')
+        //     ->orderBy('created_at', 'desc')
+        //     ->get();
         $products = DB::table('products')
-            ->where('status', '=', '1')
-            ->orderBy('created_at', 'desc')
-            ->get();
+            ->select('products.*', 'product_categories.status')
+            ->where('products.status', '=', '1')
+            ->where('product_categories.status', '=', '1')
+            ->leftJoin('product_categories', 'products.product_categories_id', '=', 'product_categories.id')
+            ->paginate(config('my-config.item-per-pages'));
 
+        // dd($products);
         // $productCategories = DB::table('product_categories')->where('status', '=', '1')->get();
 
         return view(
