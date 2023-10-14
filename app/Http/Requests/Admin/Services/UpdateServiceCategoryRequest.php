@@ -23,7 +23,7 @@ class UpdateServiceCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|min:5|max:50|unique:service_categories,name,' . $this->service_category,
-            'status' => 'required',
+            'status' => 'required|boolean',
             'image' => 'image',
         ];
     }

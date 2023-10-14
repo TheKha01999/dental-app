@@ -120,12 +120,6 @@ class UserController extends Controller
     {
         $user = User::find((int)$id);
 
-        $image = $user->image;
-
-        if (!is_null($image) && file_exists('images/' . $image)) {
-            unlink('images/' . $image);
-        }
-
         $user->delete();
 
         return redirect()->route('admin.users.index')->with('message', 'Deleted successfully');

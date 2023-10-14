@@ -2,28 +2,30 @@
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper mt-4">
         <!-- Content Header (Page header) -->
-        @if (session('message'))
-            <section class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-12 alert alert-success">
-                            {{ session('message') }}
-                        </div>
-                    </div>
-                </div><!-- /.container-fluid -->
-            </section>
-        @endif
         <!-- Main content -->
-        <section class="content mt-2">
+        <section class="content">
             <div class="container-fluid">
+                @if (session('message'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                {{-- {{ dd($_GET['page']) }} --}}
+
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="card">
-                            <div class="card-header d-flex align-items-center">
-                                <h3 class="card-title mr-3">Products List</h3>
-                                <form class="form-inline ml-3" action="{{ route('admin.products.index') }}" method="get">
+                            <div style="gap: 12px"
+                                class="card-header d-flex align-items-center flex-md-row flex-column mb-sm-0 mb-5">
+                                <h3 class="card-title">Product Table</h3>
+
+                                <form class="form-inline ml-md-auto" action="{{ route('admin.products.index') }}"
+                                    method="get">
                                     <div class="input-group input-group-sm">
                                         <input class="form-control" type="text" name='keyword' placeholder="Search"
                                             aria-label="Search" value="{{ $keyword }}">
@@ -44,8 +46,8 @@
                                 </form>
                             </div>
                             <!-- /.card-header -->
-                            <div class="card-body">
-                                <table class="table table-bordered">
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-hover text-nowrap">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -53,6 +55,7 @@
                                             <th>Price</th>
                                             <th>Avatar</th>
                                             <th>Category</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -71,9 +74,15 @@
                                                 </td>
                                                 <td>{{ $product->product_category_name }}</td>
                                                 <td>
-                                                    <form
+                                                    <div
+                                                        class="{{ $product->status === 1 ? 'btn btn-success' : 'btn btn-danger' }}">
+                                                        {{ $product->status === 1 ? 'show' : 'hide' }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <form class="d-inline"
                                                         action="{{ route('admin.products.destroy', ['product' => $product->id]) }}"
-                                                        method="post">
+                                                        method="POST">
                                                         @csrf
                                                         @method('delete')
                                                         <button onclick="return confirm('Are u sure !')" type="submit"
@@ -98,7 +107,6 @@
                         </div>
                         <!-- /.card -->
                     </div>
-                    <!-- /.col -->
                 </div>
                 <!-- /.row -->
             </div><!-- /.container-fluid -->

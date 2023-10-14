@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\Services;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Services\StoreServiceRequest;
 use App\Http\Requests\Admin\Services\UpdateServiceRequest;
+use App\Models\Service;
+use App\Models\ServiceCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +33,7 @@ class ServiceController extends Controller
         $services = DB::table('services')
             ->select('services.*', 'service_categories.name as service_category_name')
             ->where('services.title', 'like', '%' . $keyword . '%')
+            ->whereNull('services.deleted_at')
             ->leftJoin('service_categories', 'services.service_categories_id', '=', 'service_categories.id')
             ->orderBy('created_at', $sort)
             ->paginate($itemPerPage);
@@ -147,21 +150,19 @@ class ServiceController extends Controller
      */
     public function destroy(string $id)
     {
-        //Destroy image in source file
-        $service = DB::table('services')->find($id);
-        $serviceImage = $service->image;
+
+        $service = Service::find((int)$id);
+        $serviceCategory = ServiceCategory::find($service->service_categories_id);
+        $serviceCategory->status = 0;
+        $service->status = 0;
+        $service->save();
+        $serviceCategory->save();
+
+        $service->delete();
 
 
-        if (!is_null($serviceImage) && file_exists('images/' . $serviceImage)) {
-            unlink('images/' . $serviceImage);
-        }
-
-        //delete 
-        $result = DB::table('services')->delete($id);
-
-        $message = $result ? 'Deleted successfully' : 'Deleted failed';
         //session flash
-        return redirect()->route('admin.services.index')->with('message', $message);
+        return redirect()->route('admin.services.index')->with('message', 'Deleted successfully');
     }
     public function createSlug(Request $request)
     {

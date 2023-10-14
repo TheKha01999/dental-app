@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Branch;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Branch\CreateBranchRequest;
 use App\Http\Requests\Admin\Branch\UpdateBranchRequest;
+use App\Models\Branch;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,7 @@ class BranchController extends Controller
 
         //Query Builder
         $branchs = DB::table('branchs')
+            ->whereNull('deleted_at')
             ->orderBy('created_at', 'desc')
             ->get();
         return view('admin.pages.branchs.list', ['branchs' => $branchs]);
@@ -115,17 +117,12 @@ class BranchController extends Controller
      */
     public function destroy(string $id)
     {
-        $branch = DB::table('branchs')->find($id);
-        $image = $branch->image;
+        $branch = Branch::find((int)$id);
+        $branch->status = 0;
+        $branch->save();
 
-        if (!is_null($image) && file_exists('images/' . $image)) {
-            unlink('images/' . $image);
-        }
-
-        $result = DB::table('branchs')->delete($id);
-
-        $message = $result ? 'Deleted successfully' : 'Deleted failed';
+        $branch->delete();
         //session flash
-        return redirect()->route('admin.branchs.index')->with('message', $message);
+        return redirect()->route('admin.branchs.index')->with('message', 'Deleted successfully');
     }
 }

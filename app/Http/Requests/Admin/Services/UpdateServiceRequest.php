@@ -26,7 +26,7 @@ class UpdateServiceRequest extends FormRequest
             "slug" => "required",
             "content" => "required",
             "description" => "required",
-            'status' => 'required',
+            'status' => 'required|boolean',
             "service_categories_id" => "required",
             'image' => 'image',
         ];

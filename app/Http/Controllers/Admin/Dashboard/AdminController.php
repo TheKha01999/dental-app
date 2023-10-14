@@ -122,11 +122,11 @@ class AdminController extends Controller
 
         $admin = User::find((int)$id);
 
-        $image = $admin->image;
+        // $image = $admin->image;
 
-        if (!is_null($image) && file_exists('images/' . $image)) {
-            unlink('images/' . $image);
-        }
+        // if (!is_null($image) && file_exists('images/' . $image)) {
+        //     unlink('images/' . $image);
+        // }
 
         $admin->delete();
 

@@ -23,7 +23,7 @@ class StoreServiceCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|min:5|max:50|unique:service_categories,name',
-            'status' => 'required',
+            'status' => 'required|boolean',
             'image' => 'image|required',
         ];
     }

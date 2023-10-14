@@ -30,7 +30,7 @@ class StoreBlogRequest extends FormRequest
             "content" => "required",
             "short_description" => "required",
             "author_description" => "required",
-            'status' => 'required',
+            'status' => 'required|boolean',
             "blog_categories_id" => "required",
         ];
     }

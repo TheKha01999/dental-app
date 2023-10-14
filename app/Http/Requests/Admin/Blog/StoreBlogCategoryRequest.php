@@ -23,7 +23,7 @@ class StoreBlogCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:255|unique:blog_categories,name',
-            'status' => 'required'
+            'status' => 'required|boolean'
         ];
     }
 }

@@ -86,9 +86,11 @@
                                         @endforelse
                                     </tbody>
                                 </table>
-                                {{ $productCategories->links('pagination::bootstrap-5') }}
                             </div>
                             <!-- /.card-body -->
+                            <div class="card-footer clearfix">
+                                {{ $productCategories->links('pagination::bootstrap-5') }}
+                            </div>
                         </div>
                         <!-- /.card -->
                     </div>

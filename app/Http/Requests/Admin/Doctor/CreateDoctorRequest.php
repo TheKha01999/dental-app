@@ -25,7 +25,7 @@ class CreateDoctorRequest extends FormRequest
             'name' => 'required|min:5|max:50|',
             "description" => "required",
             "biography" => "required",
-            'status' => 'required',
+            'status' => 'required|boolean',
             "service_categories_id" => "required",
             "branch_id" => "required",
             'image' => 'image|required',

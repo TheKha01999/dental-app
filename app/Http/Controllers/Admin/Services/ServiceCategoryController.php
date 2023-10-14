@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Services;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Services\StoreServiceCategoryRequest;
 use App\Http\Requests\Admin\Services\UpdateServiceCategoryRequest;
+use App\Models\ServiceCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +29,7 @@ class ServiceCategoryController extends Controller
 
         $serviceCategories = DB::table('service_categories')
             ->where('name', 'like', '%' . $keyword . '%')
+            ->whereNull('deleted_at')
             ->orderBy('created_at', $sort)
             ->paginate($itemPerPage);
         return view(
@@ -126,17 +128,14 @@ class ServiceCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $service = DB::table('service_categories')->find($id);
-        $image = $service->image;
 
-        if (!is_null($image) && file_exists('images/' . $image)) {
-            unlink('images/' . $image);
-        }
+        $service = ServiceCategory::find((int)$id);
+        $service->status = 0;
+        $service->save();
 
-        $result = DB::table('service_categories')->delete($id);
+        $service->delete();
 
-        $message = $result ? 'Deleted successfully' : 'Deleted failed';
         //session flash
-        return redirect()->route('admin.service_categories.index')->with('message', $message);
+        return redirect()->route('admin.service_categories.index')->with('message', 'Deleted successfully');
     }
 }

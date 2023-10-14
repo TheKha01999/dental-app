@@ -55,7 +55,7 @@
 
                                     <div class="form-group">
                                         <label for="qty">Quantity</label>
-                                        <input name="qty" type="number" value="{{ old('qty') }}"
+                                        <input name="qty" type="text" value="{{ old('qty') }}"
                                             class="form-control" id="qty" placeholder="Enter Quantity">
 
                                         @error('qty')

@@ -25,7 +25,7 @@ class BookingRequest extends FormRequest
             'user' => 'required',
             'branch' => 'required',
             'service' => 'required',
-            'day' => 'required',
+            'day' => 'required|date_format:d-m-Y|after:today',
             'doctor' => 'required',
             'time' => 'required',
             'status' => 'required'

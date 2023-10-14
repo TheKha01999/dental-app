@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductsRequest;
 use App\Http\Requests\UpdateProductsRequest;
+use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +32,7 @@ class ProductsController extends Controller
         $products = DB::table('products')
             ->select('products.*', 'product_categories.name as product_category_name')
             ->where('products.name', 'like', '%' . $keyword . '%')
+            ->whereNull('products.deleted_at')
             ->leftJoin('product_categories', 'products.product_categories_id', '=', 'product_categories.id')
             ->orderBy('created_at', $sort)
             ->paginate($itemPerPage);
@@ -151,18 +153,15 @@ class ProductsController extends Controller
      */
     public function destroy(string $id)
     {
-        $product = DB::table('products')->find($id);
-        $image = $product->image;
+        $product = Product::find((int)$id);
 
-        if (!is_null($image) && file_exists('images/' . $image)) {
-            unlink('images/' . $image);
-        }
+        $product->status = 0;
+        $product->save();
 
-        $result = DB::table('products')->delete($id);
+        $product->delete();
 
-        $message = $result ? 'Deleted successfully' : 'Deleted failed';
         //session flash
-        return redirect()->route('admin.products.index')->with('message', $message);
+        return redirect()->route('admin.products.index')->with('message', 'Deleted successfully');
     }
     public function createSlug(Request $request)
     {

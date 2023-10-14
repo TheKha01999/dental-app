@@ -23,7 +23,7 @@ class UpdateBlogCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:255|unique:blog_categories,name,' . $this->blog_category,
-            'status' => 'required'
+            'status' => 'required|boolean'
         ];
     }
 }

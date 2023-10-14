@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Blog;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Blog\StoreBlogCategoryRequest;
 use App\Http\Requests\Admin\Blog\UpdateBlogCategoryRequest;
+use App\Models\BlogCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,8 +29,10 @@ class BlogCategoryController extends Controller
 
         $blogCategories = DB::table('blog_categories')
             ->where('name', 'like', '%' . $keyword . '%')
+            ->whereNull('deleted_at')
             ->orderBy('created_at', $sort)
             ->paginate($itemPerPage);
+
         return view(
             'admin.pages.blog_categories.list',
             [
@@ -102,11 +105,12 @@ class BlogCategoryController extends Controller
      */
     public function destroy(string $id)
     {
+        $blogCategory = BlogCategory::find((int)$id);
+        $blogCategory->status = 0;
+        $blogCategory->save();
 
-        $check = DB::table('blog_categories')->delete($id);
+        $blogCategory->delete();
 
-        $message = $check ? 'Deleted successfully' : 'Deleted failed';
-
-        return redirect()->route('admin.blog_categories.index')->with('message', $message);
+        return redirect()->route('admin.blog_categories.index')->with('message', 'Deleted successfully');
     }
 }

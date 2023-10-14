@@ -24,13 +24,13 @@ class UpdateProductsRequest extends FormRequest
         return [
             'name' => 'required|min:5|max:1000|unique:products,name,' . $this->product,
             "slug" => "required",
-            "price" => "required",
-            "qty" => "required",
+            "price" => "required|numeric|integer|min:0",
+            "qty" => "required|numeric|integer|min:0",
             "short_description" => "required",
             "description" => "required",
             "information" => "required",
             "image" => 'image',
-            'status' => 'required',
+            'status' => 'required|boolean',
             "product_categories_id" => "required",
         ];
     }

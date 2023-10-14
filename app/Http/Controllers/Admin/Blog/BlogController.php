@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Blog;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Blog\StoreBlogRequest;
 use App\Http\Requests\Admin\Blog\UpdateBlogRequest;
+use App\Models\Blog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,8 +31,9 @@ class BlogController extends Controller
         //Query Builder
         $blogs = DB::table('blogs')
             ->select('blogs.*', 'blog_categories.name as blog_category_name')
+            ->whereNull('blogs.deleted_at')
             ->where('blogs.title', 'like', '%' . $keyword . '%')
-            ->orwhere('blogs.author', 'like', '%' . $keyword . '%')
+            // ->orwhere('blogs.author', 'like', '%' . $keyword . '%')
             ->leftJoin('blog_categories', 'blogs.blog_categories_id', '=', 'blog_categories.id')
             ->orderBy('created_at', $sort)
             ->paginate($itemPerPage);
@@ -171,24 +173,14 @@ class BlogController extends Controller
      */
     public function destroy(string $id)
     {
-        //Destroy image in source file
-        $blog = DB::table('blogs')->find($id);
-        $blogImage = $blog->blog_image;
-        $authorImage = $blog->author_image;
+        $blog = Blog::find((int)$id);
+        $blog->status = 0;
+        $blog->save();
 
-        if (!is_null($blogImage) && file_exists('images/' . $blogImage)) {
-            unlink('images/' . $blogImage);
-        }
-        if (!is_null($authorImage) && file_exists('images/' . $authorImage)) {
-            unlink('images/' . $authorImage);
-        }
+        $blog->delete();
 
-        //delete 
-        $result = DB::table('blogs')->delete($id);
-
-        $message = $result ? 'Deleted successfully' : 'Deleted failed';
         //session flash
-        return redirect()->route('admin.blogs.index')->with('message', $message);
+        return redirect()->route('admin.blogs.index')->with('message', 'Deleted successfully');
     }
 
     public function createSlug(Request $request)

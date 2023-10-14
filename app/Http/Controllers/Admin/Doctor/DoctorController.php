@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Doctor;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Doctor\CreateDoctorRequest;
 use App\Http\Requests\Admin\Doctor\UpdateDoctorRequest;
+use App\Models\Doctor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,6 +31,7 @@ class DoctorController extends Controller
         $doctors = DB::table('doctors')
             ->select('doctors.*', 'service_categories.name as service_category_name', 'branchs.name as branch_name')
             ->where('doctors.name', 'like', '%' . $keyword . '%')
+            ->whereNull('doctors.deleted_at')
             ->join('service_categories', 'doctors.service_categories_id', '=', 'service_categories.id')
             ->join('branchs', 'doctors.branch_id', '=', 'branchs.id')
             ->orderBy('created_at', $sort)
@@ -157,21 +159,15 @@ class DoctorController extends Controller
      */
     public function destroy(string $id)
     {
-        //Destroy image in source file
-        $doctor = DB::table('doctors')->find($id);
-        $doctorImage = $doctor->image;
 
+        $doctor = Doctor::find((int)$id);
+        $doctor->status = 0;
+        $doctor->save();
 
-        if (!is_null($doctorImage) && file_exists('images/' . $doctorImage)) {
-            unlink('images/' . $doctorImage);
-        }
+        $doctor->delete();
 
-        //delete 
-        $result = DB::table('doctors')->delete($id);
-
-        $message = $result ? 'Deleted successfully' : 'Deleted failed';
         //session flash
-        return redirect()->route('admin.doctors.index')->with('message', $message);
+        return redirect()->route('admin.doctors.index')->with('message', 'Deleted successfully');
     }
     public function uploadImage(Request $request)
     {

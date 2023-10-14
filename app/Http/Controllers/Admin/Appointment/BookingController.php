@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Admin\Appointment;
 
+use App\Events\BookingSuccess;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Appointment\BookingRequest;
 use App\Http\Requests\Admin\Appointment\UpdateBookingRequest;
+use App\Models\Booking;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
@@ -63,8 +67,11 @@ class BookingController extends Controller
     {
         $originalDate = $request->day;
         $originalDate = Carbon::createFromFormat('d-m-Y', $originalDate)->format('Y-m-d');
-        // dd($originalDate);
-        $check = DB::table('bookings')->insert([
+
+        $user = User::find($request->user);
+
+
+        $booking = Booking::create([
             "user_id" => $request->user,
             "branch_id" => $request->branch,
             "service_id" => $request->service,
@@ -76,10 +83,22 @@ class BookingController extends Controller
             "updated_at" => Carbon::now()
         ]);
 
-        $message = $check ? 'Created successfully' : 'Created failed';
+        // $check = DB::table('bookings')->insert([
+        //     "user_id" => $request->user,
+        //     "branch_id" => $request->branch,
+        //     "service_id" => $request->service,
+        //     "doctor_id" => $request->doctor,
+        //     "status_code" => $request->status,
+        //     "time_code" => $request->time,
+        //     'date' => $originalDate,
+        //     "created_at" => Carbon::now(),
+        //     "updated_at" => Carbon::now()
+        // ]);
+        event(new BookingSuccess($user, $booking));
+        // $message = $check ? 'Created successfully' : 'Created failed';
         // dd($message);
         //session flash
-        return redirect()->route('admin.bookings.index')->with('message', $message);
+        return redirect()->route('admin.bookings.index')->with('message', 'Created successfully');
     }
 
     /**
@@ -151,11 +170,12 @@ class BookingController extends Controller
      */
     public function destroy(string $id)
     {
-        $result = DB::table('bookings')->delete($id);
+        $booking = Booking::find((int)$id);
 
-        $message = $result ? 'Deleted successfully' : 'Deleted failed';
+        $booking->delete();
+
         //session flash
-        return redirect()->route('admin.bookings.index')->with('message', $message);
+        return redirect()->route('admin.bookings.index')->with('message', 'Deleted successfully');
     }
     public function showDoctor(Request $request)
     {
