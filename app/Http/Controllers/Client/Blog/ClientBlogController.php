@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client\Blog;
 
 use App\Http\Controllers\Controller;
+use App\Models\BlogCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -28,6 +29,8 @@ class ClientBlogController extends Controller
     }
     public function index($id)
     {
+        $blogCategories = BlogCategory::findOrFail($id);
+
         $blogs = DB::table('blogs')
             ->select('blogs.*', 'blog_categories.name as blog_category_name')
             ->where('blogs.status', '=', '1')
@@ -35,7 +38,7 @@ class ClientBlogController extends Controller
             ->leftJoin('blog_categories', 'blogs.blog_categories_id', '=', 'blog_categories.id')
             ->orderBy('created_at', 'desc')
             ->get();
-        // dd($blogs);
+
         return view(
             'client.pages.Blog.blog',
             [
@@ -43,15 +46,16 @@ class ClientBlogController extends Controller
             ]
         );
     }
-    public function detail($id)
+    public function detail($slug)
     {
         //$id này là id của blogs 
         $blog = DB::table('blogs')
             ->select('blogs.*', 'blog_categories.name as blog_category_name')
-            ->where('blogs.id', '=', $id)
+            ->where('blogs.slug', '=', $slug)
             ->leftJoin('blog_categories', 'blogs.blog_categories_id', '=', 'blog_categories.id')
             ->get()
             ->first();
+        if (!$blog) abort(404);
         $recentPosts = DB::table('blogs')
             ->orderBy('created_at', 'desc')
             ->limit(3)

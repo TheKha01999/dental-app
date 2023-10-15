@@ -21,17 +21,25 @@ class DoctorController extends Controller
         $keyword = $request->keyword;
         $sortBy = $request->sortBy ?? '';
         $sort = $sortBy  === 'oldest' ? 'asc' : 'desc';
+        $status = $request->status ?? '';
 
         // Index
         $itemPerPage = config('my-config.item-per-pages');
         $page = $request->page ?? 1;
         $stt = ($page *  $itemPerPage) - ($itemPerPage - 1);
 
+        $filter = [];
+        if (!empty($keyword)) {
+            $filter[] = ['service_categories.name', 'like', '%' . $keyword . '%'];
+        }
+        if ($status !== '') {
+            $filter[] = ['doctors.status', $status];
+        }
+
         //Query Builder
         $doctors = DB::table('doctors')
             ->select('doctors.*', 'service_categories.name as service_category_name', 'branchs.name as branch_name')
-            ->where('doctors.name', 'like', '%' . $keyword . '%')
-            ->whereNull('doctors.deleted_at')
+            ->where($filter)
             ->join('service_categories', 'doctors.service_categories_id', '=', 'service_categories.id')
             ->join('branchs', 'doctors.branch_id', '=', 'branchs.id')
             ->orderBy('created_at', $sort)
@@ -43,7 +51,8 @@ class DoctorController extends Controller
                 'doctors' => $doctors,
                 'sortBy' => $sortBy,
                 'keyword' => $keyword,
-                'stt' => $stt
+                'stt' => $stt,
+                'status' => $status
             ]
         );
     }
@@ -180,5 +189,14 @@ class DoctorController extends Controller
             $url = asset('images/' . $fileName);
             return response()->json(['fileName' => $fileName, 'uploaded' => 1, 'url' => $url]);
         }
+    }
+    public function restore(string $id)
+    {
+        $doctor = Doctor::withTrashed()->find($id);
+        $doctor->status = 1;
+        $doctor->save();
+        $doctor->restore();
+
+        return redirect()->route('admin.doctors.index')->with('message', 'Restore successfully');
     }
 }

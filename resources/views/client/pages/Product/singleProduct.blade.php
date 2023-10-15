@@ -122,74 +122,31 @@
                     </div><!-- /.product-tabs -->
                     <h6 class="related__products-title text-center-xs mb-25">Related Products</h6>
                     <div class="row">
-                        <!-- Product item #1 -->
-                        <div class="col-sm-6 col-md-6 col-lg-3">
-                            <div class="product-item">
-                                <div class="product__img">
-                                    <img src="assets/images/products/2.jpg" alt="Product" loading="lazy">
-                                    <div class="product__action">
-                                        <a href="#" class="btn btn__primary btn__rounded">
-                                            <i class="icon-cart"></i> <span>Add To Cart</span>
-                                        </a>
-                                    </div><!-- /.product-action -->
-                                </div><!-- /.product-img -->
-                                <div class="product__info">
-                                    <h4 class="product__title"><a href="#">Biotin Complex</a></h4>
-                                    <span class="product__price">$12,9</span>
-                                </div><!-- /.product-content -->
-                            </div><!-- /.product-item -->
-                        </div><!-- /.col-lg-3 -->
-                        <!-- Product item #2 -->
-                        <div class="col-sm-6 col-md-6 col-lg-3">
-                            <div class="product-item">
-                                <div class="product__img">
-                                    <img src="assets/images/products/3.jpg" alt="Product" loading="lazy">
-                                    <div class="product__action">
-                                        <a href="#" class="btn btn__primary btn__rounded">
-                                            <i class="icon-cart"></i> <span>Add To Cart</span>
-                                        </a>
-                                    </div><!-- /.product-action -->
-                                </div><!-- /.product-img -->
-                                <div class="product__info">
-                                    <h4 class="product__title"><a href="#">Facial Serum</a></h4>
-                                    <span class="product__price">$19,99</span>
-                                </div><!-- /.product-content -->
-                            </div><!-- /.product-item -->
-                        </div><!-- /.col-lg-3 -->
-                        <!-- Product item #3 -->
-                        <div class="col-sm-6 col-md-6 col-lg-3">
-                            <div class="product-item">
-                                <div class="product__img">
-                                    <img src="assets/images/products/4.jpg" alt="Product" loading="lazy">
-                                    <div class="product__action">
-                                        <a href="#" class="btn btn__primary btn__rounded">
-                                            <i class="icon-cart"></i> <span>Add To Cart</span>
-                                        </a>
-                                    </div><!-- /.product-action -->
-                                </div><!-- /.product-img -->
-                                <div class="product__info">
-                                    <h4 class="product__title"><a href="#">Calming Herps</a></h4>
-                                    <span class="product__price">$33.00</span>
-                                </div><!-- /.product-content -->
-                            </div><!-- /.product-item -->
-                        </div><!-- /.col-lg-3 -->
-                        <!-- Product item #4 -->
-                        <div class="col-sm-6 col-md-6 col-lg-3">
-                            <div class="product-item">
-                                <div class="product__img">
-                                    <img src="assets/images/products/5.jpg" alt="Product" loading="lazy">
-                                    <div class="product__action">
-                                        <a href="#" class="btn btn__primary btn__rounded">
-                                            <i class="icon-cart"></i> <span>Add To Cart</span>
-                                        </a>
-                                    </div><!-- /.product-action -->
-                                </div><!-- /.product-img -->
-                                <div class="product__info">
-                                    <h4 class="product__title"><a href="#">Essential Oil</a></h4>
-                                    <span class="product__price">$63.00</span>
-                                </div><!-- /.product-content -->
-                            </div><!-- /.product-item -->
-                        </div><!-- /.col-lg-3 -->
+                        @foreach ($relatedProducts as $relatedProduct)
+                            <!-- Product item #1 -->
+                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                <div class="product-item">
+                                    <div class="product__img">
+                                        <img src="{{ asset('images/' . $relatedProduct->image) }}" alt="Product"
+                                            loading="lazy">
+                                        {{-- <div class="product__action">
+                                            <a href="{{ route('home.product.single', ['slug' => $relatedProduct->slug]) }}"
+                                                class="btn btn__primary btn__rounded">
+                                                <i class="icon-cart"></i> <span>Add To Cart</span>
+                                            </a>
+                                        </div><!-- /.product-action --> --}}
+                                    </div><!-- /.product-img -->
+                                    <div class="product__info">
+                                        <h4 class="product__title"><a
+                                                href="{{ route('home.product.single', ['slug' => $relatedProduct->slug]) }}">{{ $relatedProduct->name }}</a>
+                                        </h4>
+                                        <span
+                                            class="product__price">{{ number_format($relatedProduct->price, 0, '.', ',') }}
+                                            VND</span>
+                                    </div><!-- /.product-content -->
+                                </div><!-- /.product-item -->
+                            </div><!-- /.col-lg-3 -->
+                        @endforeach
                     </div><!-- /.row -->
                 </div><!-- /.col-12 -->
             </div><!-- /.row -->

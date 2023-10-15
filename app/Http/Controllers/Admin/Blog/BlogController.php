@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Blog\StoreBlogRequest;
 use App\Http\Requests\Admin\Blog\UpdateBlogRequest;
 use App\Models\Blog;
+use App\Models\BlogCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,17 +23,24 @@ class BlogController extends Controller
         $keyword = $request->keyword;
         $sortBy = $request->sortBy ?? '';
         $sort = $sortBy  === 'oldest' ? 'asc' : 'desc';
-
+        $status = $request->status ?? '';
         // Index
         $itemPerPage = config('my-config.item-per-pages');
         $page = $request->page ?? 1;
         $stt = ($page *  $itemPerPage) - ($itemPerPage - 1);
 
+        $filter = [];
+        if (!empty($keyword)) {
+            $filter[] = ['blogs.author', 'like', '%' . $keyword . '%'];
+        }
+        if ($status !== '') {
+            $filter[] = ['blogs.status', $status];
+        }
+
         //Query Builder
         $blogs = DB::table('blogs')
             ->select('blogs.*', 'blog_categories.name as blog_category_name')
-            ->whereNull('blogs.deleted_at')
-            ->where('blogs.title', 'like', '%' . $keyword . '%')
+            ->where($filter)
             // ->orwhere('blogs.author', 'like', '%' . $keyword . '%')
             ->leftJoin('blog_categories', 'blogs.blog_categories_id', '=', 'blog_categories.id')
             ->orderBy('created_at', $sort)
@@ -44,7 +52,8 @@ class BlogController extends Controller
                 'blogs' => $blogs,
                 'sortBy' => $sortBy,
                 'keyword' => $keyword,
-                'stt' => $stt
+                'stt' => $stt,
+                'status' => $status,
             ]
         );
     }
@@ -198,5 +207,14 @@ class BlogController extends Controller
             $url = asset('images/' . $fileName);
             return response()->json(['fileName' => $fileName, 'uploaded' => 1, 'url' => $url]);
         }
+    }
+    public function restore(string $id)
+    {
+        $blog = Blog::withTrashed()->find($id);
+        $blog->status = 1;
+        $blog->save();
+        $blog->restore();
+
+        return redirect()->route('admin.blogs.index')->with('message', 'Restore successfully');
     }
 }

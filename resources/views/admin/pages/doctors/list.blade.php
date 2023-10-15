@@ -36,6 +36,11 @@
                                             <option {{ $sortBy === 'latest' ? 'selected' : '' }} value="latest">Latest
                                             </option>
                                         </select>
+                                        <select class="form-control" name="status">
+                                            <option value="">--Show/Hide--</option>
+                                            <option {{ $status == '1' ? 'selected' : '' }} value="1">Show</option>
+                                            <option {{ $status == '0' ? 'selected' : '' }} value="0">Hide</option>
+                                        </select>
                                         <div class="input-group-append">
                                             <button class="btn" type="submit">
                                                 <i class="fas fa-search"></i>
@@ -90,6 +95,10 @@
                                                     </form>
                                                     <a href="{{ route('admin.doctors.show', ['doctor' => $doctor->id]) }}"
                                                         class="btn btn-primary">Detail</a>
+                                                    @if (!is_null($doctor->deleted_at))
+                                                        <a href="{{ route('admin.doctors.restore', ['doctor' => $doctor->id]) }}"
+                                                            class="btn btn-success">Restore</a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @empty

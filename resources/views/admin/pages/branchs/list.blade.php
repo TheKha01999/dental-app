@@ -67,6 +67,10 @@
                                                     </form>
                                                     <a href="{{ route('admin.branchs.show', ['branch' => $branch->id]) }}"
                                                         class="btn btn-primary">Detail</a>
+                                                    @if (!is_null($branch->deleted_at))
+                                                        <a href="{{ route('admin.branchs.restore', ['branch' => $branch->id]) }}"
+                                                            class="btn btn-success">Restore</a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @empty

@@ -79,6 +79,10 @@
                                                     </form>
                                                     <a href="{{ route('admin.bookings.show', ['booking' => $booking->id]) }}"
                                                         class="btn btn-primary">Detail</a>
+                                                    @if (!is_null($booking->deleted_at))
+                                                        <a href="{{ route('admin.bookings.restore', ['booking' => $booking->id]) }}"
+                                                            class="btn btn-success">Restore</a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @empty

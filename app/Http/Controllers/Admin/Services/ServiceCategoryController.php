@@ -21,15 +21,22 @@ class ServiceCategoryController extends Controller
         $keyword = $request->keyword;
         $sortBy = $request->sortBy ?? '';
         $sort = $sortBy  === 'oldest' ? 'asc' : 'desc';
-
+        $status = $request->status ?? '';
         // Index
         $itemPerPage = config('my-config.item-per-pages');
         $page = $request->page ?? 1;
         $stt = ($page *  $itemPerPage) - ($itemPerPage - 1);
 
+        $filter = [];
+        if (!empty($keyword)) {
+            $filter[] = ['name', 'like', '%' . $keyword . '%'];
+        }
+        if ($status !== '') {
+            $filter[] = ['status', $status];
+        }
+
         $serviceCategories = DB::table('service_categories')
-            ->where('name', 'like', '%' . $keyword . '%')
-            ->whereNull('deleted_at')
+            ->where($filter)
             ->orderBy('created_at', $sort)
             ->paginate($itemPerPage);
         return view(
@@ -38,7 +45,8 @@ class ServiceCategoryController extends Controller
                 'serviceCategories' => $serviceCategories,
                 'sortBy' => $sortBy,
                 'keyword' => $keyword,
-                'stt' => $stt
+                'stt' => $stt,
+                'status' => $status
             ]
         );
     }
@@ -137,5 +145,14 @@ class ServiceCategoryController extends Controller
 
         //session flash
         return redirect()->route('admin.service_categories.index')->with('message', 'Deleted successfully');
+    }
+    public function restore(string $id)
+    {
+        $service = ServiceCategory::withTrashed()->find($id);
+        $service->status = 1;
+        $service->save();
+        $service->restore();
+
+        return redirect()->route('admin.service_categories.index')->with('message', 'Restore successfully');
     }
 }

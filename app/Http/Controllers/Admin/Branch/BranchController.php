@@ -20,7 +20,6 @@ class BranchController extends Controller
 
         //Query Builder
         $branchs = DB::table('branchs')
-            ->whereNull('deleted_at')
             ->orderBy('created_at', 'desc')
             ->get();
         return view('admin.pages.branchs.list', ['branchs' => $branchs]);
@@ -124,5 +123,14 @@ class BranchController extends Controller
         $branch->delete();
         //session flash
         return redirect()->route('admin.branchs.index')->with('message', 'Deleted successfully');
+    }
+    public function restore(string $id)
+    {
+        $branch = Branch::withTrashed()->find($id);
+        $branch->status = 1;
+        $branch->save();
+        $branch->restore();
+
+        return redirect()->route('admin.branchs.index')->with('message', 'Restore successfully');
     }
 }

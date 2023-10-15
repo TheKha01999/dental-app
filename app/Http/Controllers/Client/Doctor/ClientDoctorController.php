@@ -37,6 +37,7 @@ class ClientDoctorController extends Controller
             ->join('service_categories', 'service_categories.id', '=', 'doctors.service_categories_id')
             ->get()
             ->first();
+        if (!$doctor) abort(404);
 
         return view(
             'client.pages.Doctors.singleDoctor',

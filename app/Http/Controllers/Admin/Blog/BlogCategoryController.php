@@ -21,15 +21,22 @@ class BlogCategoryController extends Controller
         $keyword = $request->keyword;
         $sortBy = $request->sortBy ?? '';
         $sort = $sortBy  === 'oldest' ? 'asc' : 'desc';
-
+        $status = $request->status ?? '';
         // Index
         $itemPerPage = config('my-config.item-per-pages');
         $page = $request->page ?? 1;
         $stt = ($page *  $itemPerPage) - ($itemPerPage - 1);
 
+        $filter = [];
+        if (!empty($keyword)) {
+            $filter[] = ['name', 'like', '%' . $keyword . '%'];
+        }
+        if ($status !== '') {
+            $filter[] = ['status', $status];
+        }
+
         $blogCategories = DB::table('blog_categories')
-            ->where('name', 'like', '%' . $keyword . '%')
-            ->whereNull('deleted_at')
+            ->where($filter)
             ->orderBy('created_at', $sort)
             ->paginate($itemPerPage);
 
@@ -39,7 +46,8 @@ class BlogCategoryController extends Controller
                 'blogCategories' => $blogCategories,
                 'sortBy' => $sortBy,
                 'keyword' => $keyword,
-                'stt' => $stt
+                'stt' => $stt,
+                'status' => $status
             ]
         );
     }
@@ -112,5 +120,14 @@ class BlogCategoryController extends Controller
         $blogCategory->delete();
 
         return redirect()->route('admin.blog_categories.index')->with('message', 'Deleted successfully');
+    }
+    public function restore(string $id)
+    {
+        $blogCategory = BlogCategory::withTrashed()->find($id);
+        $blogCategory->status = 1;
+        $blogCategory->save();
+        $blogCategory->restore();
+
+        return redirect()->route('admin.blog_categories.index')->with('message', 'Restore successfully');
     }
 }

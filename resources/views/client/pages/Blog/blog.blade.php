@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ========================
-                                                                                                                                                                                                                                               page title
-                                                                                                                                                                                                                                            =========================== -->
+                                                                                                                                                                                                                                                   page title
+                                                                                                                                                                                                                                                =========================== -->
     <section class="page-title page-title-layout5 bg-overlay">
         <div class="bg-img"><img src="{{ asset('assets/client/images/page-titles/8.jpg') }}" alt="background"></div>
         <div class="container">
@@ -22,8 +22,8 @@
     </section><!-- /.page-title -->
 
     <!-- ======================
-                                                                                                                                                                                                                                                Blog Grid
-                                                                                                                                                                                                                                              ========================= -->
+                                                                                                                                                                                                                                                    Blog Grid
+                                                                                                                                                                                                                                                  ========================= -->
     <section class="blog-grid">
         <div class="container">
             <div class="row">
@@ -45,7 +45,7 @@
                                     <a class="post__meta-author" href="#">{{ $blog->author }}</a>
                                 </div>
                                 <h4 class="post__title"><a
-                                        href="{{ route('home.blog.detail', ['id' => $blog->id]) }}">{{ $blog->title }}</a>
+                                        href="{{ route('home.blog.detail', ['slug' => $blog->slug]) }}">{{ $blog->title }}</a>
                                 </h4>
                                 @php
                                     $shortContent = $blog->short_description;
@@ -55,7 +55,7 @@
                                 @endphp
                                 <p class="post__desc">{{ $shortContent }} ...
                                 </p>
-                                <a href="{{ route('home.blog.detail', ['id' => $blog->id]) }}"
+                                <a href="{{ route('home.blog.detail', ['slug' => $blog->slug]) }}"
                                     class="btn btn__secondary btn__link btn__rounded">
                                     <span>Read More</span>
                                     <i class="icon-arrow-right"></i>

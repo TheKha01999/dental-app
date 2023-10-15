@@ -23,17 +23,24 @@ class ServiceController extends Controller
         $keyword = $request->keyword;
         $sortBy = $request->sortBy ?? '';
         $sort = $sortBy  === 'oldest' ? 'asc' : 'desc';
-
+        $status = $request->status ?? '';
         // Index
         $itemPerPage = config('my-config.item-per-pages');
         $page = $request->page ?? 1;
         $stt = ($page *  $itemPerPage) - ($itemPerPage - 1);
 
+        $filter = [];
+        if (!empty($keyword)) {
+            $filter[] = ['service_categories.name', 'like', '%' . $keyword . '%'];
+        }
+        if ($status !== '') {
+            $filter[] = ['services.status', $status];
+        }
+
         //Query Builder
         $services = DB::table('services')
             ->select('services.*', 'service_categories.name as service_category_name')
-            ->where('services.title', 'like', '%' . $keyword . '%')
-            ->whereNull('services.deleted_at')
+            ->where($filter)
             ->leftJoin('service_categories', 'services.service_categories_id', '=', 'service_categories.id')
             ->orderBy('created_at', $sort)
             ->paginate($itemPerPage);
@@ -44,7 +51,8 @@ class ServiceController extends Controller
                 'services' => $services,
                 'sortBy' => $sortBy,
                 'keyword' => $keyword,
-                'stt' => $stt
+                'stt' => $stt,
+                'status' => $status
             ]
         );
     }
@@ -179,5 +187,17 @@ class ServiceController extends Controller
             $url = asset('images/' . $fileName);
             return response()->json(['fileName' => $fileName, 'uploaded' => 1, 'url' => $url]);
         }
+    }
+    public function restore(string $id)
+    {
+        $service = Service::withTrashed()->find($id);
+        $serviceCategory = ServiceCategory::find($service->service_categories_id);
+        $service->status = 1;
+        $serviceCategory->status = 1;
+        $serviceCategory->save();
+        $service->save();
+        $service->restore();
+
+        return redirect()->route('admin.services.index')->with('message', 'Restore successfully');
     }
 }

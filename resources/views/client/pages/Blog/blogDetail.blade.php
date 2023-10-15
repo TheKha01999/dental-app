@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ========================
-                                                                                                                                                                                                                                               page title
-                                                                                                                                                                                                                                            =========================== -->
+                                                                                                                                                                                                                                                   page title
+                                                                                                                                                                                                                                                =========================== -->
     <section class="page-title pt-30 pb-30 text-center">
         <div class="container">
             <div class="row align-items-center">
@@ -21,8 +21,8 @@
     </section><!-- /.page-title -->
 
     <!-- ======================
-                                                                                                                                                                                                                                             Blog Single
-                                                                                                                                                                                                                                              ========================= -->
+                                                                                                                                                                                                                                                 Blog Single
+                                                                                                                                                                                                                                                  ========================= -->
     <section class="blog blog-single pt-0 pb-80">
         {{-- {{ dd($blog->blog_image) }} --}}
         <div class="container">
@@ -212,14 +212,14 @@
                                 @foreach ($recentPosts as $recentPost)
                                     <div class="widget-post-item d-flex align-items-center">
                                         <div class="widget-post__img">
-                                            <a href="{{ route('home.blog.detail', ['id' => $recentPost->id]) }}"><img
+                                            <a href="{{ route('home.blog.detail', ['slug' => $recentPost->slug]) }}"><img
                                                     src="{{ asset('images/' . $recentPost->blog_image) }}"
                                                     alt="thumb"></a>
                                         </div><!-- /.widget-post-img -->
                                         <div class="widget-post__content">
                                             <span class="widget-post__date">{{ $recentPost->created_at }}</span>
                                             <h4 class="widget-post__title"><a
-                                                    href="{{ route('home.blog.detail', ['id' => $recentPost->id]) }}">{{ $recentPost->title }}</a>
+                                                    href="{{ route('home.blog.detail', ['slug' => $recentPost->slug]) }}">{{ $recentPost->title }}</a>
                                             </h4>
                                         </div><!-- /.widget-post-content -->
                                     </div><!-- /.widget-post-item -->

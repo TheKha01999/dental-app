@@ -92,11 +92,11 @@ Route::prefix('home')->name('home.')->group(function () {
     //Page Product
     Route::get('product', [ClientProductsController::class, 'index'])->name('product');
     Route::get('product/{id}', [ClientProductsController::class, 'detail'])->name('product.detail');
-    Route::get('product/single/{id}', [ClientProductsController::class, 'showSingle'])->name('product.single');
+    Route::get('product/single/{slug}', [ClientProductsController::class, 'showSingle'])->name('product.single');
 
     //Page Blog
     Route::get('blog/{id}', [ClientBlogController::class, 'index'])->name('blog');
-    Route::get('blog/detail/{id}', [ClientBlogController::class, 'detail'])->name('blog.detail');
+    Route::get('blog/detail/{slug}', [ClientBlogController::class, 'detail'])->name('blog.detail');
 
     //Page Appointmnet
     Route::get('appointment', [ClientBookingController::class, 'index'])->name('appointment')->middleware(['auth', 'auth.checkadmin']);
@@ -153,34 +153,41 @@ Route::prefix('admin')->middleware('auth.admin')->name('admin.')->group(function
     //Products table
     Route::resource('products', ProductsController::class);
     Route::post('products/slug', [ProductsController::class, 'createSlug'])->name('products.create.slug');
-    Route::get('product/restore/{product}', [ProductsController::class, 'restore'])->name('products.restore');
+    Route::get('products/restore/{product}', [ProductsController::class, 'restore'])->name('products.restore');
 
     //Blog Categories table
     Route::resource('blog_categories', BlogCategoryController::class);
+    Route::get('blog_categories/restore/{blog_category}', [BlogCategoryController::class, 'restore'])->name('blog_categories.restore');
 
     //Blogs Table
     Route::resource('blogs', BlogController::class);
     Route::post('blogs/slug', [BlogController::class, 'createSlug'])->name('blogs.create.slug');
     Route::post('blogs/ckeditor-upload-image', [BlogController::class, 'uploadImage'])->name('blogs.ckedit.upload.image');
+    Route::get('blogs/restore/{blog}', [BlogController::class, 'restore'])->name('blogs.restore');
 
     //Branchs table
     Route::resource('branchs', BranchController::class);
+    Route::get('branchs/restore/{branch}', [BranchController::class, 'restore'])->name('branchs.restore');
 
     //Service_categories table
     Route::resource('service_categories', ServiceCategoryController::class);
+    Route::get('service_categories/restore/{service_category}', [ServiceCategoryController::class, 'restore'])->name('service_categories.restore');
 
     //Services table
     Route::resource('services', ServiceController::class);
     Route::post('services/slug', [ServiceController::class, 'createSlug'])->name('services.create.slug');
     Route::post('services/ckeditor-upload-image', [ServiceController::class, 'uploadImage'])->name('services.ckedit.upload.image');
+    Route::get('services/restore/{service}', [ServiceController::class, 'restore'])->name('services.restore');
 
     //Doctors table
     Route::resource('doctors', DoctorController::class);
     Route::post('doctors/ckeditor-upload-image', [DoctorController::class, 'uploadImage'])->name('doctors.ckedit.upload.image');
+    Route::get('doctors/restore/{doctor}', [DoctorController::class, 'restore'])->name('doctors.restore');
 
     //Bookings Table
     Route::resource('bookings', BookingController::class);
     Route::post('bookings/show-doctor-ajax', [BookingController::class, 'showDoctor'])->name('bookings.show-doctor-ajax');
+    Route::get('bookings/restore/{booking}', [BookingController::class, 'restore'])->name('bookings.restore');
 
     //User Controller
     Route::resource('users', UserController::class);

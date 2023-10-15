@@ -63,7 +63,7 @@
                                     </div><!-- /.product-img -->
                                     <div class="product__info">
                                         <h4 class="product__title"><a
-                                                href="{{ route('home.product.single', ['id' => $product->id]) }}">{{ $product->name }}</a>
+                                                href="{{ route('home.product.single', ['slug' => $product->slug]) }}">{{ $product->name }}</a>
                                         </h4>
                                         <span class="product__price">{{ number_format($product->price, 0, '.', ',') }}
                                             VND</span>
@@ -116,38 +116,22 @@
                             <h5 class="widget__title">Best Sellers</h5>
                             <div class="widget__content">
                                 <!-- product item #1 -->
-                                <div class="widget-product-item d-flex align-items-center">
-                                    <div class="widget-product__img">
-                                        <a href="#"><img src="{{ asset('assets/client/images/products/11.jpg') }}"
-                                                alt="Product" loading="lazy"></a>
-                                    </div><!-- /.product-product-img -->
-                                    <div class="widget-product__content">
-                                        <h5 class="widget-product__title"><a href="#">Calming Herps</a></h5>
-                                        <span class="widget-product__price">$ 38.00</span>
-                                    </div><!-- /.widget-product-content -->
-                                </div><!-- /.widget-product-item -->
-                                <!-- product item #2 -->
-                                <div class="widget-product-item d-flex align-items-center">
-                                    <div class="widget-product__img">
-                                        <a href="#"><img src="{{ asset('assets/client/images/products/10.jpg') }}"
-                                                alt="Product" loading="lazy"></a>
-                                    </div><!-- /.product-product-img -->
-                                    <div class="widget-product__content">
-                                        <h5 class="widget-product__title"><a href="#">Goji Powder</a></h5>
-                                        <span class="widget-product__price">$ 33.00</span>
-                                    </div><!-- /.widget-product-content -->
-                                </div><!-- /.widget-product-item -->
-                                <!-- product item #3 -->
-                                <div class="widget-product-item d-flex align-items-center">
-                                    <div class="widget-product__img">
-                                        <a href="#"><img src="{{ asset('assets/client/images/products/12.jpg') }}"
-                                                alt="Product" loading="lazy"></a>
-                                    </div><!-- /.product-product-img -->
-                                    <div class="widget-product__content">
-                                        <h5 class="widget-product__title"><a href="#">Biotin Complex</a></h5>
-                                        <span class="widget-product__price">$ 18.00</span>
-                                    </div><!-- /.widget-product-content -->
-                                </div><!-- /.widget-product-item -->
+                                @foreach ($topProducts as $topProduct)
+                                    <div class="widget-product-item d-flex align-items-center">
+                                        <div class="widget-product__img">
+                                            <a href="{{ route('home.product.single', ['slug' => $topProduct->slug]) }}"><img
+                                                    src="{{ asset('images/' . $topProduct->image) }}" alt="Product"
+                                                    loading="lazy"></a>
+                                        </div><!-- /.product-product-img -->
+                                        <div class="widget-product__content">
+                                            <h5 class="widget-product__title"><a
+                                                    href="{{ route('home.product.single', ['slug' => $topProduct->slug]) }}">{{ $topProduct->name }}</a>
+                                            </h5>
+                                            <span
+                                                class="widget-product__price">{{ number_format($topProduct->price, 0, '.', ',') }}</span>
+                                        </div><!-- /.widget-product-content -->
+                                    </div><!-- /.widget-product-item -->
+                                @endforeach
                             </div><!-- /.widget-content -->
                         </div><!-- /.widget-poducts -->
 

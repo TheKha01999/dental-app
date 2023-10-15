@@ -215,4 +215,12 @@ class BookingController extends Controller
         // dd($doctors);
         return response()->json(['doctors' => $doctors]);
     }
+    public function restore(string $id)
+    {
+        $booking = Booking::withTrashed()->find($id);
+
+        $booking->restore();
+
+        return redirect()->route('admin.bookings.index')->with('message', 'Restore successfully');
+    }
 }
