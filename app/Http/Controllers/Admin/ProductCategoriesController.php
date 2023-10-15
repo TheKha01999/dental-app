@@ -21,24 +21,33 @@ class ProductCategoriesController extends Controller
         $keyword = $request->keyword;
         $sortBy = $request->sortBy ?? '';
         $sort = $sortBy  === 'oldest' ? 'asc' : 'desc';
-
+        $status = $request->status ?? '';
         // Index
         $itemPerPage = config('my-config.item-per-pages');
         $page = $request->page ?? 1;
         $stt = ($page *  $itemPerPage) - ($itemPerPage - 1);
 
+        $filter = [];
+        if (!empty($keyword)) {
+            $filter[] = ['name', 'like', '%' . $keyword . '%'];
+        }
+        if ($status !== '') {
+            $filter[] = ['status', $status];
+        }
+
         $productCategories = DB::table('product_categories')
-            ->where('name', 'like', '%' . $keyword . '%')
-            ->whereNull('deleted_at')
+            ->where($filter)
             ->orderBy('created_at', $sort)
             ->paginate($itemPerPage);
+
         return view(
             'admin.pages.product_categories.list',
             [
                 'productCategories' => $productCategories,
                 'sortBy' => $sortBy,
                 'keyword' => $keyword,
-                'stt' => $stt
+                'stt' => $stt,
+                'status' => $status
             ]
         );
     }
@@ -114,5 +123,14 @@ class ProductCategoriesController extends Controller
 
 
         return redirect()->route('admin.product_categories.index')->with('message', 'Deleted successfully');
+    }
+    public function restore(string $id)
+    {
+        $productCategory = ProductCategory::withTrashed()->find($id);
+        $productCategory->status = 1;
+        $productCategory->save();
+        $productCategory->restore();
+
+        return redirect()->route('admin.product_categories.index')->with('message', 'Restore successfully');
     }
 }

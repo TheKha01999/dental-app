@@ -22,17 +22,25 @@ class ProductsController extends Controller
         $keyword = $request->keyword;
         $sortBy = $request->sortBy ?? '';
         $sort = $sortBy  === 'oldest' ? 'asc' : 'desc';
-
+        $status = $request->status ?? '';
         // Index
         $itemPerPage = config('my-config.item-per-pages');
         $page = $request->page ?? 1;
         $stt = ($page *  $itemPerPage) - ($itemPerPage - 1);
 
+        $filter = [];
+        if (!empty($keyword)) {
+            $filter[] = ['products.name', 'like', '%' . $keyword . '%'];
+        }
+        if ($status !== '') {
+            $filter[] = ['products.status', $status];
+        }
+
         //Query Builder
         $products = DB::table('products')
             ->select('products.*', 'product_categories.name as product_category_name')
-            ->where('products.name', 'like', '%' . $keyword . '%')
-            ->whereNull('products.deleted_at')
+            ->where($filter)
+            // ->whereNull('products.deleted_at')
             ->leftJoin('product_categories', 'products.product_categories_id', '=', 'product_categories.id')
             ->orderBy('created_at', $sort)
             ->paginate($itemPerPage);
@@ -43,7 +51,8 @@ class ProductsController extends Controller
                 'products' => $products,
                 'sortBy' => $sortBy,
                 'keyword' => $keyword,
-                'stt' => $stt
+                'stt' => $stt,
+                'status' => $status
             ]
         );
     }
@@ -166,5 +175,14 @@ class ProductsController extends Controller
     public function createSlug(Request $request)
     {
         return response()->json(['slug' => str::slug($request->name, '-')]);
+    }
+    public function restore(string $id)
+    {
+        $product = Product::withTrashed()->find($id);
+        $product->status = 1;
+        $product->save();
+        $product->restore();
+
+        return redirect()->route('admin.products.index')->with('message', 'Restore successfully');
     }
 }

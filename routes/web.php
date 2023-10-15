@@ -148,10 +148,12 @@ Route::get('test-send-sms', function () {
 Route::prefix('admin')->middleware('auth.admin')->name('admin.')->group(function () {
     //Product Categories table
     Route::resource('product_categories', ProductCategoriesController::class);
+    Route::get('product_categories/restore/{product_category}', [ProductCategoriesController::class, 'restore'])->name('product_categories.restore');
 
     //Products table
     Route::resource('products', ProductsController::class);
     Route::post('products/slug', [ProductsController::class, 'createSlug'])->name('products.create.slug');
+    Route::get('product/restore/{product}', [ProductsController::class, 'restore'])->name('products.restore');
 
     //Blog Categories table
     Route::resource('blog_categories', BlogCategoryController::class);
