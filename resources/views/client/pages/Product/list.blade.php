@@ -17,19 +17,29 @@
             </div><!-- /.row -->
         </div><!-- /.container -->
     </section><!-- /.page-title -->
-
+    @php
+        if ($state == 1) {
+            $url = route('home.product.detail', ['id' => $id ?? null]);
+        } else {
+            $url = route('home.product');
+        }
+    @endphp
     <section class="shop-grid">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-8 col-lg-9">
                     <div class="sorting-options d-flex flex-wrap justify-content-between align-items-center mb-30">
                         {{-- <span>Showing 1:9 of 45 product</span> --}}
-                        <select>
-                            <option selected="" value="0">Sort by latest</option>
-                            <option value="1">Sort by Popular</option>
-                            <option value="2">Sort by highest Price </option>
-                            <option value="3">Sort by lowest Price </option>
-                        </select>
+                        <form action="{{ $url }}" method="get">
+                            <select name="sortBy" onchange="this.form.submit();">
+                                <option selected value="0">Sort by latest</option>
+                                <option {{ $sortBy === '1' ? 'selected' : '' }} value="1">Sort by Oldest</option>
+                                <option {{ $sortBy === '2' ? 'selected' : '' }} value="2">Sort by highest Price
+                                </option>
+                                <option {{ $sortBy === '3' ? 'selected' : '' }} value="3">Sort by lowest Price
+                                </option>
+                            </select>
+                        </form>
                     </div>
                     <div class="row">
                         <!-- Product item #1 -->
@@ -91,8 +101,9 @@
                         <div class="widget widget-search">
                             <h5 class="widget__title">Search</h5>
                             <div class="widget__content">
-                                <form class="widget__form-search">
-                                    <input type="text" class="form-control" placeholder="Search...">
+                                <form class="widget__form-search" method="get" action="{{ $url }}">
+                                    <input value="{{ $keyword }}" name="keyword" type="text" class="form-control"
+                                        placeholder="Search...">
                                     <button class="btn" type="submit"><i class="icon-search"></i></button>
                                 </form>
                             </div><!-- /.widget-content -->

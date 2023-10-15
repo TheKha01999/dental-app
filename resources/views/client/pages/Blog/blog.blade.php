@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ========================
-                                                                                                                                                                                                                                                   page title
-                                                                                                                                                                                                                                                =========================== -->
+                                                                                                                                                                                                                                                       page title
+                                                                                                                                                                                                                                                    =========================== -->
     <section class="page-title page-title-layout5 bg-overlay">
         <div class="bg-img"><img src="{{ asset('assets/client/images/page-titles/8.jpg') }}" alt="background"></div>
         <div class="container">
@@ -22,8 +22,8 @@
     </section><!-- /.page-title -->
 
     <!-- ======================
-                                                                                                                                                                                                                                                    Blog Grid
-                                                                                                                                                                                                                                                  ========================= -->
+                                                                                                                                                                                                                                                        Blog Grid
+                                                                                                                                                                                                                                                      ========================= -->
     <section class="blog-grid">
         <div class="container">
             <div class="row">
@@ -69,9 +69,10 @@
                 <div class="col-12 text-center">
                     <nav class="pagination-area">
                         <ul class="pagination justify-content-center">
-                            <li><a class="current" href="#">1</a></li>
+                            {{ $blogs->links('admin.pagination.pagination') }}
+                            {{-- <li><a class="current" href="#">1</a></li>
                             <li><a href="#">2</a></li>
-                            <li><a href="#"><i class="icon-arrow-right"></i></a></li>
+                            <li><a href="#"><i class="icon-arrow-right"></i></a></li> --}}
                         </ul>
                     </nav><!-- .pagination-area -->
                 </div><!-- /.col-12 -->

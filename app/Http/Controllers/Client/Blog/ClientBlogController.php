@@ -27,7 +27,7 @@ class ClientBlogController extends Controller
 
         $this->blogCategories = $blogCategories;
     }
-    public function index($id)
+    public function index(Request $request, $id)
     {
         $blogCategories = BlogCategory::findOrFail($id);
 
@@ -37,7 +37,8 @@ class ClientBlogController extends Controller
             ->where('blogs.blog_categories_id', '=', $id)
             ->leftJoin('blog_categories', 'blogs.blog_categories_id', '=', 'blog_categories.id')
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(config('my-config.item-per-pages'));
+        if ($request->page > $blogs->lastPage()) abort(404);
 
         return view(
             'client.pages.Blog.blog',

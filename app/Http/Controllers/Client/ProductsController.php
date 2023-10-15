@@ -24,18 +24,60 @@ class ProductsController extends Controller
 
         $this->productCategories = $productCategories;
     }
-    public function index()
+    public function index(Request $request)
     {
         // $products = DB::table('products')
         //     ->where('status', '=', '1')
         //     ->orderBy('created_at', 'desc')
         //     ->get();
-        $products = DB::table('products')
-            ->select('products.*', 'product_categories.status')
-            ->where('products.status', '=', '1')
-            ->where('product_categories.status', '=', '1')
-            ->leftJoin('product_categories', 'products.product_categories_id', '=', 'product_categories.id')
-            ->paginate(config('my-config.item-per-pages'));
+
+        if ($request->sortBy === '2') {
+            $products = DB::table('products')
+                ->select('products.*', 'product_categories.status')
+                ->where('products.status', '=', '1')
+                ->where('product_categories.status', '=', '1')
+                ->where('products.name', 'like', '%' . $request->keyword . '%')
+                ->leftJoin('product_categories', 'products.product_categories_id', '=', 'product_categories.id')
+                ->orderBy('products.price', 'desc')
+                ->paginate(config('my-config.item-per-pages'));
+            $products->appends(['sortBy' => $request->sortBy]);
+            if ($request->page > $products->lastPage()) abort(404);
+            // dd($products);
+        } else if ($request->sortBy === '3') {
+            $products = DB::table('products')
+                ->select('products.*', 'product_categories.status')
+                ->where('products.status', '=', '1')
+                ->where('product_categories.status', '=', '1')
+                ->where('products.name', 'like', '%' . $request->keyword . '%')
+                ->leftJoin('product_categories', 'products.product_categories_id', '=', 'product_categories.id')
+                ->orderBy('products.price', 'asc')
+                ->paginate(config('my-config.item-per-pages'));
+            $products->appends(['sortBy' => $request->sortBy]);
+            if ($request->page > $products->lastPage()) abort(404);
+        } else if ($request->sortBy === '1') {
+            $products = DB::table('products')
+                ->select('products.*', 'product_categories.status')
+                ->where('products.status', '=', '1')
+                ->where('product_categories.status', '=', '1')
+                ->where('products.name', 'like', '%' . $request->keyword . '%')
+                ->leftJoin('product_categories', 'products.product_categories_id', '=', 'product_categories.id')
+                ->orderBy('products.created_at', 'asc')
+                ->paginate(config('my-config.item-per-pages'));
+            $products->appends(['sortBy' => $request->sortBy]);
+            if ($request->page > $products->lastPage()) abort(404);
+        } else {
+
+            $products = DB::table('products')
+                ->select('products.*', 'product_categories.status')
+                ->where('products.status', '=', '1')
+                ->where('product_categories.status', '=', '1')
+                ->where('products.name', 'like', '%' . $request->keyword . '%')
+                ->leftJoin('product_categories', 'products.product_categories_id', '=', 'product_categories.id')
+                ->orderBy('products.created_at', 'desc')
+                ->paginate(config('my-config.item-per-pages'));
+            $products->appends(['sortBy' => $request->sortBy]);
+            if ($request->page > $products->lastPage()) abort(404);
+        }
 
         // dd($products);
         // $productCategories = DB::table('product_categories')->where('status', '=', '1')->get();
@@ -60,19 +102,63 @@ class ProductsController extends Controller
             [
                 'productCategories' => $this->productCategories,
                 'products' => $products,
-                'topProducts' => $topProducts
+                'topProducts' => $topProducts,
+                'sortBy' => $request->sortBy,
+                'state' => 0,
+                'keyword' => $request->keyword
             ]
         );
     }
-    public function detail($id)
+    public function detail(Request $request, $id)
     {
         $productCategories = ProductCategory::findOrFail($id);
 
-        $products = DB::table('products')
-            ->where('product_categories_id', '=', $id)
-            ->where('status', '=', '1')
-            ->orderBy('created_at', 'desc')
-            ->paginate(config('my-config.item-per-pages'));
+        if ($request->sortBy === '2') {
+            $products = DB::table('products')
+                ->where('product_categories_id', '=', $id)
+                ->where('status', '=', '1')
+                ->where('name', 'like', '%' . $request->keyword . '%')
+                ->orderBy('price', 'desc')
+                ->paginate(config('my-config.item-per-pages'));
+            $products->appends(['sortBy' => $request->sortBy]);
+            if ($request->page > $products->lastPage()) abort(404);
+            // dd($products);
+        } else if ($request->sortBy === '3') {
+            $products = DB::table('products')
+                ->where('product_categories_id', '=', $id)
+                ->where('status', '=', '1')
+                ->where('name', 'like', '%' . $request->keyword . '%')
+                ->orderBy('price', 'asc')
+                ->paginate(config('my-config.item-per-pages'));
+            $products->appends(['sortBy' => $request->sortBy]);
+            if ($request->page > $products->lastPage()) abort(404);
+        } else if ($request->sortBy === '1') {
+            $products = DB::table('products')
+                ->where('product_categories_id', '=', $id)
+                ->where('status', '=', '1')
+                ->where('name', 'like', '%' . $request->keyword . '%')
+                ->orderBy('created_at', 'asc')
+                ->paginate(config('my-config.item-per-pages'));
+            $products->appends(['sortBy' => $request->sortBy]);
+            if ($request->page > $products->lastPage()) abort(404);
+        } else {
+
+            $products = DB::table('products')
+                ->where('product_categories_id', '=', $id)
+                ->where('status', '=', '1')
+                ->where('name', 'like', '%' . $request->keyword . '%')
+                ->orderBy('created_at', 'desc')
+                ->paginate(config('my-config.item-per-pages'));
+            $products->appends(['sortBy' => $request->sortBy]);
+            if ($request->page > $products->lastPage()) abort(404);
+        }
+
+
+        // $products = DB::table('products')
+        //     ->where('product_categories_id', '=', $id)
+        //     ->where('status', '=', '1')
+        //     ->orderBy('created_at', 'desc')
+        //     ->paginate(config('my-config.item-per-pages'));
         // ->get();
 
         $bestSellers = DB::table('products')
@@ -94,7 +180,11 @@ class ProductsController extends Controller
             [
                 'productCategories' => $this->productCategories,
                 'products' => $products,
-                'topProducts' => $topProducts
+                'topProducts' => $topProducts,
+                'sortBy' => $request->sortBy,
+                'state' => 1,
+                'id' => $id,
+                'keyword' => $request->keyword
             ]
         );
     }
@@ -120,7 +210,7 @@ class ProductsController extends Controller
             'client.pages.Product.singleProduct',
             [
                 'product' => $product,
-                'relatedProducts' => $relatedProducts
+                'relatedProducts' => $relatedProducts,
             ]
         );
     }
