@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -18,9 +19,11 @@ class MailToCustomer extends Mailable
      * Create a new message instance.
      */
     public $order;
-    public function __construct(Order $order)
+    public $user;
+    public function __construct(Order $order, User $user)
     {
         $this->order = $order;
+        $this->user = $user;
     }
 
     /**

@@ -25,6 +25,7 @@ class SendMailToCustomer
     public function handle(PlaceOrderSuccess $event): void
     {
         $order = $event->order;
-        Mail::to(Auth::user()->email)->send(new MailToCustomer($order));
+        $user = $event->user;
+        Mail::to(Auth::user()->email)->send(new MailToCustomer($order, $user));
     }
 }

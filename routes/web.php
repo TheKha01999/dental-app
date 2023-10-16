@@ -6,8 +6,10 @@ use App\Http\Controllers\Admin\Blog\BlogController;
 use App\Http\Controllers\Admin\Branch\BranchController;
 use App\Http\Controllers\Admin\Cart\CartController;
 use App\Http\Controllers\Admin\Dashboard\AdminController;
+use App\Http\Controllers\Admin\Dashboard\DashboardController;
 use App\Http\Controllers\Admin\Dashboard\UserController;
 use App\Http\Controllers\Admin\Doctor\DoctorController;
+use App\Http\Controllers\Admin\Order\ShowOrderController;
 use App\Http\Controllers\Admin\ProductCategoriesController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\Services\ServiceCategoryController;
@@ -196,6 +198,23 @@ Route::prefix('admin')->middleware('auth.admin')->name('admin.')->group(function
     //Admin Controller
     Route::resource('admins', AdminController::class);
     Route::post('admins/update-admin-password/{admin}', [AdminController::class, 'updatePassword'])->name('admins.update-admin-password');
+
+    //Order Controller
+    Route::get('orders', [ShowOrderController::class, 'showOrders'])->name('orders');
+    Route::get('order-items/{order}', [ShowOrderController::class, 'showOrderItems'])->name('order-items');
+    Route::get('payments/{order}', [ShowOrderController::class, 'showOrderPayments'])->name('payments');
+    Route::post('orders/destroy/{order}', [ShowOrderController::class, 'destroy'])->name('orders.destroy');
+    Route::get('orders/restore/{order}', [ShowOrderController::class, 'restore'])->name('orders.restore');
+
+    Route::post('order-items/destroy/{id}', [ShowOrderController::class, 'destroyOrderItem'])->name('order-items.destroy');
+    Route::get('order-items/restore/{id}', [ShowOrderController::class, 'restoreOrderItem'])->name('order-items.restore');
+
+    Route::post('payments/destroy/{id}', [ShowOrderController::class, 'destroyPayment'])->name('payments.destroy');
+    Route::get('payments/restore/{id}', [ShowOrderController::class, 'restorePayment'])->name('payments.restore');
+
+    Route::get('orders/update/{order}', [ShowOrderController::class, 'update'])->name('orders.update');
+    //Dashboard Controller
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 Route::get('admin', function () {

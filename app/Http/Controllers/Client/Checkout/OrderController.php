@@ -183,7 +183,7 @@ class OrderController extends Controller
             $orderPaymentMethods->note = $request->vnp_OrderInfo;
             $orderPaymentMethods->total = $request->vnp_Amount;
             $orderPaymentMethods->save();
-
+            // dd($order);
             event(new PlaceOrderSuccess($order, $user, $cart));
             $message = 'OK';
         } else {
