@@ -80,3 +80,7 @@
 @section('blog_category_list_menu_active')
     active
 @endsection
+
+@section('title')
+    Admin | Update Blog Category
+@endsection

@@ -19,6 +19,6 @@ class checkAdmin
         if (Auth::check() && Auth::user()->role === 0) {
             return $next($request);
         }
-        return redirect()->route('admin.product_categories.index'); //xiu sua thanh dashboard ben admin
+        return redirect()->route('admin.dashboard'); //xiu sua thanh dashboard ben admin
     }
 }

@@ -105,7 +105,8 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-        $product = DB::table('products')->find($id);
+        $product = Product::findOrFail($id);
+        // $product = DB::table('products')->find($id);
         $productCategories = DB::table('product_categories')->where('status', '=', 1)->get();
         // dd($productCategories);
         return view('admin.pages.products.detail', ['product' => $product, 'productCategories' => $productCategories]);

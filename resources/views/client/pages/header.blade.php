@@ -36,7 +36,7 @@
                             </li>
                             <li>
                                 <i class="icon-clock color-primary"></i>
-                                <a href="contact-us.html">Mon - Fri: 8:00 am - 7:00 pm</a>
+                                <a href="#">Mon - Fri: 8:00 am - 7:00 pm</a>
                             </li>
                         </ul>
                         <!-- /.contact__list -->
@@ -145,7 +145,7 @@
 
                     <!-- /.nav-item -->
                     <li class="nav__item">
-                        <a href="contact-us.html" class="nav__item-link">Contacts</a>
+                        <a href="#footer" class="nav__item-link">Contacts</a>
                     </li>
 
                     {{-- user --}}
@@ -175,8 +175,8 @@
                                         </li>
                                         @if (Auth::user()->role === 1)
                                             <li class="nav__item">
-                                                <a class="nav__item-link"
-                                                    href="{{ route('admin.product_categories.index') }}">Admin Page</a>
+                                                <a class="nav__item-link" href="{{ route('admin.dashboard') }}">Admin
+                                                    Page</a>
                                             </li>
                                         @else
                                             <li class="nav__item">

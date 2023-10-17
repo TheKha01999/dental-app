@@ -196,3 +196,7 @@
         });
     </script>
 @endsection
+
+@section('title')
+    Admin | List Booking
+@endsection

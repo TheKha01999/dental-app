@@ -113,7 +113,8 @@ class BookingController extends Controller
 
         $services = DB::table('service_categories')->where('status', '=', '1')->get();
 
-        $booking = DB::table('bookings')->find($id);
+        $booking = Booking::findOrFail($id);
+        // $booking = DB::table('bookings')->find($id);
 
         $doctorID = $booking->doctor_id;
 

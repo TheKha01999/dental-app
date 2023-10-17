@@ -197,3 +197,7 @@
 @section('blog_category_list_menu_active')
     active
 @endsection
+
+@section('title')
+    Admin | List Blog Category
+@endsection

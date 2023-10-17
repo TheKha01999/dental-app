@@ -159,6 +159,10 @@
     <!-- /.content-wrapper -->
 @endsection
 
+@section('title')
+    Admin | Update Blog
+@endsection
+
 @section('blog_list_menu_open')
     menu-open
 @endsection

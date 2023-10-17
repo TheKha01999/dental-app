@@ -217,3 +217,6 @@
 @section('doctor_list_menu_active')
     active
 @endsection
+@section('title')
+    Admin | List Doctor
+@endsection

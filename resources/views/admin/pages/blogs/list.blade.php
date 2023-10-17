@@ -210,3 +210,11 @@
 @section('blog_list_menu_active')
     active
 @endsection
+
+@section('title')
+    Admin | Create Blog Category
+@endsection
+
+@section('title')
+    Admin | List Blog
+@endsection

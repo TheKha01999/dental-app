@@ -66,7 +66,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $user = DB::table('users')->find($id);
+        $user = User::findOrFail($id);
+        // $user = DB::table('users')->find($id);
 
         return view('admin.pages.users.detail', ['user' => $user]);
     }

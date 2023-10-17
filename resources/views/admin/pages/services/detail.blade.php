@@ -128,6 +128,10 @@
     <!-- /.content-wrapper -->
 @endsection
 
+@section('title')
+    Admin | Update Service
+@endsection
+
 @section('service_list_menu_open')
     menu-open
 @endsection

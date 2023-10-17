@@ -61,7 +61,7 @@ Route::get('/dashboard', function () {
     // dd($bookings);
 
     return view('dashboard', ['bookings' => $bookings]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'auth.checkadmin'])->name('dashboard');
 //Luu y auth ở đây nên check có ng đăng nhập chưa ở link này vs email veryfied ở đây luôn
 
 Route::middleware('auth')->group(function () {

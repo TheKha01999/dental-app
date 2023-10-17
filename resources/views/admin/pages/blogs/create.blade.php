@@ -161,6 +161,9 @@
     <!-- /.content-wrapper -->
 @endsection
 
+@section('title')
+    Admin | Create Blog
+@endsection
 @section('blog_create_menu_open')
     menu-open
 @endsection

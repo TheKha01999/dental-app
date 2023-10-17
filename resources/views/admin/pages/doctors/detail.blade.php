@@ -142,6 +142,9 @@
     <!-- /.content-wrapper -->
 @endsection
 
+@section('title')
+    Admin | Update Doctor
+@endsection
 @section('doctor_list_menu_open')
     menu-open
 @endsection

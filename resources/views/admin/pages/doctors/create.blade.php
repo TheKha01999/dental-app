@@ -141,6 +141,10 @@
     <!-- /.content-wrapper -->
 @endsection
 
+@section('title')
+    Admin | Create Doctor
+@endsection
+
 @section('doctor_create_menu_open')
     menu-open
 @endsection

@@ -189,3 +189,7 @@
         });
     </script>
 @endsection
+
+@section('title')
+    Admin | Create Product
+@endsection

@@ -91,3 +91,6 @@
 @section('service_category_list_menu_active')
     active
 @endsection
+@section('title')
+    Admin | Update Service Category
+@endsection

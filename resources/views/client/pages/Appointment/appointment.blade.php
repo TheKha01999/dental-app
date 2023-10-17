@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="page-title page-title-layout4 bg-overlay text-center">
-        <div class="bg-img"><img src="assets/images/page-titles/5.jpg" alt="background"></div>
+        <div class="bg-img"><img src="{{ asset('assets/client/images/page-titles/5.jpg') }}" alt="background"></div>
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6 offset-xl-3">
@@ -10,7 +10,7 @@
                     <p class="pagetitle__desc">Medcity has been present in Europe since 1990, offering innovative solutions,
                         specializing in medical services for treatment of medical infrastructure.
                     </p>
-                    <a href="appointment.html" class="btn btn__secondary btn__outlined btn__rounded">
+                    <a href="{{ route('home.allDoctors') }}" class="btn btn__secondary btn__outlined btn__rounded">
                         <span>Find A Doctor</span>
                         <i class="icon-arrow-right"></i>
                     </a>
@@ -149,7 +149,9 @@
                         </form>
                         <div
                             class="contact-panel__info d-flex flex-column justify-content-between bg-overlay bg-overlay-primary-gradient">
-                            <div class="bg-img"><img src="assets/images/banners/1.jpg" alt="banner"></div>
+                            <div class="bg-img"><img src="{{ asset('assets/client/images/banners/1.jpg') }}"
+                                    alt="banner">
+                            </div>
                             <div>
                                 <h4 class="contact-panel__title color-white">Quick Contacts</h4>
                                 <p class="contact-panel__desc font-weight-bold color-white mb-30">Please feel free to
@@ -167,11 +169,11 @@
                                         <i class="icon-location"></i><a href="#">Location: Brooklyn, New York</a>
                                     </li>
                                     <li>
-                                        <i class="icon-clock"></i><a href="contact-us.html">Mon - Fri: 8:00 am - 7:00
+                                        <i class="icon-clock"></i><a href="#">Mon - Fri: 8:00 am - 7:00
                                             pm</a>
                                     </li>
                                 </ul>
-                                <a href="#" class="btn btn__white btn__rounded btn__outlined">Contact Us</a>
+                                <a href="#footer" class="btn btn__white btn__rounded btn__outlined">Contact Us</a>
                             </div>
                         </div>
                     </div>

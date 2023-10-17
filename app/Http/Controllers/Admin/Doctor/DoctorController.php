@@ -104,7 +104,8 @@ class DoctorController extends Controller
      */
     public function show(string $id)
     {
-        $doctor = DB::table('doctors')->find($id);
+        $doctor = Doctor::findOrFail($id);
+        // $doctor = DB::table('doctors')->find($id);
         $serviceCategories = DB::table('service_categories')->where('status', '=', 1)->get();
         $branchs = DB::table('branchs')->where('status', '=', 1)->get();
 

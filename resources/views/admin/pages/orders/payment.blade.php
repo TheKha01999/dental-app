@@ -96,3 +96,7 @@
         });
     </script>
 @endsection
+
+@section('title')
+    Admin | Payment Detail
+@endsection

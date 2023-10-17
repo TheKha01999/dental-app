@@ -9,8 +9,8 @@
                     <h1 class="pagetitle__heading my-3">FAQs</h1>
                     <nav>
                         <ol class="breadcrumb my-3">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item"><a href="about-us.html">About</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                            {{-- <li class="breadcrumb-item"><a href="about-us.html">About</a></li> --}}
                             <li class="breadcrumb-item active" aria-current="page">FAQs</li>
                         </ol>
                     </nav>

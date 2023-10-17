@@ -90,7 +90,8 @@ class ServiceCategoryController extends Controller
      */
     public function show(string $id)
     {
-        $serviceCategories = DB::table('service_categories')->find($id);
+        $serviceCategories = ServiceCategory::findOrFail($id);
+        // $serviceCategories = DB::table('service_categories')->find($id);
         return view('admin.pages.service_category.detail', ['serviceCategories' => $serviceCategories]);
     }
 

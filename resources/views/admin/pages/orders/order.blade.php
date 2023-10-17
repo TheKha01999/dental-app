@@ -103,3 +103,6 @@
         });
     </script>
 @endsection
+@section('title')
+    Admin | Order
+@endsection

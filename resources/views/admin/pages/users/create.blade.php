@@ -92,3 +92,6 @@
 @section('user_create_menu_active')
     active
 @endsection
+@section('title')
+    Admin | Create User
+@endsection

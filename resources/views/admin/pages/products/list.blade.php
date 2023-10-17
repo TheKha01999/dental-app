@@ -130,3 +130,6 @@
 @section('product_list_menu_active')
     active
 @endsection
+@section('title')
+    Admin | Product
+@endsection

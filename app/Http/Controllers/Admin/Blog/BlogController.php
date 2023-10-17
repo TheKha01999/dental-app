@@ -112,7 +112,8 @@ class BlogController extends Controller
      */
     public function show(string $id)
     {
-        $blog = DB::table('blogs')->find($id);
+        $blog = Blog::findOrFail($id);
+        // $blog = DB::table('blogs')->find($id);
         $blogCategories = DB::table('blog_categories')->where('status', '=', 1)->get();
         // dd($productCategories);
         return view('admin.pages.blogs.detail', ['blog' => $blog, 'blogCategories' => $blogCategories]);

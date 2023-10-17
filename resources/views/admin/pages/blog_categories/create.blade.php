@@ -75,3 +75,7 @@
 @section('blog_category_create_menu_active')
     active
 @endsection
+
+@section('title')
+    Admin | Create Blog Category
+@endsection

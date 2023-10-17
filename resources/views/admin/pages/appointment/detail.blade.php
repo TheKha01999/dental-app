@@ -237,3 +237,7 @@
         });
     </script>
 @endsection
+
+@section('title')
+    Admin | Update Booking
+@endsection

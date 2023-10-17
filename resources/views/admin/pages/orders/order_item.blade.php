@@ -93,3 +93,7 @@
         });
     </script>
 @endsection
+
+@section('title')
+    Admin | Order Detail
+@endsection

@@ -66,7 +66,8 @@ class BranchController extends Controller
      */
     public function show(string $id)
     {
-        $branch = DB::table('branchs')->find($id);
+        $branch = Branch::findOrFail($id);
+        // $branch = DB::table('branchs')->find($id);
 
         return view('admin.pages.branchs.detail', ['branch' => $branch]);
     }

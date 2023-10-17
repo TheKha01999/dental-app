@@ -122,3 +122,6 @@
 @section('branch_create_menu_active')
     active
 @endsection
+@section('title')
+    Admin | Create Branch
+@endsection

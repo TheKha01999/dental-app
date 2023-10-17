@@ -1,5 +1,5 @@
 <!-- ========================Footer========================== -->
-<footer class="footer">
+<footer class="footer" id="footer">
     <div class="footer-primary">
         <div class="container">
             <div class="row">
@@ -12,7 +12,8 @@
                             us to care for you and strive to be the first and best
                             choice for your family healthcare.
                         </p>
-                        <a href="appointment.html" class="btn btn__primary btn__primary-style2 btn__link">
+                        <a href="{{ route('home.appointment') }}"
+                            class="btn btn__primary btn__primary-style2 btn__link">
                             <span>Make Appointment</span>
                             <i class="icon-arrow-right"></i>
                         </a>
@@ -73,10 +74,10 @@
                             </li>
                         </ul>
                         <div class="d-flex align-items-center">
-                            <a href="contact-us.html" class="btn btn__primary btn__link mr-30">
+                            {{-- <a href="contact-us.html" class="btn btn__primary btn__link mr-30">
                                 <i class="icon-arrow-right"></i>
                                 <span>Get Directions</span>
-                            </a>
+                            </a> --}}
                             <ul class="social-icons list-unstyled mb-0">
                                 <li>
                                     <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -104,7 +105,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-sm-12 col-md-6 col-lg-6">
-                    <span class="fz-14">&copy; 2020 DataSoft, All Rights Reserved. With Love by</span>
+                    <span class="fz-14">&copy; 2023 DataSoft, All Rights Reserved. With Love by</span>
                     <a class="fz-14 color-primary" href="http://themeforest.net/user/7oroof">7oroof.com</a>
                 </div>
                 <!-- /.col-lg-6 -->

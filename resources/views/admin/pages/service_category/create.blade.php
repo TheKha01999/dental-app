@@ -86,3 +86,6 @@
 @section('service_category_create_menu_active')
     active
 @endsection
+@section('title')
+    Admin | Create Service Category
+@endsection

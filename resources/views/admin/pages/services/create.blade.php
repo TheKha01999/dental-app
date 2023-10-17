@@ -128,6 +128,10 @@
     <!-- /.content-wrapper -->
 @endsection
 
+@section('title')
+    Admin | Create Service
+@endsection
+
 @section('service_create_menu_open')
     menu-open
 @endsection

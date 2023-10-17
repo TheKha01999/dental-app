@@ -102,7 +102,8 @@ class ServiceController extends Controller
      */
     public function show(string $id)
     {
-        $service = DB::table('services')->find($id);
+        $service = Service::findOrFail($id);
+        // $service = DB::table('services')->find($id);
         $serviceCategories = DB::table('service_categories')->where('status', '=', 1)->get();
         // dd($productCategories);
         return view('admin.pages.services.detail', ['service' => $service, 'serviceCategories' => $serviceCategories]);

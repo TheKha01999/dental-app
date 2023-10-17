@@ -232,3 +232,7 @@
         });
     </script>
 @endsection
+
+@section('title')
+    Admin | Create Booking
+@endsection

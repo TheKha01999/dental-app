@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ========================
-                                                                                                                                                                                                                                                       page title
-                                                                                                                                                                                                                                                    =========================== -->
+                                                                                                                                                                                                                                                           page title
+                                                                                                                                                                                                                                                        =========================== -->
     <section class="page-title page-title-layout5 bg-overlay">
         <div class="bg-img"><img src="{{ asset('assets/client/images/page-titles/8.jpg') }}" alt="background"></div>
         <div class="container">
@@ -12,7 +12,7 @@
                     <h1 class="pagetitle__heading">Health Essentials</h1>
                     <nav>
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Blog</li>
                         </ol>
                     </nav>
@@ -22,8 +22,8 @@
     </section><!-- /.page-title -->
 
     <!-- ======================
-                                                                                                                                                                                                                                                        Blog Grid
-                                                                                                                                                                                                                                                      ========================= -->
+                                                                                                                                                                                                                                                            Blog Grid
+                                                                                                                                                                                                                                                          ========================= -->
     <section class="blog-grid">
         <div class="container">
             <div class="row">

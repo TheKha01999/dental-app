@@ -69,7 +69,8 @@ class AdminController extends Controller
      */
     public function show(string $id)
     {
-        $admin = DB::table('users')->find($id);
+        $admin = User::findOrFail($id);
+        // $admin = DB::table('users')->find($id);
 
         return view('admin.pages.admins.detail', ['admin' => $admin]);
     }

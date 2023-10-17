@@ -62,11 +62,11 @@
                                     best practices for cleanliness.
                                 </p>
                                 <div class="d-flex flex-wrap align-items-center">
-                                    <a href="services.html" class="btn btn__secondary btn__rounded mr-30">
+                                    <a href="#our_service" class="btn btn__secondary btn__rounded mr-30">
                                         <span>Our Services</span>
                                         <i class="icon-arrow-right"></i>
                                     </a>
-                                    <a href="about-us.html" class="btn btn__white btn__rounded">
+                                    <a href="{{ route('home.about') }}" class="btn btn__white btn__rounded">
                                         <span>More About Us</span>
                                         <i class="icon-arrow-right"></i>
                                     </a>
@@ -170,7 +170,7 @@
                         sustainable change for patients!
                     </p>
                     <div class="d-flex flex-wrap align-items-center mt-40 mb-30">
-                        <a href="appointment.html" class="btn btn__primary btn__rounded mr-30">
+                        <a href="{{ route('home.appointment') }}" class="btn btn__primary btn__rounded mr-30">
                             <span>Make Appointment</span>
                             <i class="icon-arrow-right"></i>
                         </a>
@@ -341,7 +341,7 @@
                         Serve the community by improving the quality of life through
                         better health. We have put protocols to protect our patients and
                         staff while continuing to provide medically necessary care.
-                        <a href="#" class="color-secondary">
+                        <a href="#footer" class="color-secondary">
                             <span>Contact Us For More Information</span>
                             <i class="icon-arrow-right"></i>
                         </a>
@@ -928,7 +928,9 @@
                         </form>
                         <div
                             class="contact-panel__info d-flex flex-column justify-content-between bg-overlay bg-overlay-primary-gradient">
-                            <div class="bg-img"><img src="assets/images/banners/1.jpg" alt="banner"></div>
+                            <div class="bg-img"><img src="{{ asset('assets/client/images/banners/1.jpg') }}"
+                                    alt="banner">
+                            </div>
                             <div>
                                 <h4 class="contact-panel__title color-white">Quick Contacts</h4>
                                 <p class="contact-panel__desc font-weight-bold color-white mb-30">Please feel free to
@@ -946,11 +948,11 @@
                                         <i class="icon-location"></i><a href="#">Location: Brooklyn, New York</a>
                                     </li>
                                     <li>
-                                        <i class="icon-clock"></i><a href="contact-us.html">Mon - Fri: 8:00 am - 7:00
+                                        <i class="icon-clock"></i><a href="#">Mon - Fri: 8:00 am - 7:00
                                             pm</a>
                                     </li>
                                 </ul>
-                                <a href="#" class="btn btn__white btn__rounded btn__outlined">Contact Us</a>
+                                <a href="#footer" class="btn btn__white btn__rounded btn__outlined">Contact Us</a>
                             </div>
                         </div>
                     </div>

@@ -182,3 +182,6 @@
             </div>
         </div>
     </div> --}}
+@section('title')
+    Profile
+@endsection

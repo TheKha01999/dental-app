@@ -155,3 +155,6 @@
 @section('branch_list_menu_active')
     active
 @endsection
+@section('title')
+    Admin | List Branch
+@endsection
