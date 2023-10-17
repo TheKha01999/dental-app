@@ -45,6 +45,9 @@ class ServiceController extends Controller
             ->orderBy('created_at', $sort)
             ->paginate($itemPerPage);
 
+        $services->appends(['sortBy' => $request->sortBy, 'status' => $request->status, 'keyword' => $request->keyword]);
+        if ($request->page > $services->lastPage()) abort(404);
+
         return view(
             'admin.pages.services.list',
             [

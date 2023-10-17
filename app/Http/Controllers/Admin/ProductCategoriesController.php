@@ -40,6 +40,9 @@ class ProductCategoriesController extends Controller
             ->orderBy('created_at', $sort)
             ->paginate($itemPerPage);
 
+        $productCategories->appends(['sortBy' => $request->sortBy, 'status' => $request->status, 'keyword' => $request->keyword]);
+        if ($request->page > $productCategories->lastPage()) abort(404);
+
         return view(
             'admin.pages.product_categories.list',
             [

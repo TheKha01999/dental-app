@@ -44,6 +44,8 @@ class ProductsController extends Controller
             ->leftJoin('product_categories', 'products.product_categories_id', '=', 'product_categories.id')
             ->orderBy('created_at', $sort)
             ->paginate($itemPerPage);
+        $products->appends(['sortBy' => $request->sortBy, 'status' => $request->status, 'keyword' => $request->keyword]);
+        if ($request->page > $products->lastPage()) abort(404);
 
         return view(
             'admin.pages.products.list',

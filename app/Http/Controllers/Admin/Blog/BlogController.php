@@ -46,6 +46,9 @@ class BlogController extends Controller
             ->orderBy('created_at', $sort)
             ->paginate($itemPerPage);
 
+        $blogs->appends(['sortBy' => $request->sortBy, 'status' => $request->status, 'keyword' => $request->keyword]);
+        if ($request->page > $blogs->lastPage()) abort(404);
+
         return view(
             'admin.pages.blogs.list',
             [
