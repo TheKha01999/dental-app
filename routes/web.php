@@ -45,6 +45,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('client.pages.Home.home');
 // })->name('/');
 
+
 Route::get('/dashboard', function () {
 
     $bookings = DB::table('bookings')
@@ -61,7 +62,7 @@ Route::get('/dashboard', function () {
     // dd($bookings);
 
     return view('dashboard', ['bookings' => $bookings]);
-})->middleware(['auth', 'verified', 'auth.checkadmin'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 //Luu y auth ở đây nên check có ng đăng nhập chưa ở link này vs email veryfied ở đây luôn
 
 Route::middleware('auth')->group(function () {
@@ -101,8 +102,8 @@ Route::prefix('home')->name('home.')->group(function () {
     Route::get('blog/detail/{slug}', [ClientBlogController::class, 'detail'])->name('blog.detail');
 
     //Page Appointmnet
-    Route::get('appointment', [ClientBookingController::class, 'index'])->name('appointment')->middleware(['auth', 'auth.checkadmin']);
-    Route::post('appointment/store', [ClientBookingController::class, 'store'])->name('appointment.store')->middleware(['auth', 'auth.checkadmin']);
+    Route::get('appointment', [ClientBookingController::class, 'index'])->name('appointment')->middleware(['auth.checkadmin']);
+    Route::post('appointment/store', [ClientBookingController::class, 'store'])->name('appointment.store');
     Route::get('appointment/cancel-booking/{id}', [ClientBookingController::class, 'cancelBooking'])->name('appointment.cancel-booking');
     Route::post('appointment/show-doctor-ajax', [ClientBookingController::class, 'showDoctor'])->name('appointment.show-doctor-ajax');
 

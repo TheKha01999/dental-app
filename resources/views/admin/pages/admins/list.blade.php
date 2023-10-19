@@ -55,7 +55,7 @@
                                                         @csrf
                                                         @method('delete')
                                                         <button onclick="return confirm('Are u sure !')" type="submit"
-                                                            name="submit" class="btn btn-danger">Soft delete</button>
+                                                            name="submit" class="btn btn-danger">Delete</button>
                                                     </form>
                                                     <a href="{{ route('admin.admins.show', ['admin' => $admin->id]) }}"
                                                         class="btn btn-primary">Detail</a>

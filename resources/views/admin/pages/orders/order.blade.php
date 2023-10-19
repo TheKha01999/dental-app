@@ -29,6 +29,7 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>Order #</th>
                                             <th>Customer</th>
                                             <th>Address</th>
                                             <th>Note</th>
@@ -41,10 +42,11 @@
                                         @forelse ($orders as $order)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $order->id }}</td>
                                                 <td>{{ $order->customer }}</td>
                                                 <td>{{ $order->address }} </td>
                                                 <td>{{ $order->note }} </td>
-                                                <td>{{ $order->total }} </td>
+                                                <td>{{ number_format($order->total, 0, '.', ',') }} VND</td>
                                                 <td>{{ $order->status }} </td>
                                                 <td>
                                                     <form class="d-inline"

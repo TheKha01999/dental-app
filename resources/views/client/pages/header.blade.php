@@ -192,7 +192,7 @@
                                             @csrf
                                             <li class="nav__item">
                                                 <a onclick="event.preventDefault(); this.closest('form').submit();"
-                                                    class="nav__item-link" href="{{ route('logout') }}">
+                                                    class="nav__item-link">
                                                     Log out
                                                 </a>
                                             </li>

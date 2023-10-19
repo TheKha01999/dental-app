@@ -29,6 +29,7 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>Order #</th>
                                             <th>Product name</th>
                                             <th>Product price</th>
                                             <th>Product qty</th>
@@ -39,8 +40,9 @@
                                         @forelse ($orderItems as $orderItem)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $orderItem->order_id }}</td>
                                                 <td>{{ $orderItem->product_name }}</td>
-                                                <td>{{ $orderItem->product_price }} </td>
+                                                <td>{{ number_format($orderItem->product_price, 0, '.', ',') }} VND</td>
                                                 <td>{{ $orderItem->qty }} </td>
                                                 <td>
                                                     <form class="d-inline"

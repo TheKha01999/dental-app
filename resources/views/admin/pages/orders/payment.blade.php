@@ -29,6 +29,7 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>Order #</th>
                                             <th>Method</th>
                                             <th>Total</th>
                                             <th>Note</th>
@@ -40,8 +41,9 @@
                                         @forelse ($orderPayments as $orderPayment)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $orderPayment->order_id }}</td>
                                                 <td>{{ $orderPayment->payment_provider }}</td>
-                                                <td>{{ $orderPayment->total }} </td>
+                                                <td>{{ number_format($orderPayment->total, 0, '.', ',') }} VND</td>
                                                 <td>{{ $orderPayment->note }} </td>
                                                 <td>{{ $orderPayment->status }} </td>
 
